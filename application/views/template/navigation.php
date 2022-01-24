@@ -1,3 +1,7 @@
+
+
+
+
 <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper" >
           <div class="sidebar-brand">
@@ -61,7 +65,7 @@
 
           <?php endif;?>
 
-           <?php if($this->session->userdata('user_role_id_fk') == 1 || $this->session->userdata('user_role_id_fk')): ?>
+           <?php if($this->session->userdata('user_role_id_fk') == 1 || $this->session->userdata('user_role_id_fk') == 3): ?>
 
 
              <li class="dropdown">
@@ -73,7 +77,7 @@
 
           <?php endif;?>
 
-           <?php if($this->session->userdata('user_role_id_fk') == 1 || $this->session->userdata('user_role_id_fk')): ?>
+           <?php if($this->session->userdata('user_role_id_fk') == 1 || $this->session->userdata('user_role_id_fk') == 3): ?>
 
             <li class="dropdown">
                 <a href="admin/selected_officals" class="nav-link ">
@@ -154,6 +158,7 @@
             </li> 
 
           <?php endif;?>
+          
            <?php if($this->session->userdata('user_role_id_fk') == 1):?>
 
             <li class="dropdown">
@@ -163,6 +168,7 @@
                 
             </li> 
             <?php endif;?>
+            
           </ul>
         </aside>
       </div>
