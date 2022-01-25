@@ -16,7 +16,7 @@ class AuthModel extends CI_Model
         
         $this->db->select('users.*,user_roles.user_role_name')->from('users');
         $this->db->join('user_roles','user_roles.user_role_id=users.user_role_id_fk');
-        $this->db->where('user_name',trim($data_arr['user_name']));
+        $this->db->where('user_email',trim($data_arr['user_email']));
         $this->db->where('user_password',md5(trim($data_arr['user_password'])));
         // $this->db->where('user_role_id_fk',trim($data_arr['user_role_id_fk']));
         $this->db->where('user_status',1);
@@ -31,7 +31,7 @@ class AuthModel extends CI_Model
     
     public function user_add($data_arr)
     {
-        $required_fields = array('user_name'=>0,'user_password'=>0,'user_contact'=>0,'user_role_id_fk'=>0,'user_status'=>0,'user_district_id_fk'=>0);
+        $required_fields = array('user_name'=>0,'user_email'=>0,'user_password'=>0,'user_contact'=>0,'user_role_id_fk'=>0,'user_status'=>0,'user_district_id_fk'=>0);
         $missing = array_diff_key($required_fields,$data_arr);
 
         if(count($missing) > 0)
@@ -43,7 +43,7 @@ class AuthModel extends CI_Model
         // check duplication 
         //======================================================================
          
-        $find_user = $this->db->query('select * from users where user_name = ? or user_contact = ? ',array($data_arr['user_name'],$data_arr['user_contact']))->result_array();
+        $find_user = $this->db->query('select * from users where user_name = ? or user_contact = ? ',array($data_arr['user_name'],$data_arr['user_email'],$data_arr['user_contact']))->result_array();
         
         if(count($find_user) > 0)
         {

@@ -49,13 +49,13 @@
                     </div>
                     </div>
                     <?php }?>
-                    </div>
+                    </div>  
                     <!-- end of messages  --->
            
-                <form method="POST" action="<?= base_url('Admin/login_user')?>" class="needs-validation" novalidate="">
+                <form method="POST" action="<?= base_url('Athletes/login_user')?>" class="needs-validation" novalidate="">
                   <div class="form-group">
-                    <label for="email">Username</label>
-                    <input id="email" type="text" class="form-control" name="user_name" tabindex="1" required autofocus>
+                    <label for="email">Useremail</label>
+                    <input id="email" type="email" class="form-control" name="user_email" tabindex="1" required autofocus>
                     <div class="invalid-feedback">
                       Please fill in your Username
                     </div>

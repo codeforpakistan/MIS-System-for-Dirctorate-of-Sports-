@@ -168,6 +168,49 @@
                 
             </li> 
             <?php endif;?>
+
+
+             <?php if($this->session->userdata('user_role_id_fk') == 5):?>
+
+            <li class="dropdown">
+                <a href="Athletes/application_form"  class="nav-link ">
+                  <i data-feather="briefcase"></i><span>Application form</span>
+                </a>
+                
+            </li> 
+            <?php endif;?>
+            
+
+            <?php if($this->session->userdata('user_role_id_fk') == 5):?>
+
+            <li class="dropdown">
+                <a href="#"  class="nav-link ">
+                  <i data-feather="briefcase"></i><span>Payment History</span>
+                </a>
+                
+            </li> 
+            <?php endif;?>
+            
+
+            <?php if($this->session->userdata('user_role_id_fk') == 5):?>
+
+            <li class="dropdown">
+                <a href="#"  class="nav-link ">
+                  <i data-feather="briefcase"></i><span>Change Activity</span>
+                </a>
+                
+            </li> 
+            <?php endif;?>
+            
+
+            <?php if($this->session->userdata('user_role_id_fk') == 5):?>
+
+            <li class="dropdown">
+                <a href="#"  class="nav-link ">
+                  <i data-feather="briefcase"></i><span>Update Profile</span>
+                </a>
+            </li> 
+            <?php endif;?>
             
           </ul>
         </aside>

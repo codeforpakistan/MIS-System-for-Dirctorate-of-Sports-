@@ -54,7 +54,7 @@ class Admin extends CI_Controller {
     
     public function login_user()
     {   
-        $this->form_validation->set_rules('user_name', 'Username', 'required|trim');
+        $this->form_validation->set_rules('user_email', 'Useremail', 'required|trim');
         $this->form_validation->set_rules('user_password', 'Password', 'required|trim');
         if ($this->form_validation->run() == FALSE)
         {
@@ -66,18 +66,20 @@ class Admin extends CI_Controller {
         }
         else
         {
-            $username = $this->input->post('user_name');
+            $user_email = $this->input->post('user_email');
             $password = $this->input->post('user_password');
-            $array    = array('user_name'=>$username,'user_password'=>$password,'user_status'=>1);
+            $array    = array('user_email'=>$user_email,'user_password'=>$password,'user_status'=>1);
 
             $response = $this->AuthModel->user_login($array); 
 
-            // print_r($response);die;
+
+
             if(!empty($response))// is user name and passsword valid
                {
 
                 $this->session->set_userdata('user_id',$response->user_id);
                 $this->session->set_userdata('user_name',$response->user_name);
+                $this->session->set_userdata('user_email',$response->user_email);
                 $this->session->set_userdata('user_role_id_fk',$response->user_role_id_fk);
                 $this->session->set_userdata('user_role_name',$response->user_role_name);
                 redirect('/admin/dashboard'); exit();
@@ -142,7 +144,7 @@ class Admin extends CI_Controller {
     //==========================================================================
     function users_insert()
     {
-        $this->form_validation->set_rules('user_name', 'Username', 'required|trim|is_unique[users.user_name]');
+        $this->form_validation->set_rules('user_email', 'User Email', 'required|trim|is_unique[users.user_email]');
         $this->form_validation->set_rules('user_password', 'Password', 'required|trim');
 
         if($this->input->post('user_role_id_fk') == 3) // to for District admin
@@ -160,15 +162,15 @@ class Admin extends CI_Controller {
         }
         else
         {
-            $user_name            = $this->input->post('user_name');
+            $user_email           = $this->input->post('user_email');
             $user_password        = $this->input->post('user_password');
             $user_district_id_fk  = (empty($this->input->post('district_id'))? 0:$this->input->post('district_id'));
             $user_role_id_fk      = $this->input->post('user_role_id_fk');
             $table_name           = 'users';
-            $inert_it_array       = array('user_name'=>$user_name,'user_password'=>md5($user_password),'user_district_id_fk'=>$user_district_id_fk,'user_status'=>1,'user_role_id_fk'=>$user_role_id_fk);
+            $inert_admin_array       = array('user_email'=> $user_email,'user_password'=>md5($user_password),'user_district_id_fk'=>$user_district_id_fk,'user_status'=>1,'user_role_id_fk'=>$user_role_id_fk);
             $table_name           = 'users';
 
-            $response = $this->model->insert($inert_it_array,$table_name);
+            $response = $this->model->insert($inert_admin_array,$table_name);
 
                 if($response == true)
                 {

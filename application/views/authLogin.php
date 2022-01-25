@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="assets/css/components.css">
   <!-- Custom style CSS -->
   <link rel="stylesheet" href="assets/css/custom.css">
-  <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.ico' />
+  <link rel='shortcut icon' type='image/x-icon' href='assets/img/logo/logo-icon.png'   />
 </head>
 
 <body>
@@ -53,8 +53,8 @@
            
                 <form method="POST" action="<?= base_url('Admin/login_user')?>" class="needs-validation" novalidate="">
                   <div class="form-group">
-                    <label for="email">Username</label>
-                    <input id="email" type="text" class="form-control" name="user_name" tabindex="1" required autofocus>
+                    <label for="email">Useremail</label>
+                    <input id="email" type="email" class="form-control" name="user_email" tabindex="1" required autofocus>
                     <div class="invalid-feedback">
                       Please fill in your Username
                     </div>

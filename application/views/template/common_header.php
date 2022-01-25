@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="assets/css/components.css">
   <!-- Custom style CSS -->
   <link rel="stylesheet" href="assets/css/custom.css">
-  <link rel='shortcut icon' type='image/x-icon' href='assets/img/logo/logo-icon.png' />
+  <link rel='shortcut icon' type='image/x-icon' href='assets/img/logo/logo-icon.png'  />
   <script src="assets/js/jquery.min.js"></script>
 
 
@@ -76,9 +76,16 @@
                 Settings
               </a> -->
               <div class="dropdown-divider"></div>
+              <?php if($this->session->userdata('user_role_id_fk') == 1): ?>
               <a href="<?= base_url('admin/logout_user')?>" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
-                Logout
+              Logout
               </a>
+              <?php else:?>
+              <a href="<?= base_url('Athletes/logout_user')?>" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+              Logout
+              </a>
+              <?php endif;?>
+
             </div>
           </li>
         </ul>

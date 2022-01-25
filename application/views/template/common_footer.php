@@ -24,8 +24,7 @@
   <!-- Custom JS File -->
   <script src="assets/js/custom.js"></script>
   <script src="breadcrumb_assets/script.js"></script>
-
-      <script src="assets/js/jquery.inputmask.bundle.js"></script>
+  <script src="assets/js/jquery.inputmask.bundle.js"></script>
   
  
 </body>
