@@ -1580,9 +1580,53 @@ public function get_ajax_officals_player($player_offical_id,$type)
     }
 }
 
+public function profile()
+    {   
+        //$this->check_role_privileges('dashboard',$this->session->userdata('user_role_id_fk'));
+        $data['title']       = 'User Profile';
+        $data['page']        = 'profile';
+        $user_role_id_fk     = $this->session->userdata('user_role_id_fk');
+        if(empty($user_role_id_fk))
+        {
+            $this->logout_user();
+        } 
+        
+        $data['profile']     = $this->model->profile($user_role_id_fk);      
+        $this->load->view('template',$data);
+    }
 
-    //////Athlete work start //////////
 
+    public function update_profile()
+    { 
+        $update_profile = array(
+             'user_first_name'  => $this->input->post('user_first_name'),
+             'user_last_name'   => $this->input->post('user_last_name'),
+             'user_email'       => $this->input->post('user_email'),
+             'user_contact'     => $this->input->post('user_contact'),
+             'user_address'     => $this->input->post('user_address'),
+             'user_password'    => md5($this->input->post('confirm'))
+                                );
+        $response = $this->model->update($update_profile,'users','user_role_id_fk',$this->session->userdata('user_role_id_fk'));
+            if($response == true)
+            {
+                if($this->input->post('remember') == 'on')
+                {
+                    $this->messages('alert-success','Please login now');
+                    return redirect('admin/logout_user');
+                }
+                else
+                {
+                    $this->messages('alert-success','Successfully Update');
+                    return redirect('admin/profile');    
+                }
+                
+            }
+            else
+            {
+                $this->messages('alert-danger','Some Thing Wrong');
+                return redirect('admin/profile');
+            }                       
+    }
 
 
    

@@ -24,7 +24,8 @@ class AdminModel extends CI_Model
     }
     function exist_record_row($talbe_column_name,$table_id,$table_name)
     {
-        return $this->db->where($talbe_column_name,$table_id)->get($table_name)->row();
+
+        return $this->db->where($talbe_column_name,$table_id)->get($table_name)->row_array();
     }
     function update($update_array,$table_name,$talbe_column_name,$table_id)
     {
@@ -227,6 +228,19 @@ class AdminModel extends CI_Model
                                     ->join('user_roles r','r.user_role_id=users.user_role_id_fk','left')
                                      ->get()->result();
                 }
+
+
+                function profile($user_role_id_fk)
+    {
+                        return $this->db->select('*')
+                        ->from('users')
+                        ->where('user_role_id_fk =',$user_role_id_fk)
+                        ->join('districts d','d.district_id=users.user_district_id_fk','left')
+                        ->join('user_roles r','r.user_role_id=users.user_role_id_fk','left')
+                        ->join('athletes','athletes.user_id=users.user_id','left')
+                        ->order_by('users.user_id','desc')
+                         ->get()->result();
+    }
 
 
 

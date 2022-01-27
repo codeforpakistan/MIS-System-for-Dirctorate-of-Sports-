@@ -86,6 +86,7 @@
                               <div class="input-group">
                                   <select class="form-control" id="toggleDistrictSection_edit" name="user_role_id_fk" style="width:90%" required>
                                     <option value="3">District Admin</option>
+                                    <option value="4">super admin</option>
                                 </select>
                               </div>
                             </div>
@@ -148,7 +149,8 @@
                             <div class="form-group">
                               <label>User Role</label>
                               <div class="input-group">
-                                  <select class="form-control" id="toggleDistrictSection" name="user_role_id_fk" style="width:90%" required>
+                                  <select class="form-control"  id="toggleDistrictSection" name="user_role_id_fk" style="width:90%" required>
+                                    <option value="1">Super Admin</option>
                                     <option value="3">District Admin</option>
                                   </select>
                               </div>
@@ -156,7 +158,7 @@
                             <div class="form-group"  id="hideShowDistrict">
                                   <label>District</label>
                                   <div class="input-group">
-                                      <select class="form-control select2" name="district_id" id="" style="width:90%">
+                                      <select class="form-control select2" name="district_id" id="" style="width:100%">
                                         <option disabled value="" selected hidden>Please Select District</option>
                                         <?php if($district){ foreach($district as $dist){?>
                                            <option value="<?= $dist->district_id?>"><?= $dist->district_name?></option>

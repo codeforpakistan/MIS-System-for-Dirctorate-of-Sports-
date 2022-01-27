@@ -49,6 +49,11 @@
       color:#fff;
     }
 
+     .select2-selection__choice{
+
+    background: #126E40 !important;
+    }
+
   </style>
 </head>
 
@@ -69,7 +74,7 @@
                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title"><?= $this->session->userdata('user_role_name')?></div>
-              <a href="profile.html" class="dropdown-item has-icon" data-toggle="modal" data-target="#updateAmdinPasswordModel"> <i class="far
+              <a href="admin/profile" class="dropdown-item has-icon" > <i class="far
                     fa-user"></i> Profile
               </a> 
               <!-- <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
@@ -130,5 +135,10 @@
         $(document).ready(function(){
           $(".msg").delay(3000).fadeOut(1000);
 
+        $(":input").inputmask();
+
+
         });
       </script>
+
+      

@@ -1,37 +1,57 @@
+    
+
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
+          <!-- start messages --->
+                      <div style="text-align: center">
+                              <?php if($feedback =$this->session->flashdata('feedback')){
+                                $feedback_class =$this->session->flashdata('feedbase_class');  ?>
+                                    <div class="row">
+                                      <div class="col-md-6 col-md-offset-6 msg">
+                                      <div class="alert alert-dismissible <?=  $feedback_class;?>">
+                                      <?= $feedback ?>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                      </div>
+                                      </div>
+                                  </div>    
+                                <?php }?>
+                            </div>
+                    <!-- end of messages  --->
           <div class="section-body">
+         <form class="" method="post">
             <div class="row">
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
-                    <h4 class="bg-success text-white" ><?=$title?></h4>
+                  <h2><span style="padding: 0px 10px;border-radius:0px 0px 20px 0px;" class="bg-success text-white">Profile Info</span></h2>
+
                   <div class="card-header">
+
 
                   </div>
                   <div class="card-body">
-
-                    <form class="" method="post">
                       <div class="row">
 
                       <div class="col-4">
                             <div class="form-group">
                                   <label>Name</label>
-                                  <input type="text" class="form-control" placeholder="Name" name="name" required>
+                                  <input type="text" class="form-control" placeholder="Name" name="name" value="<?=$athlete['ath_name']?>" required>
                             </div>
                       </div>
 
                       <div class="col-4">
                             <div class="form-group">
                                   <label>Father Name</label>
-                                  <input type="text" class="form-control" placeholder="Name" name="f_name" required>
+                                  <input type="text" class="form-control" placeholder="Father Name" name="f_name" required>
                             </div>
                           </div>
 
                       <div class="col-4">
                             <div class="form-group">
                                   <label>CNIC No</label>
-                                  <input type="text" class="form-control" placeholder="CNIC No" name="cnic" required>
+                                  <input type="text" class="form-control" placeholder="CNIC No" name="cnic" data-inputmask="'mask': '99999-9999999-9'" required minlength="15" maxlength="15" required>
                             </div>
                       </div>
 
@@ -55,7 +75,7 @@
                        <div class="col-4">
                             <div class="form-group">
                                   <label>Contact</label>
-                                  <input type="text" class="form-control" placeholder="Contact" name="contact" required>
+                                  <input type="text" class="form-control" placeholder="Contact" name="contact" value="<?=$athlete['ath_contact']?>" required>
                             </div>
                       </div>
 
@@ -84,31 +104,14 @@
                                   <label>Profession</label>
                                  <select class="form-control" name="profession">
                                     <option>-Select Profession-</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="student">Student</option>
+                                    <option value="player">Player</option>
                                     
                                   </select>
                             </div>
                       </div>
 
-
-                       <div class="col-4">
-                            <div class="form-group">
-                                  <label>Date of apply</label>
-                                  <input type="date" class="form-control" placeholder="" name="date_of_apply" required>
-                            </div>
-                      </div>
-
-                      <div class="col-12">
-                            <div class="form-group">
-                              <label>Game Applied For</label>
-                                  <select class="form-control select2" multiple="" name="game_id">
-                                   
-                                  </select>
-                            </div>
-                    </div>  
-
-                       <div class="col-4">
+                      <div class="col-4">
                             <div class="form-group">
                                   <label>Attach NIC Front Photocopy</label>
                                   <input type="file" class="form-control" placeholder="" name="cnic_front_copy" required>
@@ -121,6 +124,38 @@
                                   <input type="file" class="form-control" placeholder="profile_picture" name="profile_pic" required>
                             </div>
                       </div>
+
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+
+        <div class="row">
+              <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                  <h2><span style="padding: 0px 10px;border-radius:0px 0px 20px 0px;" class="bg-success text-white">Game Info</span></h2>
+                  <div class="card-header">
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+
+                    
+
+                      <div class="col-12">
+                            <div class="form-group">
+                              <label>Game Applied For</label>
+                                  <select class="form-control select2" multiple="" name="game_id[]">
+                                    <option>-Select Games</option>
+                                    <?php if(!empty($games)){
+                                      foreach($games as $game){?>
+                                    <option value="<?=$game->game_id?>"><?=$game->game_name?></option>
+                                   <?php } }?>
+                                  </select>
+                            </div>
+                    </div>  
+
+                       
 
                       <div class="col-4">
                             <div class="form-group">
@@ -151,6 +186,14 @@
                                   </select>
                             </div>
                       </div>
+
+                       <div class="col-4">
+                            <div class="form-group">
+                                  <label>Date of apply</label>
+                                  <input type="date" class="form-control" placeholder="" name="date_of_apply" required>
+                            </div>
+                      </div>
+
                     </div>
 
                        <div class="col-12">
@@ -158,12 +201,17 @@
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect pull-right" >Save</button>
                       </div>
                     </div>
-                               
-                        </form>
-                                    
-                  </div>
-                </div>
-               </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+
+        
+
+
+      </form>                
+    </div>
+  </div>
 
 
                <script>

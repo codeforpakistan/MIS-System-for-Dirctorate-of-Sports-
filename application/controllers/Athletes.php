@@ -111,6 +111,7 @@ class Athletes extends CI_Controller {
     {
 
         $this->form_validation->set_rules('user_email', 'User Email', 'required|trim|is_unique[users.user_email]');
+        $this->form_validation->set_rules('user_name',  'User Name', 'required|trim|is_unique[users.user_name]');
         $this->form_validation->set_rules('user_password', 'Password', 'required|trim');
         $this->form_validation->set_rules('mobile_number', 'Mobile Number', 'required|trim');
 
@@ -158,11 +159,10 @@ class Athletes extends CI_Controller {
 
     public function application_form(){
 
-
+        $user_id  = $this->session->userdata('user_id'); 
 
         if($this->input->post()){
 
-            $user_id  = $this->session->userdata('user_role_id_fk'); 
 
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
         $this->form_validation->set_rules('f_name', 'Father Name', 'required|trim');
@@ -184,14 +184,34 @@ class Athletes extends CI_Controller {
         if ($this->form_validation->run() == FALSE)
         {
 
+
             $error   = array('error' => validation_errors());
             $message = implode(" ",$error);
             $this->messages('alert-danger',$message);
-            return redirect('admin/events_trials');
+            return redirect('Athletes/application_form');
             
         }
         else
         {
+
+           $config=array(
+            'upload_path'=>'images/athlete_images',
+            'allowed_types'=>'png|jpg|jpeg',
+            );
+
+            $this->load->library('upload',$config);
+            $this->upload->initialize($config);
+            $this->upload->do_upload('cnic_front_copy');
+            $upload_data   = $this->upload->data(); 
+            $cnic_front     = $upload_data['file_name'];
+
+            $this->upload->do_upload('cnic_front_copy');
+            $upload_data    = $this->upload->data(); 
+            $cnic_front     = $upload_data['file_name'];
+
+            $this->upload->do_upload('profile_pic');
+            $upload_data     = $this->upload->data(); 
+            $profile_pic     = $upload_data['file_name'];
 
             $name               = $this->input->post('name');
             $f_name             = $this->input->post('f_name');
@@ -204,8 +224,6 @@ class Athletes extends CI_Controller {
             $profession         = $this->input->post('profession');
             $date_of_apply      = $this->input->post('date_of_apply');
             $game_id            = $this->input->post('game_id');
-            $cnic_front_copy    = $this->input->post('cnic_front_copy');
-            $profile_pic        = $this->input->post('profile_pic');
             $time_prefernce     = $this->input->post('time_prefernce');
             $total_fee          = $this->input->post('total_fee');
             $payment_mode       = $this->input->post('payment_mode');
@@ -214,47 +232,73 @@ class Athletes extends CI_Controller {
 
             $applicantion_array         = array(
 
-                'event_id'         =>  $name,
-                'trial_name'       =>  $f_name,
-                'trial_start_date' =>  $cnic,
-                'trial_end_date'   =>  $dob,
-                'officials'        =>  $address,
-                'max_players'      =>  $contact,
-                'trial_session'    =>  $gender,
-                'facilities'       =>  $emergency_contact,
-                'game_id'          =>  $profession,
-                'closing_date'     =>  $date_of_apply,
-                'closing_date'     =>  $profile_pic,
-                'closing_date'     =>  $cnic_front_copy,
+                        'event_id'         =>  $name,
+                        'trial_name'       =>  $f_name,
+                        'trial_start_date' =>  $cnic,
+                        'trial_end_date'   =>  $dob,
+                        'officials'        =>  $address,
+                        'max_players'      =>  $contact,
+                        'trial_session'    =>  $gender,
+                        'facilities'       =>  $emergency_contact,
+                        'game_id'          =>  $profession,
+                        'closing_date'     =>  $date_of_apply,
+                        'closing_date'     =>  $profile_pic,
+                        'closing_date'     =>  $cnic_front,
 
             );
 
 
+            print_r($applicantion_array);die;
+
+
             $response = $this->model->update($applicantion_array,$table_name);
+            $ath_id = $this->db->insert_id();
+
+            $table_name1 = 'athlete_games';
+
+             /* for insert into multiple games */
+            for($i=0; $i < count($game_id); $i++){
+                $athlete_games_array1    = array(
+                'game_id'                     =>  $game_id[$i],
+                'ath_id'                      =>  $ath_id,
+                'ath_game_time_preference'    =>  $time_prefernce,
+                'ath_game_payment_mode'       =>  $payment_mode,
+                'ath_game_total_fee'          =>  $total_fee,
+            );
+
+
+             $this->model->insert($athlete_games_array1,$table_name1);
+
+         }
                 if($response == true)
                 {
                     $this->messages('alert-success','Successfully Added');
-                    return redirect('admin/events_trials'); 
+                    return redirect('athletes'); 
                 }
                 else
                 {
                     $this->messages('alert-danger','Some Thing Wrong');
-                    return redirect('admin/events_trials');
+                    return redirect('athletes');
                 }
-        }
+        
+    }
+    }
 
 
+        $table           = 'games';
+        $data['games']    = $this->admin_model->get_all_records($table);
 
-        }
 
+        $table_name          = "athletes";
+        $talbe_column_name   = 'user_id';
+        $table_id            = $user_id;
+        $data['athlete']    = $this->admin_model->exist_record_row($talbe_column_name,$table_id,$table_name);
 
 
         $data['title'] = 'Application Form';
         $data['page']  = 'application_form';
         $this->load->view('template',$data);
-    }
-
-    
-
 
     }
+
+}

@@ -20,20 +20,21 @@
   <link rel='shortcut icon' type='image/x-icon'  href='assets/img/logo/logo-icon.png' />
 </head>
 
-<body>
+<body style="background: #006000;">
   <div class="loader"></div>
   <div id="app" >
     <section class="section" >
       <div class="container mt-5">
         <div class="row">
-          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
-            <div class="card card-primary">
-              <div class="card-header">
-                <div class="col-md-4 offset-sm-4">
-                 <img alt="image" src="assets/images/DG sports logo.png"  style="height:100px;width:100px;"/> 
-               </div>
-              </div>
-              <div class="card-body" >
+
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2" style="">
+
+              <div class="row"  style="padding:0px;background: #fff;border-radius:30px;box-shadow:10px 10px 100px #00000082">
+                <div class="col-xl-6" style="padding:0px;margin:0px;background: #006000;">
+                <img src="assets/images/Asset 1.png" style="width:100% !important;height:100%">
+                  </div>
+
+                  <div class="col-xl-6" style="margin-top: 100px;">
                     <!-- start messages --->
                     <div style="text-align: center">
                     <?php if($feedback =$this->session->flashdata('feedback')){
@@ -82,7 +83,7 @@
                   </div> -->
                    <div class="col-md-4 offset-sm-4">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block text-center"  tabindex="4">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block text-center" style="border-radius:50px" tabindex="4">
                       Login
                     </button>
                   </div>
@@ -101,8 +102,7 @@
                       </div>
                 </div>
                 </form>
-                
-              </div>
+            </div>
             </div>
              <!-- <div class="mt-5 text-muted text-center">
               Don't have an account? <a href="auth-register.html">Create One</a>
