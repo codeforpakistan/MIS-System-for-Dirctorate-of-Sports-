@@ -145,6 +145,7 @@ class Admin extends CI_Controller {
     function users_insert()
     {
         $this->form_validation->set_rules('user_email', 'User Email', 'required|trim|is_unique[users.user_email]');
+        $this->form_validation->set_rules('user_name', 'User Email', 'required|trim|is_unique[users.user_name]');
         $this->form_validation->set_rules('user_password', 'Password', 'required|trim');
 
         if($this->input->post('user_role_id_fk') == 3) // to for District admin
@@ -163,14 +164,15 @@ class Admin extends CI_Controller {
         else
         {
             $user_email           = $this->input->post('user_email');
+            $user_name           = $this->input->post('user_name');
             $user_password        = $this->input->post('user_password');
             $user_district_id_fk  = (empty($this->input->post('district_id'))? 0:$this->input->post('district_id'));
             $user_role_id_fk      = $this->input->post('user_role_id_fk');
             $table_name           = 'users';
-            $inert_admin_array       = array('user_email'=> $user_email,'user_password'=>md5($user_password),'user_district_id_fk'=>$user_district_id_fk,'user_status'=>1,'user_role_id_fk'=>$user_role_id_fk);
+            $inert_array       = array('user_email'=> $user_email,'user_name'=> $user_name,'user_password'=>md5($user_password),'user_district_id_fk'=>$user_district_id_fk,'user_status'=>1,'user_role_id_fk'=>$user_role_id_fk);
             $table_name           = 'users';
 
-            $response = $this->model->insert($inert_admin_array,$table_name);
+            $response = $this->model->insert($inert_array,$table_name);
 
                 if($response == true)
                 {
@@ -204,6 +206,7 @@ class Admin extends CI_Controller {
         if($this->input->post('user_id'))
         {   
             $user_id           = $this->input->post('user_id');
+            $user_email        = $this->input->post('user_email');
             $user_name         = $this->input->post('user_name');
             $user_password     = $this->input->post('user_password');
             // $user_district_id_fk=$this->input->post('district_id');
@@ -212,15 +215,17 @@ class Admin extends CI_Controller {
             $talbe_column_name = 'user_id';
             $table_id          = $user_id;
 
-            $IT_staff = $this->model->exist_record_row($talbe_column_name,$table_id,$table_name);  // get row
-            $exists_user_name =  $IT_staff->user_name;
-            if($exists_user_name != $user_name)
+            $district_email = $this->model->exist_record_row($talbe_column_name,$table_id,$table_name);  // get row
+            $exists_user_name =  $district_email->user_email;
+            if($exists_user_name != $user_email)
             {
+              $this->form_validation->set_rules('user_email', 'Useremail', 'required|trim|is_unique[users.user_email]');  
               $this->form_validation->set_rules('user_name', 'Username', 'required|trim|is_unique[users.user_name]');  
             }
             else
             {
-                $this->form_validation->set_rules('user_name', 'Username', 'required|trim');
+                $this->form_validation->set_rules('user_email', 'User email', 'required|trim');
+                $this->form_validation->set_rules('user_name',  'Username', 'required|trim');
             }
             if($this->input->post('user_role_id_fk') == 3) // to for District admin
             {
@@ -1591,7 +1596,8 @@ public function profile()
             $this->logout_user();
         } 
         
-        $data['profile']     = $this->model->profile($user_role_id_fk);      
+        $data['profile']     = $this->model->profile($user_role_id_fk); 
+
         $this->load->view('template',$data);
     }
 

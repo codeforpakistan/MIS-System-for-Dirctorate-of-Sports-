@@ -102,9 +102,16 @@
                                   </div>
                                 </div>
                                 <div class="form-group">
-                                  <label>Username</label>
+                                  <label>User Name</label>
                                   <div class="input-group">
-                                      <input type="text" class="form-control" placeholder="Username" id="edit_user_name" name="user_name" required>
+                                      <input type="text" class="form-control" placeholder="User name" name="user_name" id="edit_user_name" required>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label>User Email</label>
+                                  <div class="input-group">
+                                      <input type="email" class="form-control" placeholder="User Email" id="edit_user_email" name="user_email" required>
                                   </div>
                                 </div>
                                 <div class="form-group">
@@ -167,9 +174,16 @@
                                   </div>
                                 </div>
                                 <div class="form-group">
-                                  <label>Username</label>
+                                  <label>User Name</label>
                                   <div class="input-group">
-                                      <input type="text" class="form-control" placeholder="Username" name="user_name" required>
+                                      <input type="text" class="form-control" placeholder="User name" name="user_name" required>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label>User Email</label>
+                                  <div class="input-group">
+                                      <input type="email" class="form-control" placeholder="User Email" name="user_email" required>
                                   </div>
                                 </div>
                                 <div class="form-group">
@@ -229,6 +243,7 @@
             url: 'admin/users_edit_model/'+user_id,
             dataType: 'json',
             success: function(response){ 
+              $('#edit_user_email').val(response.user_email);
               $('#edit_user_name').val(response.user_name);
               $('#edit_user_password').val(response.user_password);
               $('#edit_user_id').val(response.user_id); 

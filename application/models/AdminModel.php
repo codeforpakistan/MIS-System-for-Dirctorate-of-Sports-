@@ -223,7 +223,7 @@ class AdminModel extends CI_Model
                 {
                     return $this->db->from('users')
                                     ->where('user_role_id_fk !=',1)
-                                    ->where('user_role_id_fk !=',4)
+                                    ->where('user_role_id_fk !=',5)
                                     ->join('districts d','d.district_id=users.user_district_id_fk','left')
                                     ->join('user_roles r','r.user_role_id=users.user_role_id_fk','left')
                                      ->get()->result();
@@ -235,11 +235,21 @@ class AdminModel extends CI_Model
                         return $this->db->select('*')
                         ->from('users')
                         ->where('user_role_id_fk =',$user_role_id_fk)
-                        ->join('districts d','d.district_id=users.user_district_id_fk','left')
                         ->join('user_roles r','r.user_role_id=users.user_role_id_fk','left')
-                        ->join('athletes','athletes.user_id=users.user_id','left')
-                        ->order_by('users.user_id','desc')
-                         ->get()->result();
+                        ->join('athletes','athletes.user_id=users.user_id','left');
+                        
+
+                        if($user_role_id_fk ==5)
+                        {
+                        $this->db->join('districts d','d.district_id=athletes.district_id','left');
+
+                        }
+                        else
+                        {
+                        $this->db->join('districts d','d.district_id=users.user_district_id_fk','left');
+                        }
+                        $this->db->order_by('users.user_id','desc')
+                         ->get()->row_array();
     }
 
 
