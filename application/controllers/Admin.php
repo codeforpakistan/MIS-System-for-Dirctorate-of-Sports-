@@ -1591,12 +1591,13 @@ public function profile()
         $data['title']       = 'User Profile';
         $data['page']        = 'profile';
         $user_role_id_fk     = $this->session->userdata('user_role_id_fk');
+        $user_id             = $this->session->userdata('user_id');
         if(empty($user_role_id_fk))
         {
             $this->logout_user();
         } 
         
-        $data['profile']     = $this->model->profile($user_role_id_fk); 
+        $data['profile']     = $this->model->profile($user_role_id_fk,$user_id); 
 
         $this->load->view('template',$data);
     }
@@ -1605,14 +1606,14 @@ public function profile()
     public function update_profile()
     { 
         $update_profile = array(
-             'user_first_name'  => $this->input->post('user_first_name'),
-             'user_last_name'   => $this->input->post('user_last_name'),
+             'user_name'  => $this->input->post('user_first_name'),
+            //  'user_last_name'   => $this->input->post('user_last_name'),
              'user_email'       => $this->input->post('user_email'),
              'user_contact'     => $this->input->post('user_contact'),
              'user_address'     => $this->input->post('user_address'),
              'user_password'    => md5($this->input->post('confirm'))
                                 );
-        $response = $this->model->update($update_profile,'users','user_role_id_fk',$this->session->userdata('user_role_id_fk'));
+        $response = $this->model->update($update_profile,'users','user_id',$this->session->userdata('user_id'));
             if($response == true)
             {
                 if($this->input->post('remember') == 'on')

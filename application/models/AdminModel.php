@@ -230,26 +230,16 @@ class AdminModel extends CI_Model
                 }
 
 
-                function profile($user_role_id_fk)
+    function profile($user_role_id_fk,$user_id)
     {
-                        return $this->db->select('*')
+        return $this->db->select('users.user_name,users.user_email,users.user_address,users.user_contact,r.user_role_id,r.user_role_name,d.district_name,')
                         ->from('users')
-                        ->where('user_role_id_fk =',$user_role_id_fk)
+                        ->where('users.user_role_id_fk =',$user_role_id_fk)
+                        ->where('users.user_id =',$user_id)
                         ->join('user_roles r','r.user_role_id=users.user_role_id_fk','left')
-                        ->join('athletes','athletes.user_id=users.user_id','left');
-                        
-
-                        if($user_role_id_fk ==5)
-                        {
-                        $this->db->join('districts d','d.district_id=athletes.district_id','left');
-
-                        }
-                        else
-                        {
-                        $this->db->join('districts d','d.district_id=users.user_district_id_fk','left');
-                        }
-                        $this->db->order_by('users.user_id','desc')
-                         ->get()->row_array();
+                        ->join('districts d','d.district_id=users.user_district_id_fk','left')
+                        ->order_by('users.user_id','desc')
+                        ->get()->row_array();
     }
 
 
