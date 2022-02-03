@@ -1596,8 +1596,7 @@ public function profile()
             $this->logout_user();
         } 
         
-        $data['profile']     = $this->model->profile($user_role_id_fk); 
-
+        $data['profile']  = $this->model->profile($user_role_id_fk); 
         $this->load->view('template',$data);
     }
 
@@ -1605,12 +1604,11 @@ public function profile()
     public function update_profile()
     { 
         $update_profile = array(
-             'user_first_name'  => $this->input->post('user_first_name'),
-             'user_last_name'   => $this->input->post('user_last_name'),
-             'user_email'       => $this->input->post('user_email'),
-             'user_contact'     => $this->input->post('user_contact'),
-             'user_address'     => $this->input->post('user_address'),
-             'user_password'    => md5($this->input->post('confirm'))
+             'user_name'        => $this->input->post('user_name',true),
+             'user_email'       => $this->input->post('user_email',true),
+             'user_contact'     => $this->input->post('user_contact',true),
+             'user_address'     => $this->input->post('user_address',true),
+             'user_password'    => md5($this->input->post('confirm',true))
                                 );
         $response = $this->model->update($update_profile,'users','user_role_id_fk',$this->session->userdata('user_role_id_fk'));
             if($response == true)

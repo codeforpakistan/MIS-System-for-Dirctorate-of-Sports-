@@ -97,7 +97,7 @@
                             <div class="col-6">
                             <div class="form-group">
                                 <label>Trial Name</label>
-                                <input type="text" class="form-control" placeholder="Trial Name" name="trial_name" pattern="[a-zA-Z0-9-]"  required>        
+                                <input type="text" class="form-control" placeholder="Trial Name" name="trial_name"  required>        
                                 </div>
                               </div>
                             <div class="col-6">

@@ -1,35 +1,30 @@
-    
-
-      <!-- Main Content -->
+     <!-- Main Content -->
       <div class="main-content">
         <section class="section">
-          <!-- start messages --->
-                      <div style="text-align: center">
-                              <?php if($feedback =$this->session->flashdata('feedback')){
-                                $feedback_class =$this->session->flashdata('feedbase_class');  ?>
-                                    <div class="row">
-                                      <div class="col-md-6 col-md-offset-6 msg">
-                                      <div class="alert alert-dismissible <?=  $feedback_class;?>">
-                                      <?= $feedback ?>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                      </div>
-                                      </div>
-                                  </div>    
-                                <?php }?>
-                            </div>
-                    <!-- end of messages  --->
-          <div class="section-body">
-         <form class="" method="post">
+<!-- start messages --->
+          <div style="text-align: center">
+                  <?php if($feedback =$this->session->flashdata('feedback')){
+                    $feedback_class =$this->session->flashdata('feedbase_class');  ?>
+                        <div class="row">
+                          <div class="col-md-6 col-md-offset-6 msg">
+                          <div class="alert alert-dismissible <?=  $feedback_class;?>">
+                          <?= $feedback ?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                          </div>
+                          </div>
+                      </div>    
+                    <?php }?>
+                </div>
+        <!-- end of messages  --->
+      <div class="section-body">
+         <form class="" method="post" enctype="multipart/form-data">
             <div class="row">
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                   <h2><span style="padding: 0px 10px;border-radius:0px 0px 20px 0px;" class="bg-success text-white">Profile Info</span></h2>
-
                   <div class="card-header">
-
-
                   </div>
                   <div class="card-body">
                       <div class="row">
@@ -37,14 +32,14 @@
                       <div class="col-4">
                             <div class="form-group">
                                   <label>Name</label>
-                                  <input type="text" class="form-control" placeholder="Name" name="name" value="<?=$athlete['ath_name']?>" required>
+                                  <input type="text" class="form-control" placeholder="Name" name="name" value="<?=$athlete['ath_name']?>"  maxlength="30" onkeyup="this.value=this.value.replace(/[^A-Za-z\s]/g,'');" required>
                             </div>
                       </div>
 
                       <div class="col-4">
                             <div class="form-group">
                                   <label>Father Name</label>
-                                  <input type="text" class="form-control" placeholder="Father Name" name="f_name" required>
+                                  <input type="text" class="form-control" placeholder="Father Name" name="f_name"  maxlength="30" onkeyup="this.value=this.value.replace(/[^A-Za-z\s]/g,'');" required>
                             </div>
                           </div>
 
@@ -111,13 +106,6 @@
                             </div>
                       </div>
 
-                      <div class="col-4">
-                            <div class="form-group">
-                                  <label>Attach NIC Front Photocopy</label>
-                                  <input type="file" class="form-control" placeholder="" name="cnic_front_copy" required>
-                            </div>
-                      </div>
-
                        <div class="col-4">
                             <div class="form-group">
                                   <label>Attach Profile Picture</label>
@@ -125,6 +113,12 @@
                             </div>
                       </div>
 
+                      <div class="col-4">
+                            <div class="form-group">
+                                  <label>Attach NIC Front Photocopy</label>
+                                  <input type="file" class="form-control" placeholder="" name="cnic_front_copy" required>
+                            </div>
+                      </div>
               </div>
             </div>
           </div>

@@ -28,6 +28,28 @@ class AuthModel extends CI_Model
        return  $this->db->get()->row();
 
     }
+
+     public function athlete_login($ath_email,$ath_password)
+    { 
+        //======================================================================
+        // query
+        //======================================================================
+        
+        $this->db->select(`ath_id`, `ath_name`,`ath_email`, `ath_password`, `user_role_id_fk`, `is_active`, `create_at`)
+        ->from('athletes');
+        //$this->db->join('user_roles','user_roles.user_role_id=users.user_role_id_fk');
+         $this->db->where('ath_email',trim($ath_email));
+        $this->db->where('ath_password',md5($ath_password));
+        // $this->db->where('user_role_id_fk',trim($data_arr['user_role_id_fk']));
+        $this->db->where('is_active',1);
+        
+        //======================================================================
+        // return
+        //======================================================================
+        
+       return  $this->db->get()->row_array();
+
+    }
     
     public function user_add($data_arr)
     {

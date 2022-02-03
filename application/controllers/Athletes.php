@@ -12,6 +12,10 @@ class Athletes extends CI_Controller {
         $this->load->model('AdminModel','admin_model');
         $this->load->library('auto_no.php','zend');
         $this->load->library('form_validation');
+
+        // if(!$this->session->userdata('ath_id')){
+        //     redirect('athletes');
+        // }
     } 
 
   public function index()
@@ -19,7 +23,7 @@ class Athletes extends CI_Controller {
         
         if($this->session->userdata('user_role_id_fk'))
         {
-            $this->dashboard();
+            $this->athlete_dashboard();
         }
         else
         {
@@ -30,32 +34,34 @@ class Athletes extends CI_Controller {
     
     public function login_user()
     {   
-        $this->form_validation->set_rules('user_email', 'Useremail', 'required|trim');
-        $this->form_validation->set_rules('user_password', 'Password', 'required|trim');
+        $this->form_validation->set_rules('ath_email', 'Useremail', 'required|trim');
+        $this->form_validation->set_rules('ath_password', 'Password', 'required|trim');
         if ($this->form_validation->run() == FALSE)
         {
             $error   = array('error' => validation_errors());
             $message = implode(" ",$error);
             $this->messages('alert-danger',$message);
-            return redirect(base_url());
+            return redirect(base_url('athletes'));
             
         }
         else
         {
-            $user_email = $this->input->post('user_email');
-            $password   = $this->input->post('user_password');
-            $array      = array('user_email'=>$user_email,'user_password'=>$password,'user_status'=>1);
-            $response   = $this->AuthModel->user_login($array); 
+            $ath_email     = $this->input->post('ath_email');
+            $ath_password  = $this->input->post('ath_password');
+            $response      = $this->AuthModel->athlete_login($ath_email,$ath_password); 
+
+
+
 
             if(!empty($response))// is user name and passsword valid
                {
 
-                $this->session->set_userdata('user_id',$response->user_id);
-                $this->session->set_userdata('user_name',$response->user_name);
-                $this->session->set_userdata('user_email',$response->user_email);
-                $this->session->set_userdata('user_role_id_fk',$response->user_role_id_fk);
-                $this->session->set_userdata('user_role_name',$response->user_role_name);
-                redirect('athletes/dashboard'); exit();
+                $this->session->set_userdata('ath_id',$response['ath_id']);
+                $this->session->set_userdata('ath_name',$response['ath_name']);
+                $this->session->set_userdata('ath_email',$response['ath_email']);
+                $this->session->set_userdata('user_role_id_fk',$response['user_role_id_fk']);
+                //$this->session->set_userdata('user_role_name',$response->user_role_name);
+                redirect('athletes/athlete_dashboard'); exit();
                
                 } // end is user name and passsword valid
                 else // not match ue name and pass
@@ -76,8 +82,9 @@ class Athletes extends CI_Controller {
     }
     public function logout_user()
     {
-        $this->session->unset_userdata('user_name');
-        $this->session->unset_userdata('user_id'); 
+        $this->session->unset_userdata('ath_name');
+        $this->session->unset_userdata('ath_email');
+        $this->session->unset_userdata('ath_id'); 
         $this->session->unset_userdata('user_role_id_fk'); 
         $this->session->sess_destroy();
         $this->clear_cache();
@@ -95,10 +102,13 @@ class Athletes extends CI_Controller {
     // dashboard
     //==========================================================================
     
-    public function dashboard()
+    public function athlete_dashboard()
     {   
+        $ath_id = $this->session->userdata('ath_id');
+        $data['athlete_games']   = $this->model->get_athlete_games($ath_id); 
+
         $data['title']          = 'Dashboard';
-        $data['page']           = 'dashboard';
+        $data['page']           = 'athlete_dashboard';
         $this->load->view('template',$data);
     }
 
@@ -110,13 +120,15 @@ class Athletes extends CI_Controller {
    public function athlete_insert()
     {
 
-        $this->form_validation->set_rules('user_email', 'User Email', 'required|trim|is_unique[users.user_email]');
-        $this->form_validation->set_rules('user_name',  'User Name', 'required|trim|is_unique[users.user_name]');
-        $this->form_validation->set_rules('user_password', 'Password', 'required|trim');
-        $this->form_validation->set_rules('mobile_number', 'Mobile Number', 'required|trim');
+
+        $this->form_validation->set_rules('ath_email', 'User Email', 'required|trim|is_unique[athletes.ath_email]');
+        $this->form_validation->set_rules('ath_name',  'User Name', 'required|trim|is_unique[athletes.ath_name]');
+        $this->form_validation->set_rules('ath_password', 'Password', 'required|trim');
+        $this->form_validation->set_rules('ath_contact', 'Mobile Number', 'required|trim');
 
         if ($this->form_validation->run() == FALSE)
         {
+
             $error   = array('error' => validation_errors());
             $message = implode(" ",$error);
             $this->messages('alert-danger',$message);
@@ -125,22 +137,26 @@ class Athletes extends CI_Controller {
         }
         else
         {
-            $user_name            = $this->input->post('user_name');
-            $user_password        = $this->input->post('user_password');
-            $user_email           = $this->input->post('user_email');
-            $mobile_number        = $this->input->post('mobile_number');
 
-            $table_name           = 'users';
-            $insert_user_array       = array('user_email'=>$user_email,'user_password'=>md5($user_password),'user_role_id_fk'=>5,'user_status'=>1);
+            $ath_name             = $this->input->post('ath_name');
+            $ath_password         = $this->input->post('ath_password');
+            $ath_email            = $this->input->post('ath_email');
+            $ath_contact          = $this->input->post('ath_contact');
 
-            $response = $this->admin_model->insert($insert_user_array,$table_name);
-            $last_user_id = $this->db->insert_id();
+            $table_name            = 'athletes';
+            $insert_athlete_array  = array(
+
+                'ath_name'        => $ath_name,
+                'ath_email'       => $ath_email,
+                'ath_password'    => md5($ath_password),
+                'ath_contact'     => $ath_contact,
+                'user_role_id_fk' => 5,
+                'is_active'       => 1
+            );
 
 
-            $table_name2           = 'athletes';
-            $insert_athlete_array  = array('ath_name'=>$user_name,'ath_contact'=>$mobile_number,'user_id' => $last_user_id );
-
-              $this->admin_model->insert($insert_athlete_array,$table_name2);
+            $response = $this->admin_model->insert($insert_athlete_array,$table_name);
+          
 
                 if($response == true)
                 {
@@ -159,10 +175,9 @@ class Athletes extends CI_Controller {
 
     public function application_form(){
 
-        $user_id  = $this->session->userdata('user_id'); 
+        $ath_id  = $this->session->userdata('ath_id'); 
 
         if($this->input->post()){
-
 
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
         $this->form_validation->set_rules('f_name', 'Father Name', 'required|trim');
@@ -174,17 +189,15 @@ class Athletes extends CI_Controller {
         $this->form_validation->set_rules('emergency_contact', 'Emergency Contact', 'required|trim');
         $this->form_validation->set_rules('profession', 'Profession', 'required|trim');
         $this->form_validation->set_rules('date_of_apply', 'Date of Apply', 'required|trim');
-        $this->form_validation->set_rules('game_id', 'Game', 'required|trim');
-        $this->form_validation->set_rules('cnic_front_copy', 'CNIC Picture', 'required|trim');
-        $this->form_validation->set_rules('profile_pic', 'Profile Picture', 'required|trim');
+      //  $this->form_validation->set_rules('game_id', 'Game', 'required|trim');
+        //$this->form_validation->set_rules('cnic_front_copy', 'CNIC Picture', 'required|trim');
+       // $this->form_validation->set_rules('profile_pic', 'Profile Picture', 'required|trim');
         $this->form_validation->set_rules('time_prefernce', 'Time Prefernce', 'required|trim');
         $this->form_validation->set_rules('total_fee', 'Total Fee', 'required|trim');
         $this->form_validation->set_rules('payment_mode', 'Payment Mode', 'required|trim');
 
         if ($this->form_validation->run() == FALSE)
         {
-
-
             $error   = array('error' => validation_errors());
             $message = implode(" ",$error);
             $this->messages('alert-danger',$message);
@@ -194,65 +207,57 @@ class Athletes extends CI_Controller {
         else
         {
 
-           $config=array(
-            'upload_path'=>'images/athlete_images',
-            'allowed_types'=>'png|jpg|jpeg',
+
+           $cnic_picture        = $_FILES['cnic_front_copy']['name'];
+           $profile_picture     = $_FILES['profile_pic']['name'];
+            $name                = $this->input->post('name');
+            $f_name              = $this->input->post('f_name');
+            $cnic                = $this->input->post('cnic');
+            $dob                 = $this->input->post('dob');
+            $address             = $this->input->post('address');
+            $contact             = $this->input->post('contact');
+            $gender              = $this->input->post('gender');
+            $emergency_contact   = $this->input->post('emergency_contact');
+            $profession          = $this->input->post('profession');
+            $date_of_apply       = $this->input->post('date_of_apply');
+            $game_id             = $this->input->post('game_id');
+            $time_prefernce      = $this->input->post('time_prefernce');
+            $total_fee           = $this->input->post('total_fee');
+            $payment_mode        = $this->input->post('payment_mode');
+            $table_name          = 'athletes'; 
+            $talbe_column_name   = 'ath_id';
+            $table_id            = $ath_id;
+
+            
+
+
+            $config = array(
+            'upload_path'   => 'assets/images/athlete_images/',
+            'allowed_types' => 'png|jpg|jpeg',
             );
 
             $this->load->library('upload',$config);
-            $this->upload->initialize($config);
             $this->upload->do_upload('cnic_front_copy');
-            $upload_data   = $this->upload->data(); 
-            $cnic_front     = $upload_data['file_name'];
-
-            $this->upload->do_upload('cnic_front_copy');
-            $upload_data    = $this->upload->data(); 
-            $cnic_front     = $upload_data['file_name'];
-
             $this->upload->do_upload('profile_pic');
-            $upload_data     = $this->upload->data(); 
-            $profile_pic     = $upload_data['file_name'];
-
-            $name               = $this->input->post('name');
-            $f_name             = $this->input->post('f_name');
-            $cnic               = $this->input->post('cnic');
-            $dob                = $this->input->post('dob');
-            $address            = $this->input->post('address');
-            $contact            = $this->input->post('contact');
-            $gender             = $this->input->post('gender');
-            $emergency_contact  = $this->input->post('emergency_contact');
-            $profession         = $this->input->post('profession');
-            $date_of_apply      = $this->input->post('date_of_apply');
-            $game_id            = $this->input->post('game_id');
-            $time_prefernce     = $this->input->post('time_prefernce');
-            $total_fee          = $this->input->post('total_fee');
-            $payment_mode       = $this->input->post('payment_mode');
-            $table_name         = 'athletes'; 
-
-
+            
             $applicantion_array         = array(
 
-                        'event_id'         =>  $name,
-                        'trial_name'       =>  $f_name,
-                        'trial_start_date' =>  $cnic,
-                        'trial_end_date'   =>  $dob,
-                        'officials'        =>  $address,
-                        'max_players'      =>  $contact,
-                        'trial_session'    =>  $gender,
-                        'facilities'       =>  $emergency_contact,
-                        'game_id'          =>  $profession,
-                        'closing_date'     =>  $date_of_apply,
-                        'closing_date'     =>  $profile_pic,
-                        'closing_date'     =>  $cnic_front,
+                        'ath_name'               =>  $name,
+                        'ath_father_name'        =>  $f_name,
+                        'ath_cnic'               =>  $cnic,
+                        'ath_dob'                =>  $dob,
+                        'ath_address'            =>  $address,
+                        'ath_contact'            =>  $contact,
+                        'ath_gender'             =>  $gender,
+                        'ath_emergency_contact'  =>  $emergency_contact,
+                        'ath_profession'         =>  $profession,
+                        'ath_date_apply'         =>  $date_of_apply, 
+                        'ath_profile_photo'      =>  $this->upload->data('file_name'),
+                        'ath_nic_photo'          =>  $this->upload->data('file_name')
 
             );
 
-
-            print_r($applicantion_array);die;
-
-
-            $response = $this->model->update($applicantion_array,$table_name);
-            $ath_id = $this->db->insert_id();
+            $response = $this->admin_model->update($applicantion_array,$table_name,$talbe_column_name,$table_id);
 
             $table_name1 = 'athlete_games';
 
@@ -264,10 +269,11 @@ class Athletes extends CI_Controller {
                 'ath_game_time_preference'    =>  $time_prefernce,
                 'ath_game_payment_mode'       =>  $payment_mode,
                 'ath_game_total_fee'          =>  $total_fee,
+                'ath_game_status'             =>  'pending',
             );
 
 
-             $this->model->insert($athlete_games_array1,$table_name1);
+             $this->admin_model->insert($athlete_games_array1,$table_name1);
 
          }
                 if($response == true)
@@ -289,16 +295,64 @@ class Athletes extends CI_Controller {
         $data['games']    = $this->admin_model->get_all_records($table);
 
 
-        $table_name          = "athletes";
-        $talbe_column_name   = 'user_id';
-        $table_id            = $user_id;
-        $data['athlete']    = $this->admin_model->exist_record_row($talbe_column_name,$table_id,$table_name);
 
+        $table_name          = "athletes";
+        $talbe_column_name   = 'ath_id';
+        $table_id            =  $ath_id;
+        $data['athlete']    = $this->admin_model->exist_record_row($talbe_column_name,$table_id,$table_name);
 
         $data['title'] = 'Application Form';
         $data['page']  = 'application_form';
         $this->load->view('template',$data);
 
     }
+
+    public function athlete_profile()
+    {   
+        //$this->check_role_privileges('dashboard',$this->session->userdata('user_role_id_fk'));
+        $data['title']       = 'User Profile';
+        $data['page']        = 'profile';
+        $ath_id     = $this->session->userdata('ath_id');
+        if(empty($ath_id))
+        {
+            $this->logout_user();
+        } 
+        
+        $data['athlete_profile']  = $this->model->athlete_profile($ath_id); 
+        $this->load->view('template',$data);
+    }
+
+    public function update_profile()
+    { 
+
+        $update_profile = array(
+             'ath_name'        => $this->input->post('user_name'),
+             'ath_email'       => $this->input->post('user_email'),
+             'ath_contact'     => $this->input->post('user_contact'),
+             'ath_address'     => $this->input->post('user_address'),
+             'ath_password'    => md5($this->input->post('confirm'))
+                                );
+        $response = $this->admin_model->update($update_profile,'athletes','user_role_id_fk',$this->session->userdata('user_role_id_fk'));
+            if($response == true)
+            {
+                if($this->input->post('remember') == 'on')
+                {
+                    $this->messages('alert-success','Please login now');
+                    return redirect('athletes/logout_user');
+                }
+                else
+                {
+                    $this->messages('alert-success','Successfully Update');
+                    return redirect('athletes/athlete_profile');    
+                }
+                
+            }
+            else
+            {
+                $this->messages('alert-danger','Some Thing Wrong');
+                return redirect('athletes/athlete_profile');
+            }                       
+    }
+
 
 }

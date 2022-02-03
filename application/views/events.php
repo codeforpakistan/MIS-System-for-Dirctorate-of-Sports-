@@ -39,9 +39,10 @@
                             <th>Action</th>
                           </tr>
                         </thead>
-                        <?php if(!empty($events)):?>
                             <tbody>
-                            <?php foreach($events as $onByOne):?>
+                        <?php if(!empty($events)):
+
+                             foreach($events as $onByOne):?>
                                 <tr>
                                     <td><?=$onByOne->event_title?></td>
                                     <td><?= $onByOne->event_start_date?></td>

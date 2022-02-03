@@ -55,7 +55,7 @@
                   <p style="color:#15693F; font-weight: bold;text-align: center;margin-top:60px;font-size:22px;">Login your account</p>
                   <div class="form-group">
                     <label for="email"><strong>Useremail</strong></label>
-                    <input id="email" type="email" class="form-control" name="user_email" tabindex="1"  required autofocus>
+                    <input id="email" type="email" class="form-control" name="ath_email" tabindex="1"  required autofocus>
                     <div class="invalid-feedback">
                       Please fill in your Username
                     </div>
@@ -69,7 +69,7 @@
                       </a>
                       </div> -->
                       </div>
-                    <input id="password" type="password" class="form-control" name="user_password" tabindex="2" required>
+                    <input id="password" type="password" class="form-control" name="ath_password" tabindex="2" required>
                       <div class="invalid-feedback">
                       please fill in your password
                       </div>

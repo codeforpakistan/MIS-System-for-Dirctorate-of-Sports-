@@ -57,31 +57,31 @@
               <form method="POST" action="<?= base_url('Athletes/athlete_insert')?>" class="needs-validation" novalidate="" onsubmit="return myFunction()">
                   <div class="form-group">
                     <label for="name">Name</label>
-                    <input id="name" type="text" class="form-control" name="user_name" required autofocus>
+                    <input id="name" type="text" class="form-control" name="ath_name" required autofocus>
                   </div>
 
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="text" class="form-control" name="user_email" required autofocus>
+                    <input id="email" type="text" class="form-control" name="ath_email" required autofocus>
                    
                   </div>
 
                   <div class="form-group">
-                    <label for="mobile_number">Mobile Number</label>
-                    <input id="mobile_number" type="text" class="form-control" name="mobile_number" required autofocus>
+                    <label for="ath_contact">Mobile Number</label>
+                    <input id="mobile_number" type="text" class="form-control" name="ath_contact" required autofocus>
                   </div>
 
                   <div class="form-group">
                       <div class="d-block">
                       <label for="password" class="control-label">Password</label>
                       </div>
-                    <input id="password" type="password" class="form-control" name="user_password"   required>   
+                    <input id="password" type="password" class="form-control" name="ath_password"   required>   
                   </div>
 
 
                   <div class="form-group">
                     <label for="c_user_password">Confirm Password</label>
-                    <input id="c_password" type="password" class="form-control" name="c_user_password"  required autofocus>
+                    <input id="c_password" type="password" class="form-control" name="c_ath_password"  required autofocus>
                    
                   </div>
                    <div class="col-md-4 offset-sm-4">
