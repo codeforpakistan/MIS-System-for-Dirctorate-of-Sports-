@@ -230,7 +230,7 @@ class AdminModel extends CI_Model
                 }
 
 
-                public function ath_profile($user_role_id_fk)
+                public function profile($user_role_id_fk)
     {
                         return $this->db->select('*')
                         ->from('users')
