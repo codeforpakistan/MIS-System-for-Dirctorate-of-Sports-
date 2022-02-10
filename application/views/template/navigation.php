@@ -1,11 +1,7 @@
-
-
-
-
 <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper" >
           <div class="sidebar-brand">
-            <a href="<?= base_url()?>"> <img alt="image" src="assets/images/DG sports logo.png"  style="border-radius:50px;"  class="header-logo" /> 
+            <a><img alt="image" src="assets/images/DG sports logo.png" class="header-logo" /> 
             </a>
           </div>
 
@@ -88,16 +84,6 @@
           <?php endif;?>
 
            <?php if($this->session->userdata('user_role_id_fk') == 1):?>
-
-             <li class="dropdown">
-                <a href="Athletes" class="nav-link ">
-                  <i data-feather="briefcase"></i><span>Athletes</span>
-                </a>
-            </li>
-
-          <?php endif;?>
-
-           <?php if($this->session->userdata('user_role_id_fk') == 1):?>
             <li class="dropdown">
                 <a href="admin/users" class="nav-link">
                   <i data-feather="briefcase"></i><span>Users</span>
@@ -124,16 +110,6 @@
                   <i data-feather="briefcase"></i><span>Fee</span>
                 </a>
                
-            </li>
-
-          <?php endif;?>
-           <?php if($this->session->userdata('user_role_id_fk') == 1):?>
-
-            <li class="dropdown">
-                <a href="#"  class="nav-link ">
-                  <i data-feather="briefcase"></i><span>Athlete</span>
-                </a>
-                
             </li>
 
           <?php endif;?>

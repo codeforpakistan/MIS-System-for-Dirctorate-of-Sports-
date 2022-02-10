@@ -49,6 +49,7 @@
                                     <td><?=$athlete_game->ath_game_time_preference?></td>
                                     <td><?=$athlete_game->ath_game_payment_mode?></td>
                                     <td><?=$athlete_game->ath_game_status?></td>
+                                    <td><a href="athletes/bank_challan/<?=$athlete_game->ath_id?>" class="btn btn-primary">Download Challan</td>
                                   </tr>
 
                                 <?php  endforeach;endif;?>

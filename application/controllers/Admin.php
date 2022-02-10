@@ -8,13 +8,13 @@ class Admin extends CI_Controller {
     
     
     public function __construct()
-	{
-		parent::__construct();
+    {
+        parent::__construct();
         $this->load->model('AdminModel','model');
         $this->load->library('auto_no.php','zend');
         $this->load->library('form_validation');
-	} 
-	
+    } 
+    
     public function check_role_privileges($page_name,$role_id)
     {
         $pages_data = $this->model->check_page($page_name);  
@@ -32,8 +32,6 @@ class Admin extends CI_Controller {
            }
         } 
     }
-
-
     //==========================================================================
     // Auth
     //==========================================================================
@@ -290,7 +288,10 @@ class Admin extends CI_Controller {
     //==========================================================================
     
     public function dashboard()
-    {   
+    { 
+
+     $this->check_role_privileges('users',$this->session->userdata('user_role_id_fk'));
+
         $data['title']          = 'Dashboard';
         $data['page']           = 'dashboard';
         $data['it_staff']       = $this->model->countUsersByRoleId(2);
@@ -1003,6 +1004,7 @@ class Admin extends CI_Controller {
     {
 
         $this->form_validation->set_rules('game_name', 'Game Name', 'required|trim|is_unique[games.game_name]');
+        $this->form_validation->set_rules('game_fee', 'Game Fee', 'required|trim');
         $this->form_validation->set_rules('game_description', 'Game Description', 'required|trim');
         if ($this->form_validation->run() == FALSE)
         {
@@ -1017,12 +1019,14 @@ class Admin extends CI_Controller {
         {
 
             $game_name          = $this->input->post('game_name');
+            $game_fee          = $this->input->post('game_fee');
             $game_description   = $this->input->post('game_description');
             $table_name          = 'games'; 
 
             $game_array         = array(
 
                 'game_name'        =>  $game_name,
+                'game_fee'        =>  $game_fee,
                 'game_description' =>  $game_description,
 
             );
@@ -1048,10 +1052,12 @@ class Admin extends CI_Controller {
         {   
 
 
-            $this->form_validation->set_rules('game_name', 'Game Name', 'required|trim|is_unique[games.game_name]');
+            $this->form_validation->set_rules('game_name', 'Game Name', 'required|trim');
+            $this->form_validation->set_rules('game_fee', 'Game Fee', 'required|trim');
             $this->form_validation->set_rules('game_description', 'Game Description', 'required|trim');
 
             $game_name          = $this->input->post('game_name');
+            $game_fee          = $this->input->post('game_fee');
             $game_id            = $this->input->post('game_id');
             $game_description   = $this->input->post('game_description');
             $table_name          = "games";
@@ -1072,8 +1078,9 @@ class Admin extends CI_Controller {
 
             $game_array         = array(
 
-                'game_name'      =>  $game_name,
-                'game_description'       =>  $game_description,
+                'game_name'            =>  $game_name,
+                'game_fee'             =>  $game_fee,
+                'game_description'     =>  $game_description,
                
 
             );
@@ -1209,7 +1216,7 @@ class Admin extends CI_Controller {
     {
         if($this->input->post('district_id'))
         {
-            $this->form_validation->set_rules('district_name', 'District Name', 'required|trim');
+            $this->form_validation->set_rules('district_id', 'District Name', 'required|trim');
             $this->form_validation->set_rules('district_status', 'District Status', 'required|trim');
             if ($this->form_validation->run() == FALSE)
             {

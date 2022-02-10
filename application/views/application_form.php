@@ -70,7 +70,7 @@
                        <div class="col-4">
                             <div class="form-group">
                                   <label>Contact</label>
-                                  <input type="text" class="form-control" placeholder="Contact" name="contact" value="<?=$athlete['ath_contact']?>" required>
+                                  <input type="text" class="form-control" placeholder="Contact" name="contact" value="<?=$athlete['ath_contact']?>" data-inputmask="'mask': '0399-9999999'" minlength="12" maxlength="12" required>
                             </div>
                       </div>
 
@@ -102,6 +102,23 @@
                                     <option value="student">Student</option>
                                     <option value="player">Player</option>
                                     
+                                  </select>
+                            </div>
+                      </div>
+
+                       <div class="col-4">
+                            <div class="form-group">
+                                  <label>District</label>
+
+                                  <select  class="form-control "  name="district_id" required>
+                                   <option>--Select District--</option>
+
+                                    <?php if(!empty($districts)){
+                                      foreach ($districts as $district){?>
+                                      ?>
+                                    <option value="<?=$district->district_id?>"><?=$district->district_name?></option>
+
+                                  <?php } }?>
                                   </select>
                             </div>
                       </div>

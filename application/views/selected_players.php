@@ -134,13 +134,13 @@
                               <div class="col-6">                            
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" placeholder="Enter Name" name="name" required> 
+                                <input type="text" class="form-control" placeholder="Enter Name" name="name" maxlength="30" onkeyup="this.value=this.value.replace(/[^A-Za-z\s]/g,'');" required> 
                                 </div>
                               </div>
                             <div class="col-6">
                                 <div class="form-group">
                                   <label>Father Name</label>
-                                  <input type="text" class="form-control" placeholder="Enter Father Name" name="father_name" required>
+                                  <input type="text" class="form-control" placeholder="Enter Father Name" maxlength="30" onkeyup="this.value=this.value.replace(/[^A-Za-z\s]/g,'');" name="father_name" required>
                                   
                                 </div>
                               </div>
@@ -298,13 +298,13 @@
                               <div class="col-6">                            
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" placeholder="Enter Name" name="name" id="edit_name" required> 
+                                <input type="text" class="form-control" placeholder="Enter Name" name="name" maxlength="30" onkeyup="this.value=this.value.replace(/[^A-Za-z\s]/g,'');" id="edit_name" required> 
                                 </div>
                               </div>
                             <div class="col-6">
                                 <div class="form-group">
                                   <label>Father Name</label>
-                                  <input type="text" class="form-control" placeholder="Enter Father Name" id="edit_father_name" name="father_name" required>
+                                  <input type="text" class="form-control" placeholder="Enter Father Name" id="edit_father_name" name="father_name" maxlength="30" onkeyup="this.value=this.value.replace(/[^A-Za-z\s]/g,'');" required>
                                   
                                 </div>
                               </div>
@@ -312,7 +312,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                   <label>CNIC</label>
-                                  <input type="text" class="form-control" placeholder="Enter CNIC" id="edit_cnic" name="cnic" required>
+                                  <input type="text" class="form-control" placeholder="Enter CNIC" id="edit_cnic" name="cnic"  data-inputmask="'mask': '99999-9999999-9'" required minlength="15" maxlength="15">
                                 </div>
                               </div>
 

@@ -13,9 +13,9 @@ class Athletes extends CI_Controller {
         $this->load->library('auto_no.php','zend');
         $this->load->library('form_validation');
 
-        // if(!$this->session->userdata('ath_id')){
-        //     redirect('athletes');
-        // }
+         // if(!$this->session->userdata('ath_id')){
+         //     redirect('athletes');
+         // }
     } 
 
   public function index()
@@ -189,6 +189,7 @@ class Athletes extends CI_Controller {
         $this->form_validation->set_rules('emergency_contact', 'Emergency Contact', 'required|trim');
         $this->form_validation->set_rules('profession', 'Profession', 'required|trim');
         $this->form_validation->set_rules('date_of_apply', 'Date of Apply', 'required|trim');
+        $this->form_validation->set_rules('district_id', 'District', 'required|trim');
       //  $this->form_validation->set_rules('game_id', 'Game', 'required|trim');
         //$this->form_validation->set_rules('cnic_front_copy', 'CNIC Picture', 'required|trim');
        // $this->form_validation->set_rules('profile_pic', 'Profile Picture', 'required|trim');
@@ -220,6 +221,7 @@ class Athletes extends CI_Controller {
             $emergency_contact   = $this->input->post('emergency_contact');
             $profession          = $this->input->post('profession');
             $date_of_apply       = $this->input->post('date_of_apply');
+            $district_id         = $this->input->post('district_id');
             $game_id             = $this->input->post('game_id');
             $time_prefernce      = $this->input->post('time_prefernce');
             $total_fee           = $this->input->post('total_fee');
@@ -250,6 +252,7 @@ class Athletes extends CI_Controller {
                         'ath_contact'            =>  $contact,
                         'ath_gender'             =>  $gender,
                         'ath_emergency_contact'  =>  $emergency_contact,
+                        'district_id'     => $district_id,
                         'ath_profession'         =>  $profession,
                         'ath_date_apply'         =>  $date_of_apply, 
                         'ath_profile_photo'      =>  $this->upload->data('file_name'),
@@ -286,15 +289,15 @@ class Athletes extends CI_Controller {
                     $this->messages('alert-danger','Some Thing Wrong');
                     return redirect('athletes');
                 }
-        
     }
-    }
+}
 
 
         $table           = 'games';
         $data['games']    = $this->admin_model->get_all_records($table);
 
-
+        $table_name = 'districts';
+        $data['districts'] = $this->admin_model->get_all_records($table_name);
 
         $table_name          = "athletes";
         $talbe_column_name   = 'ath_id';
@@ -313,12 +316,14 @@ class Athletes extends CI_Controller {
         $data['title']       = 'User Profile';
         $data['page']        = 'profile';
         $ath_id     = $this->session->userdata('ath_id');
+
         if(empty($ath_id))
         {
             $this->logout_user();
         } 
         
         $data['athlete_profile']  = $this->model->athlete_profile($ath_id); 
+
         $this->load->view('template',$data);
     }
 
@@ -352,6 +357,13 @@ class Athletes extends CI_Controller {
                 $this->messages('alert-danger','Some Thing Wrong');
                 return redirect('athletes/athlete_profile');
             }                       
+    }
+
+    public function bank_challan($ath_id)
+    {
+        $data['title'] = 'Bank Copy';
+        $data['page']  = 'bank_challan';
+        $this->load->view('template',$data);
     }
 
 

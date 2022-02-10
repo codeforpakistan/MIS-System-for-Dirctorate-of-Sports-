@@ -73,7 +73,12 @@
               class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png"
                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
+              <?php if($this->session->userdata('user_role_id_fk') == 5):?>
+              <div class="dropdown-title"><?= $this->session->userdata('ath_name')?></div>
+
+              <?php else:?>
               <div class="dropdown-title"><?= $this->session->userdata('user_role_name')?></div>
+            <?php endif;?>
 
               <?php if($this->session->userdata('user_role_id_fk') == 1):?>
               <a href="admin/profile" class="dropdown-item has-icon" > <i class="far

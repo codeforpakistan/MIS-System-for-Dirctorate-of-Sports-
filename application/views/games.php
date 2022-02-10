@@ -32,6 +32,7 @@
                         <thead class="">
                           <tr>
                             <th>Games Name</th>
+                            <th>Games Fee</th>
                             <th>Games Description</th>
                             <th>Action</th>
                           </tr>
@@ -41,6 +42,7 @@
                             <?php foreach($games as $onByOne):?>
                                 <tr>
                                     <td><?= $onByOne->game_name?></td>
+                                    <td><?= $onByOne->game_fee?></td>
                                     <td><?= $onByOne->game_description?></td>
                                     <td>
                                        <a class="fa fa-edit text-info" data-toggle="modal" data-target="#editModel" href="javascript:void(0)" onclick="game_update(<?= $onByOne->game_id ?>)"></a>
@@ -78,7 +80,13 @@
                             
                             <div class="form-group">
                                   <label>Game Name</label>
-                                  <input type="text" class="form-control" placeholder="Game Name" name="game_name" required>
+                                  <input type="text" class="form-control" placeholder="Game Name" name="game_name" maxlength="30" onkeyup="this.value=this.value.replace(/[^A-Za-z\s]/g,'');" required>
+                                  
+                                </div>
+
+                                 <div class="form-group">
+                                  <label>Game Fee</label>
+                                  <input type="text" class="form-control" placeholder="Game Fee" name="game_fee" required>
                                   
                                 </div>
 
@@ -113,7 +121,14 @@
                         <form class="" method="post" action="<?= base_url("admin/game_update") ?>">
                             <div class="form-group">
                                   <label>Game Name</label>
-                                  <input type="text" class="form-control" placeholder="Game Name" name="game_name" id="edit_game_name" required>
+                                  <input type="text" class="form-control" placeholder="Game Name" name="game_name" maxlength="30" onkeyup="this.value=this.value.replace(/[^A-Za-z\s]/g,'');" id="edit_game_name" required>
+                                  
+                                </div>
+
+
+                                 <div class="form-group">
+                                  <label>Game Fee</label>
+                                  <input type="text" class="form-control" placeholder="Game Fee" name="game_fee" id="edit_game_fee" required>
                                   
                                 </div>
 
@@ -122,17 +137,6 @@
                                   <input type="text" class="form-control" placeholder="Game Description" name="game_description" id="edit_game_description" required>
                                   
                                 </div>
-
-                               <!--  <div class="form-group">
-                                  <label>Event End Date</label>
-                                  <input type="date" class="form-control" id="edit_event_end_date" placeholder="Event End Date" name="event_end_date" required>
-                                  
-                                </div>
-
-                                <div class="form-group">
-                                  <label>Event Year</label>
-                                  <input type="date" class="form-control" id="edit_event_year" placeholder="Event Year" name="event_year" required>
-                                  
                                 </div> -->
                                 <input type="hidden" name="game_id" id="edit_game_id" >
                                 <div class="col-12">
@@ -153,6 +157,7 @@
             dataType: 'json',
             success: function(response){
               $('#edit_game_name').val(response.game_name);
+              $('#edit_game_fee').val(response.game_fee);
               $('#edit_game_description').val(response.game_description);
               $('#edit_game_id').val(response.game_id); 
             }

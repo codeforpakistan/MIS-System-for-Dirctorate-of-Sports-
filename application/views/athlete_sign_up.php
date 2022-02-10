@@ -57,7 +57,7 @@
               <form method="POST" action="<?= base_url('Athletes/athlete_insert')?>" class="needs-validation" novalidate="" onsubmit="return myFunction()">
                   <div class="form-group">
                     <label for="name">Name</label>
-                    <input id="name" type="text" class="form-control" name="ath_name" required autofocus>
+                    <input id="name" type="text" class="form-control" name="ath_name" maxlength="30" onkeyup="this.value=this.value.replace(/[^A-Za-z\s]/g,'');" required autofocus>
                   </div>
 
                   <div class="form-group">
@@ -68,7 +68,7 @@
 
                   <div class="form-group">
                     <label for="ath_contact">Mobile Number</label>
-                    <input id="mobile_number" type="text" class="form-control" name="ath_contact" required autofocus>
+                    <input id="mobile_number" type="text" class="form-control" name="ath_contact" data-inputmask="'mask': '0399-9999999'" minlength="12" maxlength="12" required >
                   </div>
 
                   <div class="form-group">
@@ -111,6 +111,8 @@
     <script src="assets/js/scripts.js"></script>
     <!-- Custom JS File -->
     <script src="assets/js/custom.js"></script>
+
+    <script src="assets/js/jquery.inputmask.bundle.js"></script>
     </body>
     <!-- auth-login.html  21 Nov 2019 03:49:32 GMT -->
 </html>
@@ -135,3 +137,14 @@
       }
     }
 </script>
+
+ <script>
+        
+        $(document).ready(function(){
+          $(".msg").delay(3000).fadeOut(1000);
+
+        $(":input").inputmask();
+
+
+        });
+      </script>
