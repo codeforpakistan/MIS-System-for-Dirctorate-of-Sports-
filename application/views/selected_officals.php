@@ -9,7 +9,10 @@
                     <h4><?= $title ?></h4>
                   </div>
                   <div class="card-body">
+
+                    <?php if($this->session->userdata('user_role_id_fk') == '3'):?>
                   <button type="button" class="btn btn-primary pull-right fa fa-plus" data-toggle="modal" data-target="#addModel" style="margin-top:-5%;"> Add Offical</button>
+                <?php endif;?>
                       <!-- start messages --->
                       <div style="text-align: center">
                               <?php if($feedback =$this->session->flashdata('feedback')){
@@ -43,7 +46,11 @@
                             <th>Category</th>
                             <th>Domicle</th>
                             <th>District</th>
+                    <?php if($this->session->userdata('user_role_id_fk') == '3'):?>
+
                             <th>Action</th>
+
+                          <?php endif;?>
                           </tr>
                         </thead>
 
@@ -64,11 +71,14 @@
                           <td><?=ucwords($selected_offical->category)?></td>
                           <td><?=ucwords($selected_offical->domicle)?></td>
                           <td><?=ucwords($selected_offical->district_name)?></td>
+                    <?php if($this->session->userdata('user_role_id_fk') == '3'):?>
+
                            <td>
                              <a class="fa fa-edit text-info" href="javascript:void(0)" onclick="open_edit_modal(<?=$selected_offical->player_offical_id ?>)"></a>
 
                               <a class="fa fa-trash text-danger" onclick="return confirm('Are you sure to delete?')" href="<?= base_url("admin/selected_player_offical_delete/player/$selected_offical->player_offical_id")?>"></a>
                             </td>
+                          <?php endif;?>
                         </tr>
                       <?php } } ?>
                         </tbody>

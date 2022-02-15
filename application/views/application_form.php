@@ -20,6 +20,7 @@
         <!-- end of messages  --->
       <div class="section-body">
          <form class="" method="post" enctype="multipart/form-data">
+
             <div class="row">
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
@@ -50,7 +51,17 @@
                             </div>
                       </div>
 
-                    
+                      <div class="col-4">
+                            <div class="form-group">
+                                  <label>Gender</label>
+                                 <select class="form-control" name="gender">
+                                    <option>-Select Gender-</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    
+                                  </select>
+                            </div>
+                      </div>
 
                        <div class="col-4">
                             <div class="form-group">
@@ -74,17 +85,7 @@
                             </div>
                       </div>
 
-                      <div class="col-4">
-                            <div class="form-group">
-                                  <label>Gender</label>
-                                 <select class="form-control" name="gender">
-                                    <option>-Select Gender-</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    
-                                  </select>
-                            </div>
-                      </div>
+                      
 
                        <div class="col-4">
                             <div class="form-group">
@@ -191,7 +192,6 @@
                                   <label>Payment Mode</label>
                                   <select class="form-control" name="payment_mode">
                                     <option>-Select Payment Mode-</option>
-                                    <option>online</option>
                                     <option>easypaisa</option>
                                     <option>Bank</option>
                                   </select>

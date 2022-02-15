@@ -19,8 +19,7 @@ class Athletes extends CI_Controller {
     } 
 
   public function index()
-    { 
-        
+    {         
         if($this->session->userdata('user_role_id_fk'))
         {
             $this->athlete_dashboard();
@@ -32,8 +31,7 @@ class Athletes extends CI_Controller {
         
     }
     
-    public function login_user()
-    {   
+    public function login_user(){
         $this->form_validation->set_rules('ath_email', 'Useremail', 'required|trim');
         $this->form_validation->set_rules('ath_password', 'Password', 'required|trim');
         if ($this->form_validation->run() == FALSE)
@@ -61,7 +59,17 @@ class Athletes extends CI_Controller {
                 $this->session->set_userdata('ath_email',$response['ath_email']);
                 $this->session->set_userdata('user_role_id_fk',$response['user_role_id_fk']);
                 //$this->session->set_userdata('user_role_name',$response->user_role_name);
-                redirect('athletes/athlete_dashboard'); exit();
+
+
+            if($response['ath_cnic'] > 0){
+                redirect('athletes/athlete_dashboard');
+
+            }
+            else{
+
+                redirect('athletes/application_form');
+
+            }
                
                 } // end is user name and passsword valid
                 else // not match ue name and pass
@@ -104,9 +112,11 @@ class Athletes extends CI_Controller {
     
     public function athlete_dashboard()
     {   
-        $ath_id = $this->session->userdata('ath_id');
-        $data['athlete_games']   = $this->model->get_athlete_games($ath_id); 
+         $table           = 'games';
+        $data['games']    = $this->admin_model->get_all_records($table);
 
+        $ath_id = $this->session->userdata('ath_id');
+        $data['athlete_games']   = $this->model->get_athlete_games($ath_id,$ath_game_id=null); 
         $data['title']          = 'Dashboard';
         $data['page']           = 'athlete_dashboard';
         $this->load->view('template',$data);
@@ -179,6 +189,18 @@ class Athletes extends CI_Controller {
 
         if($this->input->post()){
 
+        $more_games = $this->input->post('more_games');
+
+        if($more_games > 0){
+
+        $this->form_validation->set_rules('time_prefernce', 'Time Prefernce', 'required|trim');
+        $this->form_validation->set_rules('total_fee', 'Total Fee', 'required|trim');
+        $this->form_validation->set_rules('payment_mode', 'Payment Mode', 'required|trim');
+
+        }
+        else{
+
+
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
         $this->form_validation->set_rules('f_name', 'Father Name', 'required|trim');
         $this->form_validation->set_rules('cnic', 'CNIC', 'required|trim');
@@ -197,12 +219,20 @@ class Athletes extends CI_Controller {
         $this->form_validation->set_rules('total_fee', 'Total Fee', 'required|trim');
         $this->form_validation->set_rules('payment_mode', 'Payment Mode', 'required|trim');
 
+    }
+
         if ($this->form_validation->run() == FALSE)
         {
             $error   = array('error' => validation_errors());
             $message = implode(" ",$error);
             $this->messages('alert-danger',$message);
-            return redirect('Athletes/application_form');
+
+            if($more_games > 0){
+            return redirect('Athletes');
+}
+            else{
+                 return redirect('Athletes/application_form');
+            }
             
         }
         else
@@ -359,8 +389,10 @@ class Athletes extends CI_Controller {
             }                       
     }
 
-    public function bank_challan($ath_id)
+    public function bank_challan($ath_id,$ath_game_id)
     {
+
+        $data['bank_challan']  = $this->model->get_athlete_games($ath_id,$ath_game_id); 
         $data['title'] = 'Bank Copy';
         $data['page']  = 'bank_challan';
         $this->load->view('template',$data);

@@ -47,18 +47,18 @@
 
                         <tr>
                           <td>Name:</td>
-                          <td></td>
+                          <td><?=$bank_challan[0]->ath_name?></td>
                         </tr>
 
                         <tr>
                           <td>CNIC:</td>
-                          <td></td>
+                          <td><?=$bank_challan[0]->ath_cnic?></td>
                         </tr>
 
 
                         <tr>
                           <td>Games:</td>
-                          <td></td>
+                          <td><?=$bank_challan[0]->game_name?></td>
                         </tr>
 
 
@@ -82,7 +82,7 @@
 
                         <tr>
                           <td>Total Fee:</td>
-                          <td></td>
+                          <td><?=$bank_challan[0]->ath_game_total_fee?></td>
                         </tr>
 
 

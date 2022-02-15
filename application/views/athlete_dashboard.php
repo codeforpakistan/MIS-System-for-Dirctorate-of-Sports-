@@ -9,7 +9,7 @@
                     <h4>Applied Games</h4>
                   </div>
                   <div class="card-body">
-                 
+                  <button type="button" class="btn btn-primary pull-right fa fa-plus" data-toggle="modal" data-target="#addGameModel" style="margin-top:-5%;"> Add New Game</button>
                       <!-- start messages --->
                       <div style="text-align: center">
                               <?php if($feedback =$this->session->flashdata('feedback')){
@@ -49,7 +49,13 @@
                                     <td><?=$athlete_game->ath_game_time_preference?></td>
                                     <td><?=$athlete_game->ath_game_payment_mode?></td>
                                     <td><?=$athlete_game->ath_game_status?></td>
-                                    <td><a href="athletes/bank_challan/<?=$athlete_game->ath_id?>" class="btn btn-primary">Download Challan</td>
+                                    <td>
+
+                                      <a href="athletes/bank_challan/<?=$athlete_game->ath_id?>/<?=$athlete_game->ath_game_id?>" class="btn btn-primary">Download Challan</a>
+
+                                      <a href="javascript:void(0)" data-toggle="modal" data-target="#editModel" href="javascript:void(0)" class="btn btn-primary">Upload Challan</a>
+
+                                    </td>
                                   </tr>
 
                                 <?php  endforeach;endif;?>
@@ -64,5 +70,105 @@
           </div>
         </section>
       </div>
+
+       <!--- edit form -->
+      <div class="modal fade" id="addGameModel"  role="dialog" aria-labelledby="formModaladd" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-success">
+                    <h5 class="modal-title text-white" id="formModaladd">Add Game</h5>
+                    <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <!-- body-->
+                        <form class="" method="post" action="<?= base_url("athletes/application_form") ?>">
+                            <div class="form-group">
+                              <label>Game Applied For</label>
+                                  <select class="form-control select2" multiple="" name="game_id[]" style="width:100%">
+                                    <option>-Select Games</option>
+                                    <?php if(!empty($games)){
+                                      foreach($games as $game){?>
+                                    <option value="<?=$game->game_id?>"><?=$game->game_name?></option>
+                                   <?php } }?>
+                                  </select>
+                            </div>
+
+                        <input type="text" name="more_games" value="more_games">
+
+
+                            <div class="form-group">
+                                  <label>Time Prefernce</label>
+                                  <select class="form-control" name="time_prefernce">
+                                    <option>-Select Prefernce-</option>
+                                    <option value="morning">Morning</option>
+                                    <option value="evening">Evening</option>
+                                  </select>
+                            </div>
+
+                            <div class="form-group">
+                                  <label>Total Fee</label>
+                                  <input type="text" class="form-control" placeholder="Total Fee" name="total_fee" required>
+                            </div>
+
+                            <div class="form-group">
+                                  <label>Payment Mode</label>
+                                  <select class="form-control" name="payment_mode">
+                                    <option>-Select Payment Mode-</option>
+                                    <option>easypaisa</option>
+                                    <option>Bank</option>
+                                  </select>
+                            </div>
+
+                            <div class="form-group">
+                                  <label>Date of apply</label>
+                                  <input type="date" class="form-control" placeholder="" name="date_of_apply" required>
+                            </div>
+                               <div class="col-12">
+                                <div class="form-group pull-right">
+                                <button type="submit" class="btn btn-primary m-t-15 waves-effect pull-right" >Save</button>
+                              </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- add game modal--->
+
+        <!--- edit form -->
+      <div class="modal fade" id="editModel"  role="dialog" aria-labelledby="formModaladd" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-success">
+                    <h5 class="modal-title text-white" id="formModaladd">Update Challan </h5>
+                    <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <!-- body-->
+                        <form class="" method="post" action="<?= base_url("admin/event_update") ?>">
+                            <div class="form-group">
+                                  <label>Attach Challan Picture</label>
+                                  <input type="file" class="form-control" placeholder="" name="Upload_challan" required>
+                            </div>
+
+                                <div class="form-group">
+                                  <label>Challan No</label>
+                                  <input type="text" class="form-control" placeholder="" name="challan_no" required>
+                                  
+                                </div>                               
+                               <div class="col-12">
+                                <div class="form-group pull-right">
+                                <button type="submit" class="btn btn-primary m-t-15 waves-effect pull-right" >Save</button>
+                              </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
       

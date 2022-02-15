@@ -29,7 +29,7 @@
           <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2" style="margin-top: 80px;">
               <div class="row"style="padding:0px;border-radius:40px;box-shadow:10px 10px 100px #00000082">
                 <div class="col-xl-7" style="padding:0px;margin:0px;">
-                <img src="assets/images/Group_1809.png" style="width:100% !important;height:100%; ">
+                <img src="assets/images/asset_1.png" style="width:100% !important;height:100%; ">
                   </div>
 
                   <div class="col-xl-5" style="background: #fff;border-radius:0px 40px 40px 0px;">

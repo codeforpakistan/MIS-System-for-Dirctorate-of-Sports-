@@ -7,7 +7,12 @@
 
           <ul class="sidebar-menu">
             <li class="dropdown active">
-              <a href="<?= base_url()?>" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <?php if($this->session->userdata('user_role_id_fk') == 5):?>
+              <a href="Athletes" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <?php else:?>
+              <a href="admin" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+
+                <?php endif;?>
             </li>
 
            <?php if($this->session->userdata('user_role_id_fk') == 1): ?>
@@ -144,18 +149,6 @@
                 
             </li> 
             <?php endif;?>
-
-
-             <?php if($this->session->userdata('user_role_id_fk') == 5):?>
-
-            <li class="dropdown">
-                <a href="Athletes/application_form"  class="nav-link ">
-                  <i data-feather="briefcase"></i><span>Application form</span>
-                </a>
-                
-            </li> 
-            <?php endif;?>
-            
 
             <?php if($this->session->userdata('user_role_id_fk') == 5):?>
 

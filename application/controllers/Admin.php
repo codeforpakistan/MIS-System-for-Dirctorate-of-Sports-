@@ -38,6 +38,7 @@ class Admin extends CI_Controller {
     
     public function index()
     { 
+
         
         if($this->session->userdata('user_role_id_fk'))
         {
