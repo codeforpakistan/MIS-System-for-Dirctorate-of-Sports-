@@ -53,7 +53,7 @@
 
                                       <a href="athletes/bank_challan/<?=$athlete_game->ath_id?>/<?=$athlete_game->ath_game_id?>" class="btn btn-primary">Download Challan</a>
 
-                                      <a href="javascript:void(0)" data-toggle="modal" data-target="#editModel" href="javascript:void(0)" class="btn btn-primary">Upload Challan</a>
+                                      <a href="javascript:void(0)" data-toggle="modal" data-target="#editModel" href="javascript:void(0)" class="btn btn-primary" onclick="return get_id(<?=$athlete_game->ath_game_id?>);">Upload Challan</a>
 
                                     </td>
                                   </tr>
@@ -142,14 +142,15 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-success">
-                    <h5 class="modal-title text-white" id="formModaladd">Update Challan </h5>
+                    <h5 class="modal-title text-white" id="formModaladd">Upload Challan </h5>
                     <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span> 
                     </button>
                     </div>
                     <div class="modal-body">
                     <!-- body-->
-                        <form class="" method="post" action="<?= base_url("admin/event_update") ?>">
+                        <form class="" method="post"  action="<?= base_url("athletes/add_athlete_challan") ?>" enctype="multipart/form-data">
+                          <input type="hidden" name="ath_game_id" id="ath_game_id" >
                             <div class="form-group">
                                   <label>Attach Challan Picture</label>
                                   <input type="file" class="form-control" placeholder="" name="Upload_challan" required>
@@ -171,4 +172,11 @@
             </div>
         </div>
 
+
+<script>
+  function get_id($ath_game_id){
+
+    $('#ath_game_id').val($ath_game_id);
+  }
+</script>
       

@@ -26,16 +26,23 @@ class AthletesModel extends CI_Model
 
          $this->db->select('athlete_games.`ath_game_id`,athlete_games.`ath_game_time_preference`,athlete_games.`ath_game_payment_mode`,athlete_games.`ath_game_total_fee`,athlete_games`.ath_game_status`,athlete_games.`ath_id`,athlete_games.`game_id`,games.game_name,games.game_fee,
 
-        athletes.ath_name,athletes.ath_father_name,athletes.ath_cnic,athletes.ath_address,
-        ')
+        athletes.ath_name,athletes.ath_father_name,athletes.ath_cnic,athletes.ath_address,athletes.`user_role_id_fk`
+        ');
         
-        ->from('athlete_games')
-        ->join('athletes','athletes.ath_id=athlete_games.ath_id','left')
-        ->join('games','athlete_games.game_id=games.game_id','left');
+        if($this->session->userdata('user_role_id_fk' == 6)){
+        $this->db->from('athlete_games');
+        }
+        else{
+
+        $this->db->from('athlete_games');
+        $this->db->join('athletes','athletes.ath_id=athlete_games.ath_id','left');
+        $this->db->join('games','athlete_games.game_id=games.game_id','left');
         if($ath_game_id !=null){
         $this->db->where('athlete_games.ath_game_id =',$ath_game_id);
         }
         $this->db->where('athlete_games.ath_id =',$ath_id);
+        }
+
         $query = $this->db->get();
 
         return $query->result();

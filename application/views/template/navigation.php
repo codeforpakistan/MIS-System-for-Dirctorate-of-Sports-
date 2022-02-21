@@ -7,7 +7,7 @@
 
           <ul class="sidebar-menu">
             <li class="dropdown active">
-              <?php if($this->session->userdata('user_role_id_fk') == 5):?>
+              <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6):?>
               <a href="Athletes" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
               <?php else:?>
               <a href="admin" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
@@ -177,6 +177,15 @@
             <li class="dropdown">
                 <a href="#"  class="nav-link ">
                   <i data-feather="briefcase"></i><span>Update Profile</span>
+                </a>
+            </li> 
+            <?php endif;?>
+
+            <?php if($this->session->userdata('user_role_id_fk') == 6):?>
+
+            <li class="dropdown">
+                <a href="Athletes/Athlete_dashboard"  class="nav-link ">
+                  <i data-feather="briefcase"></i><span>Applied Games</span>
                 </a>
             </li> 
             <?php endif;?>

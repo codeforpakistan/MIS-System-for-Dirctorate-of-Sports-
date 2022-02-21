@@ -13,9 +13,6 @@ class Athletes extends CI_Controller {
         $this->load->library('auto_no.php','zend');
         $this->load->library('form_validation');
 
-         // if(!$this->session->userdata('ath_id')){
-         //     redirect('athletes');
-         // }
     } 
 
   public function index()
@@ -117,6 +114,8 @@ class Athletes extends CI_Controller {
 
         $ath_id = $this->session->userdata('ath_id');
         $data['athlete_games']   = $this->model->get_athlete_games($ath_id,$ath_game_id=null); 
+
+        //print_r($data['athlete_games']);die;
         $data['title']          = 'Dashboard';
         $data['page']           = 'athlete_dashboard';
         $this->load->view('template',$data);
@@ -239,8 +238,8 @@ class Athletes extends CI_Controller {
         {
 
 
-           $cnic_picture        = $_FILES['cnic_front_copy']['name'];
-           $profile_picture     = $_FILES['profile_pic']['name'];
+            $cnic_picture        = $_FILES['cnic_front_copy']['name'];
+            $profile_picture     = $_FILES['profile_pic']['name'];
             $name                = $this->input->post('name');
             $f_name              = $this->input->post('f_name');
             $cnic                = $this->input->post('cnic');
@@ -282,7 +281,7 @@ class Athletes extends CI_Controller {
                         'ath_contact'            =>  $contact,
                         'ath_gender'             =>  $gender,
                         'ath_emergency_contact'  =>  $emergency_contact,
-                        'district_id'     => $district_id,
+                        'district_id'            => $district_id,
                         'ath_profession'         =>  $profession,
                         'ath_date_apply'         =>  $date_of_apply, 
                         'ath_profile_photo'      =>  $this->upload->data('file_name'),
@@ -396,6 +395,43 @@ class Athletes extends CI_Controller {
         $data['title'] = 'Bank Copy';
         $data['page']  = 'bank_challan';
         $this->load->view('template',$data);
+    }
+
+    public function add_athlete_challan()
+    {
+        if($this->input->post()){
+
+            $ath_game_id = $this->input->post('ath_game_id',true);
+            $challan_no  = $this->input->post('challan_no',true);
+
+
+            $challan        = $_FILES['Upload_challan']['name'];
+
+            if($challan == ''){
+                redirect('athletes/athlete_dashboard');
+            }
+
+            else{
+
+            $config = array(
+            'upload_path'   => 'assets/images/challan/',
+            'allowed_types' => 'png|jpg|jpeg',
+            );
+
+            $this->load->library('upload',$config);
+            $this->upload->do_upload('Upload_challan');
+
+            $data = array(
+
+                'ath_challan_no'   => $challan_no,
+                'ath_game_challan' => $this->upload->data('file_name'),
+            );
+
+            $this->db->where('ath_game_id',$ath_game_id)->update('athlete_games',$data);
+            $this->messages('alert-success','Challan Uploaded');
+            redirect('athletes/athlete_dashboard');
+            }
+        }
     }
 
 

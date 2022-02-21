@@ -74,14 +74,14 @@
                  class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png"
                  class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
-              <?php if($this->session->userdata('user_role_id_fk') == 5):?>
+              <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6):?>
               <div class="dropdown-title"><?= $this->session->userdata('ath_name')?></div>
 
               <?php else:?>
               <div class="dropdown-title"><?= $this->session->userdata('user_role_name')?></div>
             <?php endif;?>
 
-              <?php if($this->session->userdata('user_role_id_fk') == 5):?>
+              <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6):?>
                 <a href="Athletes/athlete_profile" class="dropdown-item has-icon" ><i class="far
                     fa-user"></i> Profile
               </a>
