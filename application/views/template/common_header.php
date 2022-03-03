@@ -8,6 +8,7 @@
   <title>Sports Directorate</title>
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/css/app.min.css">
+  <link rel="stylesheet" href="assets/bundles/izitoast/css/iziToast.min.css">
   <link rel="stylesheet" href="assets/bundles/chocolat/dist/css/chocolat.css">
   <link rel="stylesheet" href="assets/bundles/datatables/datatables.min.css">
   <link rel="stylesheet" href="assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
@@ -71,8 +72,10 @@
         <ul class="navbar-nav navbar-right">
           <li class="dropdown">
             <a href="#" data-toggle="dropdown"
-                 class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png"
-                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
+                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                  <!-- <img alt="image" src="assets/img/user.png"  class="user-img-radious-style"> -->
+                  <img alt="image" style="width: 40px; height: 40px; border-radius: 50%;" src="assets/<?= (!empty($this->session->userdata('prifile_image')))?'images/athlete_images/'.$this->session->userdata('prifile_image'):'img/user.png'?>" class="user-img-radious-style">
+                 <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6):?>
               <div class="dropdown-title"><?= $this->session->userdata('ath_name')?></div>
