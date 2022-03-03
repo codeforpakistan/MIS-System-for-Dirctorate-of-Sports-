@@ -1006,6 +1006,7 @@ class Admin extends CI_Controller {
 
         $this->form_validation->set_rules('game_name', 'Game Name', 'required|trim|is_unique[games.game_name]');
         $this->form_validation->set_rules('game_fee', 'Game Fee', 'required|trim');
+        $this->form_validation->set_rules('game_admission_fee', 'Game Admission Fee', 'required|trim');
         $this->form_validation->set_rules('game_description', 'Game Description', 'required|trim');
         if ($this->form_validation->run() == FALSE)
         {
@@ -1019,16 +1020,18 @@ class Admin extends CI_Controller {
         else
         {
 
-            $game_name          = $this->input->post('game_name');
-            $game_fee          = $this->input->post('game_fee');
-            $game_description   = $this->input->post('game_description');
+            $game_name           = $this->input->post('game_name');
+            $game_fee            = $this->input->post('game_fee');
+            $game_admission_fee  = $this->input->post('game_admission_fee');
+            $game_description    = $this->input->post('game_description');
             $table_name          = 'games'; 
 
             $game_array         = array(
 
-                'game_name'        =>  $game_name,
-                'game_fee'        =>  $game_fee,
-                'game_description' =>  $game_description,
+                'game_name'           =>  $game_name,
+                'game_fee'            =>  $game_fee,
+                'game_admission_fee'  =>  $game_admission_fee,
+                'game_description'    =>  $game_description,
 
             );
 
@@ -1052,15 +1055,16 @@ class Admin extends CI_Controller {
         if($this->input->post('game_id'))
         {   
 
-
             $this->form_validation->set_rules('game_name', 'Game Name', 'required|trim');
             $this->form_validation->set_rules('game_fee', 'Game Fee', 'required|trim');
+            $this->form_validation->set_rules('game_admission_fee', 'Game Admission Fee', 'required|trim');
             $this->form_validation->set_rules('game_description', 'Game Description', 'required|trim');
 
-            $game_name          = $this->input->post('game_name');
-            $game_fee          = $this->input->post('game_fee');
-            $game_id            = $this->input->post('game_id');
-            $game_description   = $this->input->post('game_description');
+            $game_name           = $this->input->post('game_name');
+            $game_fee            = $this->input->post('game_fee');
+            $game_admission_fee  = $this->input->post('game_admission_fee');
+            $game_id             = $this->input->post('game_id');
+            $game_description    = $this->input->post('game_description');
             $table_name          = "games";
             $talbe_column_name   = 'game_id';
             $table_id            = $game_id;
@@ -1081,6 +1085,7 @@ class Admin extends CI_Controller {
 
                 'game_name'            =>  $game_name,
                 'game_fee'             =>  $game_fee,
+                'game_admission_fee'   =>  $game_admission_fee,
                 'game_description'     =>  $game_description,
                
 
@@ -1141,6 +1146,9 @@ class Admin extends CI_Controller {
     }
 
     ////////game end //////////////
+
+
+    
 
 
 

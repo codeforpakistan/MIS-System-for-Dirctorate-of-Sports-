@@ -432,9 +432,6 @@
         url: 'admin/get_ajax_officals_player/'+player_offical_id+'/player',
         dataType: 'json',
         success: function(res){
-
-        console.log(res);
-
         var event_id = res.event_id;
         $('#editModel form')[0].reset();
         $('#editModel').modal('show');

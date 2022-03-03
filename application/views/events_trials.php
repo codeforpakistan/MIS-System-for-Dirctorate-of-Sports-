@@ -335,11 +335,11 @@
 
       <script>
           function trial_update(event_trial_id){ 
+
           $.ajax({
             url: 'admin/get_ajax_trial/'+event_trial_id,
             dataType: 'json',
             success: function(res){
-              console.log(res);
               $('#edit_trial_name').val(res.trial_name);
               $('#edit_event_id option[value='+res.event_id+']').attr('selected','selected'); 
               $('.game_id').append('<option value="'+ res.game_id +'">'+res.game_name+'</option>');
@@ -363,7 +363,6 @@
 
         $(document).on( "change",'.event_id',function(){
           var event_id = $(this).val();
-
             $.ajax({
             url: 'admin/get_ajax_event_game/'+event_id,
             dataType: 'json',

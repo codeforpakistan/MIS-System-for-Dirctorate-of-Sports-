@@ -82,7 +82,7 @@
 
                         <tr>
                           <td>Total Fee:</td>
-                          <td><?=$bank_challan[0]->ath_game_total_fee?></td>
+                          <td><?=$bank_challan[0]->ath_game_fee?></td>
                         </tr>
 
 

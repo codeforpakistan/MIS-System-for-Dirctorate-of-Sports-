@@ -138,7 +138,7 @@
     </div>
   </div>
   <script src="assets/js/jquery.inputmask.bundle.js"></script>
-  <<script>
+  <script>
     $(":input").inputmask();
 
         function onChange() 

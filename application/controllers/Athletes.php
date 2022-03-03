@@ -46,8 +46,6 @@ class Athletes extends CI_Controller {
             $response      = $this->AuthModel->athlete_login($ath_email,$ath_password); 
 
 
-
-
             if(!empty($response))// is user name and passsword valid
                {
 
@@ -55,7 +53,9 @@ class Athletes extends CI_Controller {
                 $this->session->set_userdata('ath_name',$response['ath_name']);
                 $this->session->set_userdata('ath_email',$response['ath_email']);
                 $this->session->set_userdata('user_role_id_fk',$response['user_role_id_fk']);
-                //$this->session->set_userdata('user_role_name',$response->user_role_name);
+
+
+               // echo $response['ath_cnic'];die;
 
 
             if($response['ath_cnic'] > 0){
@@ -109,15 +109,17 @@ class Athletes extends CI_Controller {
     
     public function athlete_dashboard()
     {   
-         $table           = 'games';
+
+        $table            = 'games';
         $data['games']    = $this->admin_model->get_all_records($table);
 
         $ath_id = $this->session->userdata('ath_id');
-        $data['athlete_games']   = $this->model->get_athlete_games($ath_id,$ath_game_id=null); 
+        $data['athlete_games']   = $this->model->get_athlete_games($ath_id,$ath_game_fee_id=null);
 
-        //print_r($data['athlete_games']);die;
-        $data['title']          = 'Dashboard';
-        $data['page']           = 'athlete_dashboard';
+       
+       
+        $data['title']  = 'Dashboard';
+        $data['page']   = 'athlete_dashboard';
         $this->load->view('template',$data);
     }
 
@@ -164,6 +166,7 @@ class Athletes extends CI_Controller {
             );
 
 
+
             $response = $this->admin_model->insert($insert_athlete_array,$table_name);
           
 
@@ -190,12 +193,11 @@ class Athletes extends CI_Controller {
 
         $more_games = $this->input->post('more_games');
 
-        if($more_games > 0){
-
+        if(!empty($more_games)){
+        
+        //$this->form_validation->set_rules('game_id', 'Name', 'required|trim');
         $this->form_validation->set_rules('time_prefernce', 'Time Prefernce', 'required|trim');
         $this->form_validation->set_rules('total_fee', 'Total Fee', 'required|trim');
-        $this->form_validation->set_rules('payment_mode', 'Payment Mode', 'required|trim');
-
         }
         else{
 
@@ -210,13 +212,9 @@ class Athletes extends CI_Controller {
         $this->form_validation->set_rules('emergency_contact', 'Emergency Contact', 'required|trim');
         $this->form_validation->set_rules('profession', 'Profession', 'required|trim');
         $this->form_validation->set_rules('date_of_apply', 'Date of Apply', 'required|trim');
-        $this->form_validation->set_rules('district_id', 'District', 'required|trim');
-      //  $this->form_validation->set_rules('game_id', 'Game', 'required|trim');
-        //$this->form_validation->set_rules('cnic_front_copy', 'CNIC Picture', 'required|trim');
-       // $this->form_validation->set_rules('profile_pic', 'Profile Picture', 'required|trim');
+        $this->form_validation->set_rules('district_id', 'District', 'required|trim');     
         $this->form_validation->set_rules('time_prefernce', 'Time Prefernce', 'required|trim');
         $this->form_validation->set_rules('total_fee', 'Total Fee', 'required|trim');
-        $this->form_validation->set_rules('payment_mode', 'Payment Mode', 'required|trim');
 
     }
 
@@ -253,7 +251,6 @@ class Athletes extends CI_Controller {
             $district_id         = $this->input->post('district_id');
             $game_id             = $this->input->post('game_id');
             $time_prefernce      = $this->input->post('time_prefernce');
-            $total_fee           = $this->input->post('total_fee');
             $payment_mode        = $this->input->post('payment_mode');
             $table_name          = 'athletes'; 
             $talbe_column_name   = 'ath_id';
@@ -283,7 +280,7 @@ class Athletes extends CI_Controller {
                         'ath_emergency_contact'  =>  $emergency_contact,
                         'district_id'            => $district_id,
                         'ath_profession'         =>  $profession,
-                        'ath_date_apply'         =>  $date_of_apply, 
+                        //'ath_date_apply'         =>  $date_of_apply, 
                         'ath_profile_photo'      =>  $this->upload->data('file_name'),
                         'ath_nic_photo'          =>  $this->upload->data('file_name')
 
@@ -291,27 +288,64 @@ class Athletes extends CI_Controller {
 
             $response = $this->admin_model->update($applicantion_array,$table_name,$talbe_column_name,$table_id);
 
-            $table_name1 = 'athlete_games';
+            $ath_game_table = 'athlete_games';
 
              /* for insert into multiple games */
+
+             $total_fee;
+
             for($i=0; $i < count($game_id); $i++){
+
+                $game_table          = 'games';
+                $talbe_column_name   = 'game_id';
+                $table_id            = $game_id[$i];
+                $data['games']       = $this->admin_model->exist_record_row($talbe_column_name,$table_id,$game_table);
+
+                $total_fee += $data['games']['game_fee']+$data['games']['game_admission_fee'];
+
+               // echo $total_fee;die;
+
+
                 $athlete_games_array1    = array(
                 'game_id'                     =>  $game_id[$i],
                 'ath_id'                      =>  $ath_id,
                 'ath_game_time_preference'    =>  $time_prefernce,
-                'ath_game_payment_mode'       =>  $payment_mode,
-                'ath_game_total_fee'          =>  $total_fee,
-                'ath_game_status'             =>  'pending',
+                'ath_game_fee            '    =>  $data['games']['game_fee'],
+                'ath_game_admission_fee'      =>  $data['games']['game_admission_fee'],
+                'ath_game_apply_date'         =>  $date_of_apply,
+                'ath_game_status'             => 'Pending',
             );
 
 
-             $this->admin_model->insert($athlete_games_array1,$table_name1);
-
+             $this->admin_model->insert($athlete_games_array1,$ath_game_table);
          }
+
+         //echo $total_fee;die;
+
+             $end_month_days =  date("t");
+             $expire_date    = date('Y-m').'-'.$end_month_days;
+
+           //  $challan_no +=1;
+             
+             $fee_table_name = "athlete_games_fees"; 
+
+             $athlete_games_fees    = array(
+                'ath_payment_mode'         =>  $payment_mode,
+                'ath_challan_no'           =>  10,
+                'ath_fee_status'           =>  1,
+                'ath_challan_fee'          =>  $total_fee,
+                'ath_id'                   =>  $ath_id,
+                'fee_monthly_start_date'   =>  $date_of_apply,
+                'fee_monthly_end_date'     =>  $expire_date
+            );
+
+              $this->admin_model->insert($athlete_games_fees,$fee_table_name);
+
+
                 if($response == true)
                 {
                     $this->messages('alert-success','Successfully Added');
-                    return redirect('athletes'); 
+                    return redirect('athletes/bank_challan/'.$ath_id); 
                 }
                 else
                 {
@@ -388,10 +422,10 @@ class Athletes extends CI_Controller {
             }                       
     }
 
-    public function bank_challan($ath_id,$ath_game_id)
+    public function bank_challan($ath_id)
     {
 
-        $data['bank_challan']  = $this->model->get_athlete_games($ath_id,$ath_game_id); 
+        $data['bank_challan']  = $this->model->get_athlete_games($ath_id); 
         $data['title'] = 'Bank Copy';
         $data['page']  = 'bank_challan';
         $this->load->view('template',$data);
@@ -401,7 +435,7 @@ class Athletes extends CI_Controller {
     {
         if($this->input->post()){
 
-            $ath_game_id = $this->input->post('ath_game_id',true);
+            $ath_game_fee_id = $this->input->post('ath_game_fee_id',true);
             $challan_no  = $this->input->post('challan_no',true);
 
 
@@ -423,15 +457,32 @@ class Athletes extends CI_Controller {
 
             $data = array(
 
-                'ath_challan_no'   => $challan_no,
-                'ath_game_challan' => $this->upload->data('file_name'),
+                'ath_challan_no'     => $challan_no,
+                'ath_upload_challan' => $this->upload->data('file_name'),
             );
 
-            $this->db->where('ath_game_id',$ath_game_id)->update('athlete_games',$data);
+            $this->db->where('ath_game_fee_id',$ath_game_fee_id)->update('athelete_games_fees',$data);
             $this->messages('alert-success','Challan Uploaded');
             redirect('athletes/athlete_dashboard');
             }
         }
+    }
+
+     public function get_ajax_multiple_game()
+    { 
+
+         $game_id = $this->input->post('hello'); echo $game_id;
+         exit;
+
+
+        // $table_name        = "games";
+        // $talbe_column_name = 'game_id';
+        // $table_id          = $game_id;
+
+        // $games = $this->admin_model->exist_record_row($talbe_column_name,$table_id,$table_name);  // get row
+        // echo json_encode($games);
+
+        //  exit;      
     }
 
 

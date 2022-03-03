@@ -1,4 +1,4 @@
-     <!-- Main Content -->
+<!-- Main Content -->
       <div class="main-content">
         <section class="section">
 <!-- start messages --->
@@ -90,7 +90,7 @@
                        <div class="col-4">
                             <div class="form-group">
                                   <label>Emergency Contact</label>
-                                  <input type="text" class="form-control" placeholder="Emergency Contact" name="emergency_contact" required>
+                                  <input type="text" class="form-control" placeholder="Emergency Contact" name="emergency_contact" data-inputmask="'mask': '0399-9999999'" minlength="12" maxlength="12" required>
                             </div>
                       </div>
 
@@ -157,7 +157,7 @@
                       <div class="col-12">
                             <div class="form-group">
                               <label>Game Applied For</label>
-                                  <select class="form-control select2" multiple="" name="game_id[]">
+                                  <select class="form-control select2" id="game_id" multiple="" name="game_id[]">
                                     <option>-Select Games</option>
                                     <?php if(!empty($games)){
                                       foreach($games as $game){?>
@@ -182,8 +182,23 @@
 
                       <div class="col-4">
                             <div class="form-group">
+                                  <label>Game Fee</label>
+                                  <input type="number" class="form-control" placeholder="Total Fee" name="total_fee" id="total_fee"  required>
+                            </div>
+                      </div>
+
+
+                      <div class="col-4">
+                            <div class="form-group">
+                                  <label>Admission Fee</label>
+                                  <input type="number" class="form-control" placeholder="Total Fee" name="total_fee" id="total_fee"  required>
+                            </div>
+                      </div>
+
+                      <div class="col-4">
+                            <div class="form-group">
                                   <label>Total Fee</label>
-                                  <input type="text" class="form-control" placeholder="Total Fee" name="total_fee" required>
+                                  <input type="number" class="form-control" placeholder="Total Fee" name="total_fee" id="total_fee"  required>
                             </div>
                       </div>
 
@@ -216,24 +231,62 @@
             </div>
           </div>
         </div> 
-
-        
-
-
       </form>                
     </div>
   </div>
 
 
-               <script>
-
-                $(document).ready(function(){
-
-                 $(".datepicker" ).datepicker();
+<script>
 
 
+$(document).ready(function(){
+
+   $(document).on('change','#game_id',function(){
+    var game_id = $(this).val();
+
+     $.ajax({
+            url: '<?=base_url()?>Athletes/get_ajax_multiple_game',
+           // dataType: 'json',
+            type:"post",
+            data:{hello:game_id},
+            success: function(response){
+             
+             console.log(response);
+            }
+          });
 
 
-                });
-                 
-               </script>
+
+  });
+});
+ 
+  //function calculate_total_fee(id){
+
+    //alert(id);
+//console.log(id);
+  // jQuery.ajax({
+  //   url: "/get_subscategories",
+  //   type: "GET",
+  //   data: {
+  //     "parent_id": id
+  //   },
+  //   dataType: "html",
+  //   success: function(data) {
+  //     jQuery("#versionsDiv").html(data);
+  //   }
+  // });
+//}
+
+ 
+
+//   function calculate_total_fee(sel) {
+
+//     var game_id = sel.value;
+
+//     alert(game_id);
+
+
+    
+// }
+
+</script>

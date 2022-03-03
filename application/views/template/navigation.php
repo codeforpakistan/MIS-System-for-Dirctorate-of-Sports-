@@ -181,6 +181,24 @@
             </li> 
             <?php endif;?>
 
+            <?php if($this->session->userdata('user_role_id_fk') == 5):?>
+
+            <li class="dropdown">
+                <a href="#"  class="nav-link ">
+                  <i data-feather="briefcase"></i><span>Active Games</span>
+                </a>
+            </li> 
+            <?php endif;?>
+
+            <?php if($this->session->userdata('user_role_id_fk') == 5):?>
+
+            <li class="dropdown">
+                <a href="#"  class="nav-link ">
+                  <i data-feather="briefcase"></i><span>Fee challans</span>
+                </a>
+            </li> 
+            <?php endif;?>
+
             <?php if($this->session->userdata('user_role_id_fk') == 6):?>
 
             <li class="dropdown">

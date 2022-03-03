@@ -33,6 +33,7 @@
                           <tr>
                             <th>Games Name</th>
                             <th>Games Fee</th>
+                            <th>Game Admission Fee</th>
                             <th>Games Description</th>
                             <th>Action</th>
                           </tr>
@@ -43,6 +44,7 @@
                                 <tr>
                                     <td><?= $onByOne->game_name?></td>
                                     <td><?= $onByOne->game_fee?></td>
+                                    <td><?= $onByOne->game_admission_fee?></td>
                                     <td><?= $onByOne->game_description?></td>
                                     <td>
                                        <a class="fa fa-edit text-info" data-toggle="modal" data-target="#editModel" href="javascript:void(0)" onclick="game_update(<?= $onByOne->game_id ?>)"></a>
@@ -86,7 +88,13 @@
 
                                  <div class="form-group">
                                   <label>Game Fee</label>
-                                  <input type="text" class="form-control" placeholder="Game Fee" name="game_fee" required>
+                                  <input type="number" class="form-control" placeholder="Game Fee" name="game_fee" required>
+                                  
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Game Admission Fee</label>
+                                  <input type="number" class="form-control" placeholder="Game Admission Fee" name="game_admission_fee" required>
                                   
                                 </div>
 
@@ -128,7 +136,13 @@
 
                                  <div class="form-group">
                                   <label>Game Fee</label>
-                                  <input type="text" class="form-control" placeholder="Game Fee" name="game_fee" id="edit_game_fee" required>
+                                  <input type="number" class="form-control" placeholder="Game Fee" name="game_fee" id="edit_game_fee" required>
+                                  
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Game Admission Fee</label>
+                                  <input type="number" class="form-control" placeholder="Game Admission Fee" name="game_admission_fee" id="edit_game_admission_fee" required>
                                   
                                 </div>
 
@@ -158,6 +172,7 @@
             success: function(response){
               $('#edit_game_name').val(response.game_name);
               $('#edit_game_fee').val(response.game_fee);
+              $('#edit_game_admission_fee').val(response.game_admission_fee);
               $('#edit_game_description').val(response.game_description);
               $('#edit_game_id').val(response.game_id); 
             }

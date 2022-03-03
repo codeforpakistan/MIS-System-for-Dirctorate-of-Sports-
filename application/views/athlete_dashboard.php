@@ -6,7 +6,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Applied Games</h4>
+                    <h4>List of Active Games</h4>
                   </div>
                   <div class="card-body">
                   <button type="button" class="btn btn-primary pull-right fa fa-plus" data-toggle="modal" data-target="#addGameModel" style="margin-top:-5%;"> Add New Game</button>
@@ -32,29 +32,32 @@
                         <thead >
                           <tr>
                             <th>Game Name</th>
-                            <th>Game Fee</th>
                             <th>Game Time</th>
+                            <th>Game Fee</th>
                             <th>Payment Mode</th>
-                            <th>Game Status</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                             <tbody>
-
                               <?php if(!empty($athlete_games)):
                                 foreach($athlete_games as $athlete_game):?>
                                   <tr>
                                     <td><?=$athlete_game->game_name?></td>
-                                    <td><?=$athlete_game->game_fee?></td>
                                     <td><?=$athlete_game->ath_game_time_preference?></td>
-                                    <td><?=$athlete_game->ath_game_payment_mode?></td>
+                                    <td><?=$athlete_game->ath_game_fee?></td>
+                                    <td><?=$athlete_game->ath_payment_mode?></td>
                                     <td><?=$athlete_game->ath_game_status?></td>
                                     <td>
 
-                                      <a href="athletes/bank_challan/<?=$athlete_game->ath_id?>/<?=$athlete_game->ath_game_id?>" class="btn btn-primary">Download Challan</a>
+                                      <?php if(empty($athlete_game->ath_game_fee_id > 0)){?>
+                                       <a href="javascript:void(0)" data-toggle="modal" data-target="#feeModel" href="javascript:void(0)" class="btn btn-primary" onclick="return get_id(<?=$athlete_game->ath_game_id?>,<?=$athlete_game->game_id?>);">Submit Fee</a>
+                                      <?php } else{?>
 
-                                      <a href="javascript:void(0)" data-toggle="modal" data-target="#editModel" href="javascript:void(0)" class="btn btn-primary" onclick="return get_id(<?=$athlete_game->ath_game_id?>);">Upload Challan</a>
+                                       <a href="athletes/bank_challan/<?=$athlete_game->ath_id?>/<?=$athlete_game->ath_game_id?>" class="btn btn-primary">Download Challan</a>
 
+                                      <a href="javascript:void(0)" data-toggle="modal" data-target="#uploadModel" href="javascript:void(0)" class="btn btn-primary" onclick="return get_id(<?=$athlete_game->ath_game_id?>);">Upload Challan</a>
+                                    <?php }?>
                                     </td>
                                   </tr>
 
@@ -95,7 +98,7 @@
                                   </select>
                             </div>
 
-                        <input type="text" name="more_games" value="more_games">
+                        <input type="hidden" name="more_games" value="more_games">
 
 
                             <div class="form-group">
@@ -111,16 +114,7 @@
                                   <label>Total Fee</label>
                                   <input type="text" class="form-control" placeholder="Total Fee" name="total_fee" required>
                             </div>
-
-                            <div class="form-group">
-                                  <label>Payment Mode</label>
-                                  <select class="form-control" name="payment_mode">
-                                    <option>-Select Payment Mode-</option>
-                                    <option>easypaisa</option>
-                                    <option>Bank</option>
-                                  </select>
-                            </div>
-
+                            
                             <div class="form-group">
                                   <label>Date of apply</label>
                                   <input type="date" class="form-control" placeholder="" name="date_of_apply" required>
@@ -138,7 +132,7 @@
         <!-- add game modal--->
 
         <!--- edit form -->
-      <div class="modal fade" id="editModel"  role="dialog" aria-labelledby="formModaladd" aria-hidden="true" data-backdrop="static">
+      <div class="modal fade" id="uploadModel"  role="dialog" aria-labelledby="formModaladd" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-success">
@@ -150,7 +144,7 @@
                     <div class="modal-body">
                     <!-- body-->
                         <form class="" method="post"  action="<?= base_url("athletes/add_athlete_challan") ?>" enctype="multipart/form-data">
-                          <input type="hidden" name="ath_game_id" id="ath_game_id" >
+                          <input type="hidden" name="ath_game_fee_id" id="ath_game_fee_id" >
                             <div class="form-group">
                                   <label>Attach Challan Picture</label>
                                   <input type="file" class="form-control" placeholder="" name="Upload_challan" required>
@@ -172,11 +166,70 @@
             </div>
         </div>
 
+         <div class="modal fade" id="feeModel"  role="dialog" aria-labelledby="formModaladd" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-success">
+                    <h5 class="modal-title text-white" id="formModaladd">Submit Fee</h5>
+                    <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span> 
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <!-- body-->
+                        <form class="" method="post"  action="<?= base_url("athletes/add_athlete_challan") ?>">
+
+                                <div class="form-group">
+                                  <label>Game</label>
+                                  <input type="text" class="form-control" placeholder="" name="game_name" id="game" readonly="">
+                                </div> 
+
+                                 <div class="form-group">
+                                  <label>Game Fee</label>
+                                  <input type="text" class="form-control" placeholder="" name="game_name" id="game" readonly="">
+                                </div> 
+
+                                <div class="form-group">
+                                        <label>Fee Type</label>
+                                        <select class="form-control" name="payment_mode">
+                                          <option>-Select Months-</option>
+                                          <option>january</option>
+                                          <option>Febraray</option>
+                                        </select>
+                                  </div>
+
+
+                                  <div class="form-group">
+                                        <label>Payment Mode</label>
+                                        <select class="form-control" name="payment_mode">
+                                          <option>-Select Payment Mode-</option>
+                                          <option>Bank</option>
+                                          <option>Easypaisa</option>
+                                        </select>
+                                  </div>
+
+                                <div class="form-group">
+                                  <label>Total Fee</label>
+                                  <input type="text" class="form-control" placeholder="" id="game_fee" name="game_fee" required>
+                                </div>
+
+                                  
+                               <div class="col-12">
+                                <div class="form-group pull-right">
+                                <button type="submit" class="btn btn-primary m-t-15 waves-effect pull-right" >Save</button>
+                              </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 <script>
-  function get_id($ath_game_id){
+  function get_id(ath_game_id,game_id){
 
-    $('#ath_game_id').val($ath_game_id);
+    $('#ath_game_fee_id').val(ath_game_id);
   }
 </script>
       
