@@ -175,7 +175,7 @@
             <?php if($this->session->userdata('user_role_id_fk') == 5):?>
 
             <li class="dropdown">
-                <a href="#"  class="nav-link ">
+                <a href="athletes/user_profile"  class="nav-link ">
                   <i data-feather="briefcase"></i><span>Update Profile</span>
                 </a>
             </li> 

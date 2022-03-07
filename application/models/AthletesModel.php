@@ -50,6 +50,33 @@ class AthletesModel extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+   // :::::::::::::::::::  user profile 
+
+    function profile($user_role_id_fk)
+    {
+        return $this->db->select('a.ath_name,a.ath_father_name,a.ath_cnic,a.ath_dob,a.ath_address,a.ath_contact,a.ath_gender,a.ath_emergency_contact,a.ath_profession,a.ath_profile_photo,a.ath_email,r.user_role_name,d.district_name')
+                        ->from('athletes a')
+                        ->where('user_role_id_fk =',$user_role_id_fk)
+                        ->join('districts d','d.district_id=a.district_id','left')
+                        ->join('user_roles r','r.user_role_id=a.user_role_id_fk','left')
+                        ->order_by('a.user_id','desc')
+                         ->get()->result();
+    }
+
+
+    function update($update_array,$table_name,$talbe_column_name,$table_id)
+    {
+      return $this->db->where($talbe_column_name,$table_id)->update($table_name,$update_array);
+    }
+
+    function user_password($ath_id)
+    {
+     return $this->db->select('athletes.ath_password')
+                     ->where('ath_id',$ath_id)
+                     ->get('athletes')
+                     ->row()->ath_password;
+    }
+
 }
 
 ?>

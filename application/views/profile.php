@@ -24,7 +24,7 @@
                 </div>
                 <div class="card">
                   <div class="card-header">
-                    <h4>Personal Details</h4>
+                    <h4>Personal Details test</h4>
                   </div>
                   <div class="card-body">
                     <div class="">
@@ -85,11 +85,14 @@
                                     Please fill in the name
                                   </div>
                                 </div>
-                              <div class="form-group col-md-6 col-12">
+
+                                <div class="form-group col-md-6 col-12">
                                   <label>Phone</label>
                                   <input type="tel" class="form-control" name="user_contact" value="<?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6): echo $athlete_profile['ath_contact']; else:  echo $profile['user_contact'];endif;?>" data-inputmask="'mask': '0399-99999999'" required maxlength = "12" minlenth="12">
                                 </div>
+
                               </div>
+
                               <div class="row">
                                 <div class="form-group col-md-6 col-12">
                                   <label>Email</label>

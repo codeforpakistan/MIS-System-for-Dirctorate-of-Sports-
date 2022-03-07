@@ -48,15 +48,14 @@ class Athletes extends CI_Controller {
 
             if(!empty($response))// is user name and passsword valid
                {
-
+               
                 $this->session->set_userdata('ath_id',$response['ath_id']);
                 $this->session->set_userdata('ath_name',$response['ath_name']);
                 $this->session->set_userdata('ath_email',$response['ath_email']);
                 $this->session->set_userdata('user_role_id_fk',$response['user_role_id_fk']);
-
-
-               // echo $response['ath_cnic'];die;
-
+                // $this->session->set_userdata('user_role_name',$response->user_role_name);
+                $this->session->set_userdata('prifile_image',$response['ath_profile_photo']);
+              
 
             if($response['ath_cnic'] > 0){
                 redirect('athletes/athlete_dashboard');
@@ -496,6 +495,150 @@ class Athletes extends CI_Controller {
          exit;   
 
           
+    }
+
+
+    // :::::::::::::::::: update user profile
+
+    // function user_profile()
+    // {
+    //     // $this->load->view('user_profile');
+    //     //$this->check_role_privileges('dashboard',$this->session->userdata('user_role_id_fk'));
+    //     $data['title']       = 'User Profile';
+    //     $data['page']        = 'user_profile';
+    //     $ath_id     = $this->session->userdata('ath_id');
+        
+    //     $data['athlete_profile']  = $this->model->athlete_profile($ath_id); 
+
+    //     $this->load->view('template',$data);
+    // }
+
+    public function user_profile()
+    {   
+        $data['title']       = 'User Profile';
+        $data['page']        = 'user_profile';
+        $user_role_id_fk     = $this->session->userdata('ath_id');
+        if(empty($user_role_id_fk))
+        {
+            $this->logout_user();
+        }       
+        $this->load->view('template',$data);
+    } 
+    //==========================================================================
+    // profile info ajax
+    //==========================================================================
+
+    public function profle_info()
+    {   
+        $user_role_id_fk = $this->session->userdata('user_role_id_fk');
+        $profile         = $this->model->profile($user_role_id_fk);      
+        echo json_encode($profile); exit;
+    }
+
+    function update_profile_users()
+    { 
+        $old_password = $this->input->post('old_password');
+        $user_id      = $this->session->userdata('ath_id');
+        // check user session is available
+            if($user_id > 0)
+            {
+            $user_password = $this->model->user_password($user_id);
+                if(md5($old_password) !== $user_password) 
+                {
+                    echo "Invalid Old  Password"; exit;
+                }
+            }
+            else
+            {
+                echo "Please login now"; exit;
+            }
+            // ::::::::::: profile image 
+                $uploadPath     = 'assets/images/athlete_images';
+                $this->load->library('image_lib');
+                    if (!file_exists($uploadPath)) 
+                    {
+                        mkdir($uploadPath);
+                        chmod($uploadPath, 0777);
+                    }
+                if (!empty($_FILES['attachment']['name']))
+                {
+                    $this->load->library('upload');
+                    $config['upload_path']   = $uploadPath;
+                    $config['allowed_types'] = '*';
+                    $config['max_width']     = '';
+                    $config['max_height']    = '';
+                    $config['remove_spaces'] = TRUE;
+                    $config['encrypt_name']  = FALSE;
+                    $config['detect_mime']   = TRUE;
+                    $config['overwrite']     = FALSE;
+                    $varAttachment = 'attachment_'.date("YmdHis");;
+                    $config['file_name'] = $varAttachment;
+                    $this->upload->initialize($config);
+                    if (!$this->upload->do_upload('attachment')):
+                        echo "Error in uploading attachment";
+                        exit;
+                    else:
+                        $image_data =   $this->upload->data();
+                            $data = array(
+                                'upload_data' => $this->upload->data()
+                            );
+                            $prifile_image = $data['upload_data']['file_name'];
+                    endif;
+                }
+                else
+                {
+                 $prifile_image = ''; 
+                }
+            // ::::::::::  profile image end
+            if(!empty($prifile_image))
+            {
+                $update_profile = array(
+                    'ath_name'               =>  $this->input->post('ath_name'),
+                        'ath_father_name'        =>  $this->input->post('ath_father_name'),
+                        'ath_dob'                =>  $this->input->post('ath_dob'),
+                        'ath_address'            =>  $this->input->post('ath_address'),
+                        'ath_contact'            =>  $this->input->post('ath_contact'),
+                        'ath_gender'             =>  $this->input->post('ath_gender'),
+                        'ath_emergency_contact'  =>  $this->input->post('ath_emergency_contact'),
+                        'ath_profession'         =>  $this->input->post('ath_profession'),
+                        'ath_password'           => md5($this->input->post('confirm')),
+                        'ath_profile_photo'      =>  $prifile_image
+                   );
+
+                        
+            }
+            else
+            {
+                $update_profile = array(
+                    'ath_name'               =>  $this->input->post('ath_name'),
+                        'ath_father_name'        =>  $this->input->post('ath_father_name'),
+                        'ath_dob'                =>  $this->input->post('ath_dob'),
+                        'ath_address'            =>  $this->input->post('ath_address'),
+                        'ath_contact'            =>  $this->input->post('ath_contact'),
+                        'ath_gender'             =>  $this->input->post('ath_gender'),
+                        'ath_emergency_contact'  =>  $this->input->post('ath_emergency_contact'),
+                        'ath_profession'         =>  $this->input->post('ath_profession'),
+                        'ath_password'           => md5($this->input->post('confirm'))
+                   );
+            }
+        
+        $response = $this->model->update($update_profile,'athletes','ath_id',$user_id);
+            if($response == true)
+            {
+                if($this->input->post('remember') == 'on')
+                {
+                    echo "Please login now"; exit;
+                }
+                else
+                { 
+                    echo "Record Update"; exit;   
+                }
+                
+            }
+            else
+            {
+                echo "Some Thing Wrong"; exit;
+            }                       
     }
 
 

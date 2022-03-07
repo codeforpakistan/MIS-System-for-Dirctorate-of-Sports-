@@ -21,6 +21,9 @@
    <script src="assets/js/page/datatables.js"></script>
   <!-- Template JS File -->
   <script src="assets/js/scripts.js"></script>
+  <script src="assets/bundles/izitoast/js/iziToast.min.js"></script>
+  <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://jeremyfagis.github.io/dropify/dist/css/dropify.min.css">
   <!-- Custom JS File -->
   <script src="assets/js/custom.js"></script>
   <script src="breadcrumb_assets/script.js"></script>
@@ -103,6 +106,29 @@ function onlyDigits(charCode)
         return true;
     }
 }
+
+function message(status,response_msg)
+{
+    if(status == 1)
+    {
+        
+        iziToast.success({
+        title: 'Success:',
+        message: response_msg,
+        position: 'topRight'
+        });
+    }
+    else
+    { 
+    iziToast.error({
+        title: 'Error:',
+        message: response_msg,
+        position: 'topRight'
+        });
+
+    }
+}
+</script>
 
 
 </script>
