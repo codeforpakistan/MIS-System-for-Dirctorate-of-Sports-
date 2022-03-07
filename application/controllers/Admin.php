@@ -86,8 +86,8 @@ class Admin extends CI_Controller {
                 } // end is user name and passsword valid
                 else // not match ue name and pass
                  {
-                    $this->session->set_flashdata('errorMsg', "Username Or Password Invalid");
-                    $this->messages('alert alert-danger',"Username Or Password Invalid");
+                    $this->session->set_flashdata('errorMsg', "Username or password invalid");
+                    $this->messages('alert alert-danger',"Username or password invalid");
                   //  echo "username or passwrod invalid"; 
                     redirect(base_url());
                     exit();

@@ -8,8 +8,17 @@
                   <div class="card-header">
                     <h4>List of Active Games</h4>
                   </div>
+                  <?php $ath_id = $this->session->userdata('ath_id')?>
                   <div class="card-body">
-                  <button type="button" class="btn btn-primary pull-right fa fa-plus" data-toggle="modal" data-target="#addGameModel" style="margin-top:-5%;"> Add New Game</button>
+                   
+                  <button type="button" class="btn btn-primary pull-right fa fa-plus" data-toggle="modal" data-target="#addGameModel" style="margin-top:-5%;margin-right: 25%;"> Add New Game</button>
+
+                  <a href="javascript:void(0)" data-toggle="modal" data-target="#uploadModel" href="javascript:void(0)" class="btn btn-info pull-right fa fa-upload" style="margin-top:-5%;margin-right: 13%;"> Upload Challan</a>
+
+                   <a href="athletes/bank_challan/<?=$ath_id?>" class="btn btn-success pull-right fa fa-download" style="margin-top:-5%;"> Download Challan</a>
+
+                  
+                                    
                       <!-- start messages --->
                       <div style="text-align: center">
                               <?php if($feedback =$this->session->flashdata('feedback')){
@@ -50,14 +59,9 @@
                                     <td><?=$athlete_game->ath_game_status?></td>
                                     <td>
 
-                                      <?php if(empty($athlete_game->ath_game_fee_id > 0)){?>
-                                       <a href="javascript:void(0)" data-toggle="modal" data-target="#feeModel" href="javascript:void(0)" class="btn btn-primary" onclick="return get_id(<?=$athlete_game->ath_game_id?>,<?=$athlete_game->game_id?>);">Submit Fee</a>
-                                      <?php } else{?>
+                                  
 
-                                       <a href="athletes/bank_challan/<?=$athlete_game->ath_id?>/<?=$athlete_game->ath_game_id?>" class="btn btn-primary">Download Challan</a>
-
-                                      <a href="javascript:void(0)" data-toggle="modal" data-target="#uploadModel" href="javascript:void(0)" class="btn btn-primary" onclick="return get_id(<?=$athlete_game->ath_game_id?>);">Upload Challan</a>
-                                    <?php }?>
+                                       
                                     </td>
                                   </tr>
 

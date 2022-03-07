@@ -23,7 +23,7 @@ class AthletesModel extends CI_Model
     
     {
 
-         $this->db->select('athlete_games.`ath_game_id`,athlete_games.`ath_game_time_preference`,athlete_games.`ath_game_status`,athlete_games.`ath_game_fee`,athlete_games.`ath_id`,athlete_games.`game_id`,
+         $this->db->select('athlete_games.`ath_game_id`,athlete_games.`ath_game_time_preference`,athlete_games.`ath_game_status`,athlete_games.`ath_game_fee`,athlete_games.`ath_game_admission_fee`,athlete_games.`ath_id`,athlete_games.`game_id`,
 
             athlete_games_fees.`ath_game_fee_id`,athlete_games_fees.`ath_payment_mode`,athlete_games_fees.`ath_challan_no`,athlete_games_fees.`ath_upload_challan`,athlete_games_fees.`ath_fee_status`,
 

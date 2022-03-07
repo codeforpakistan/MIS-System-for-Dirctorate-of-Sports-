@@ -71,8 +71,8 @@ class Athletes extends CI_Controller {
                 } // end is user name and passsword valid
                 else // not match ue name and pass
                  {
-                    $this->session->set_flashdata('errorMsg', "Useremail Or Password Invalid");
-                    $this->messages('alert alert-danger',"Useremail Or Password Invalid");
+                    $this->session->set_flashdata('errorMsg', "Useremail or password invalid");
+                    $this->messages('alert alert-danger',"Useremail or password invalid");
                   //  echo "username or passwrod invalid"; 
                     redirect(base_url('athletes'));
                     exit();
@@ -114,7 +114,7 @@ class Athletes extends CI_Controller {
         $data['games']    = $this->admin_model->get_all_records($table);
 
         $ath_id = $this->session->userdata('ath_id');
-        $data['athlete_games']   = $this->model->get_athlete_games($ath_id,$ath_game_fee_id=null);
+        $data['athlete_games']   = $this->model->get_athlete_games($ath_id);
 
        
        
@@ -425,7 +425,7 @@ class Athletes extends CI_Controller {
     public function bank_challan($ath_id)
     {
 
-        $data['bank_challan']  = $this->model->get_athlete_games($ath_id); 
+        $data['bank_challan']  = $this->model->get_athlete_games($ath_id);
         $data['title'] = 'Bank Copy';
         $data['page']  = 'bank_challan';
         $this->load->view('template',$data);
@@ -471,18 +471,31 @@ class Athletes extends CI_Controller {
      public function get_ajax_multiple_game()
     { 
 
-         $game_id = $this->input->post('hello'); echo $game_id;
-         exit;
+        $game_id = $this->input->post('game_id');
+        $total_fee = 0;
+        $admision_fee = 0;
+        $game_fee = 0;
+        $games = array();
+
+        for($i=0; $i < count($game_id); $i++){
 
 
-        // $table_name        = "games";
-        // $talbe_column_name = 'game_id';
-        // $table_id          = $game_id;
+        $table_name        = "games";
+        $talbe_column_name = 'game_id';
+        $table_id          = $game_id[$i];
+        
+        $games      = $this->admin_model->exist_record_row($talbe_column_name,$table_id,$table_name);
 
-        // $games = $this->admin_model->exist_record_row($talbe_column_name,$table_id,$table_name);  // get row
-        // echo json_encode($games);
+        $game_fee         += $games['game_fee'];
+        $admision_fee     += $games['game_admission_fee'];
+    }
 
-        //  exit;      
+        $games['total_fee']     = $admision_fee+$game_fee;
+         echo json_encode($games);
+
+         exit;   
+
+          
     }
 
 

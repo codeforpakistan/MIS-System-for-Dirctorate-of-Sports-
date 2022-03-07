@@ -24,8 +24,9 @@
             <div class="row">
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
-                  <h2><span style="padding: 0px 10px;border-radius:0px 0px 20px 0px;" class="bg-success text-white">Profile Info</span></h2>
+                  
                   <div class="card-header">
+                    <h2>Profile Info</h2>
                   </div>
                   <div class="card-body">
                       <div class="row">
@@ -146,8 +147,8 @@
         <div class="row">
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
-                  <h2><span style="padding: 0px 10px;border-radius:0px 0px 20px 0px;" class="bg-success text-white">Game Info</span></h2>
                   <div class="card-header">
+                    <h2>Game Info</h2>
                   </div>
                   <div class="card-body">
                       <div class="row">
@@ -157,7 +158,7 @@
                       <div class="col-12">
                             <div class="form-group">
                               <label>Game Applied For</label>
-                                  <select class="form-control select2" id="game_id" multiple="" name="game_id[]">
+                                  <select class="form-control select2" id="game_id"  multiple="" name="game_id[]">
                                     <option>-Select Games</option>
                                     <?php if(!empty($games)){
                                       foreach($games as $game){?>
@@ -183,7 +184,7 @@
                       <div class="col-4">
                             <div class="form-group">
                                   <label>Game Fee</label>
-                                  <input type="number" class="form-control" placeholder="Total Fee" name="total_fee" id="total_fee"  required>
+                                  <input type="number" class="form-control game_fee" placeholder="Total Fee" name="game_fee" id="game_fee"  required>
                             </div>
                       </div>
 
@@ -191,7 +192,7 @@
                       <div class="col-4">
                             <div class="form-group">
                                   <label>Admission Fee</label>
-                                  <input type="number" class="form-control" placeholder="Total Fee" name="total_fee" id="total_fee"  required>
+                                  <input type="number" class="form-control admission_fee" placeholder="Total Fee" name="admission_fee" id="admission_fee"  required>
                             </div>
                       </div>
 
@@ -244,49 +245,30 @@ $(document).ready(function(){
    $(document).on('change','#game_id',function(){
     var game_id = $(this).val();
 
+     //var game_id = $(this).find('option:selected').val();
+
+
+
+      $('#game_fee').val(0);
+      $('#admission_fee').val(0);
+      $('#total_fee').val(0);
+
      $.ajax({
             url: '<?=base_url()?>Athletes/get_ajax_multiple_game',
-           // dataType: 'json',
+            dataType: 'json',
             type:"post",
-            data:{hello:game_id},
+            data:{game_id:game_id},
             success: function(response){
              
              console.log(response);
+
+             $('#game_fee').val(response.game_fee);
+             $('#admission_fee').val(response.game_admission_fee);
+             $('#total_fee').val(response.total_fee);
             }
+
           });
-
-
-
   });
 });
  
-  //function calculate_total_fee(id){
-
-    //alert(id);
-//console.log(id);
-  // jQuery.ajax({
-  //   url: "/get_subscategories",
-  //   type: "GET",
-  //   data: {
-  //     "parent_id": id
-  //   },
-  //   dataType: "html",
-  //   success: function(data) {
-  //     jQuery("#versionsDiv").html(data);
-  //   }
-  // });
-//}
-
- 
-
-//   function calculate_total_fee(sel) {
-
-//     var game_id = sel.value;
-
-//     alert(game_id);
-
-
-    
-// }
-
 </script>
