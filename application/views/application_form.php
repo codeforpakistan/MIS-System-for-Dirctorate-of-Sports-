@@ -152,9 +152,6 @@
                   </div>
                   <div class="card-body">
                       <div class="row">
-
-                    
-
                       <div class="col-12">
                             <div class="form-group">
                               <label>Game Applied For</label>
@@ -174,7 +171,7 @@
                             <div class="form-group">
                                   <label>Time Prefernce</label>
                                   <select class="form-control" name="time_prefernce">
-                                    <option>-Select Prefernce-</option>
+                                    <option value="">-Select Prefernce-</option>
                                     <option value="morning">Morning</option>
                                     <option value="evening">Evening</option>
                                   </select>
@@ -208,7 +205,6 @@
                                   <label>Payment Mode</label>
                                   <select class="form-control" name="payment_mode">
                                     <option>-Select Payment Mode-</option>
-                                    <option>easypaisa</option>
                                     <option>Bank</option>
                                   </select>
                             </div>
@@ -244,11 +240,6 @@ $(document).ready(function(){
 
    $(document).on('change','#game_id',function(){
     var game_id = $(this).val();
-
-     //var game_id = $(this).find('option:selected').val();
-
-
-
       $('#game_fee').val(0);
       $('#admission_fee').val(0);
       $('#total_fee').val(0);
