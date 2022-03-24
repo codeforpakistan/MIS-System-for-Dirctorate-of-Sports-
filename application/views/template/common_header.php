@@ -8,6 +8,8 @@
   <title>Sports Directorate</title>
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/css/app.min.css">
+  <link rel="stylesheet" href="assets/bundles/bootstrap-daterangepicker/daterangepicker.css">
+  
   <link rel="stylesheet" href="assets/bundles/izitoast/css/iziToast.min.css">
   <link rel="stylesheet" href="assets/bundles/chocolat/dist/css/chocolat.css">
   <link rel="stylesheet" href="assets/bundles/datatables/datatables.min.css">
@@ -55,6 +57,12 @@
     background: #126E40 !important;
     }
 
+    .theme-white .navbar .nav-link .feather {
+
+      color: #126E40 !important;
+
+    }
+
   </style>
 </head>
 
@@ -63,7 +71,7 @@
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
       <div class="navbar-bg"></div>
-      <nav class="navbar navbar-expand-lg main-navbar sticky bg-success">
+      <nav class="navbar navbar-expand-lg main-navbar sticky">
         <div class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn"> <i data-feather="align-justify"></i></a></li>
@@ -99,13 +107,13 @@
                 Settings
               </a> -->
               <div class="dropdown-divider"></div>
-              <?php if($this->session->userdata('user_role_id_fk') == 1): ?>
-              <a href="<?= base_url('admin/logout_user')?>" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+              <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6):?>
+              <a href="<?=base_url('Athletes/logout_user')?>" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
               Logout
               </a>
               <?php else:?>
-              <a href="<?= base_url('Athletes/logout_user')?>" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
-              Logout
+              <a href="<?=base_url('admin/logout_user')?>" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+              Logout 
               </a>
               <?php endif;?>
 

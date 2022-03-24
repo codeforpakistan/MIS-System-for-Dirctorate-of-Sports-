@@ -6,10 +6,10 @@ class Auto_no{
 	{
 			$CI =& get_instance();
 			
-			$CI->load->model('MyModel');
+			$CI->load->model('AthletesModel');
 
-			$mx_no = $CI->MyModel->get_mx_num($type); //in argument table name is required also the table id
-			$patteron      = $CI->MyModel->get_patteron($type); // in argument patteron type is
+			$mx_no         = $CI->AthletesModel->get_mx_num($type); //in argument table name is required also the table id
+			$patteron      = $CI->AthletesModel->get_patteron($type); // in argument patteron type is
 			 
 			$no            = $mx_no['auto_no']+1; 
 			$total = $patteron['limit'];

@@ -1,47 +1,23 @@
-<!-- Main Content -->
-  <div class="main-content">
+<!-- start messages --->
+    <?php if($this->session->userdata('user_role_id_fk')  == 6){?>
+      <div class="main-content">
         <section class="section">
           <div class="section-body">
             <div class="row">
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>List of Active Games</h4>
+                    <h4>List of Pending Challan</h4>
                   </div>
                   <?php $ath_id = $this->session->userdata('ath_id')?>
                   <div class="card-body">
-                   
-                   <?php if($this->session->userdata('user_role_id_fk')  == 5){?>
-                  <button type="button" class="btn btn-primary pull-right fa fa-plus" data-toggle="modal" data-target="#addGameModel"> Add New Game</button>                
-
-                  <button type="button" class="btn btn-primary pull-right fa fa-plus" data-toggle="modal" data-target="#addGameModel" style="margin-right: 4px;">Dublicate Card</button> 
-
-                <?php }?>
-
-                      <!-- start messages --->
-                      <div style="text-align: center">
-                              <?php if($feedback =$this->session->flashdata('feedback')){
-                                $feedback_class =$this->session->flashdata('feedbase_class');  ?>
-                                    <div class="row">
-                                      <div class="col-md-6 col-md-offset-6 msg">
-                                      <div class="alert alert-dismissible <?=  $feedback_class;?>">
-                                      <?= $feedback ?>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                      </div>
-                                      </div>
-                                  </div>    
-                                <?php }?>
-                            </div>
                     <!-- end of messages  --->
                      <div class="table-responsive">
                       <table class="table table-striped table-hover"  style="width:100%;">
                         <thead >
                           <tr>
-                            <?php if($this->session->userdata('user_role_id_fk')  == 6){?>
-                            <th>Nic Photo</th>
                             <th>Profile Photo</th>
+                            <th>Nic Photo</th>
                             <th>Name</th>
                             <th>Father Name</th>
                             <th>Cnic</th>
@@ -49,24 +25,22 @@
                             <th>Contact</th>
                             <th>District</th>
                             <th>Profession</th>
-                          <?php }?>
-                          <th>Game</th>
+                            <th>Game</th>
                             <th>Game Time</th>
                             <th>Game Fee</th>
                             <th>Admission Fee</th>
                             <th>Payment Mode</th>
+                            <th>Bank Challan</th>
                             <th>Status</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                             <tbody>
-                              <?php if(!empty($athlete_games)):
-                                foreach($athlete_games as $athlete_game):?>
+                              <?php if(!empty($athlete_games_fee)):
+                                foreach($athlete_games_fee as $athlete_game):?>
                                   <tr>
-
-                                    
-                                    <td></td>
-                                    <td></td>
+                                    <td><img src="assets/images/athlete_images/<?=$athlete_game->ath_profile_photo?>" style="height:50px;width:50px;"></td>
+                                    <td><img src="assets/images/athlete_images/<?=$athlete_game->ath_nic_photo?>" style="height:50px;width:50px;"></td>
                                     <td><?=$athlete_game->ath_name?></td>
                                     <td><?=$athlete_game->ath_father_name?></td>
                                     <td><?=$athlete_game->ath_cnic?></td>
@@ -79,48 +53,223 @@
                                     <td><?=$athlete_game->game_fee?></td>
                                     <td><?=$athlete_game->game_admission_fee?></td>
                                     <td><?=$athlete_game->ath_payment_mode?></td>
-
+                                    <?php if($athlete_game->ath_upload_challan > 0){?>
+                                    <td><img src="assets/images/challan/<?=$athlete_game->ath_upload_challan?>" style="height:50px;width:50px;"></td>
+                                    
+                                    <?php } else{?>
+                                      <td></td>
+                                    <?php }?>
+                                     
+                                     <td>
                                     <?php if($athlete_game->ath_fee_status == 1){?>
-                                    <td> <span class="badge badge-primary">Pending</span></td>
+                                    <span class="badge badge-primary">Pending</span>
                                     <?php } elseif ($athlete_game->ath_fee_status == 2) {?>
-                                    <td><span class="badge badge-success">Approve</span></td>
+                                    <span class="badge badge-success">Approve</span>
                                     <?php } elseif ($athlete_game->ath_fee_status == 3) {?>
+                                    <span class="badge badge-danger">Rejcted</span>
+                                    <?php }?>
+                                  </td>
+
+                                
+                                    <td>
+                                    <div class="dropdown">
+                                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        Change Status
+                                        <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width: 10%;text-align: center;color:#000 !important;">
+                                        <li><a href="athletes/change_fee_satus/<?=$athlete_game->ath_game_id?>/<?=$athlete_game->ath_game_fee_id?>/2/<?=$athlete_game->ath_game_status?>" style="color:#000;text-decoration: none;">Approve</a></li>
+                                        <li><a href="athletes/change_fee_satus/<?=$athlete_game->ath_game_id?>/<?=$athlete_game->ath_game_fee_id?>/3/<?=$athlete_game->ath_game_status?>" style="color:#000;text-decoration: none;">Rejected</a></li> 
+                                      </ul>
+                                    </div>
+                                  </td> 
+
+                                  </tr>
+                                <?php  endforeach;endif;?>
+                            </tbody>
+                      </table>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div> 
+     </div>
+  </section>
+</div>                
+
+<?php } else{?>
+
+  <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Games</h4>
+                  </div>
+                  <div class="card-body">
+                    <?php if($this->session->userdata('user_role_id_fk')  == 5){?>
+                  <button type="button" class="btn btn-primary fa fa-plus" style="float: right" data-toggle="modal" data-target="#addGameModel"> Add New Game</button>               
+
+                <?php }?>
+
+                    <div class="table-responsive">
+                      <table class="table table-striped table-hover"  style="width:100%;">
+                        <thead >
+                          <tr>
+                            <th>Game</th>
+                            <th>Game Fee</th>
+                            <th>Admission Fee</th>
+                            <th>Game Status</th>
+                            <th>Fee Status</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                            <tbody>
+                              <?php if(!empty($athlete_games)):
+                                foreach($athlete_games as $athlete_game):
+
+
+                                  ?>
+                                  <tr>
+                                    <td><?= ucwords($athlete_game->game_name)?></td>
+                                    <td><?=$athlete_game->game_fee?></td>
+                                    <td><?=$athlete_game->game_admission_fee?></td>
+                                    <?php if($athlete_game->ath_game_status == 1):?>
+                                    <td> <span class="badge badge-danger">In-active</span></td>
+                                    <?php elseif($athlete_game->ath_game_status == 2):?>
+                                    <td><span class="badge badge-primary">Active</span></td>
+                                    <?php endif;?>
+
+                                   <?php $get_game_fees = $this->model->get_game_fees($athlete_game->ath_game_id);
+
+                                   ?>
+                                   <td><?=$get_game_fees->ath_fee_status == 1?>
+                                   <span>Payment Not Verified</span>  
+                                   </td>
+
+                                    <td> 
+                                      <?php 
+
+                                      if($get_game_fees->fee_monthly_end_date < date('Y-m-d')){
+
+                                      $expired_game=array('ath_game_status' => 3);
+                                      $this->db->where('ath_id',$athlete_game->ath_id)->where('ath_game_status',$athlete_game->ath_game_status == 1)->update('athlete_games',$expired_game);
+
+                                      $expired_game=array('ath_fee_status' => 4);
+                                      $this->db->where('ath_game_fee_id',$get_game_fees->ath_game_fee_id)->where('ath_game_id',$athlete_game->ath_game_id)->where('ath_fee_status',1)->update('athlete_games_fees',$expired_game);
+
+                                        ?>
+
+                                        <a  href="javascript:void(0)" data-toggle="modal" data-target="#feeModel" href="javascript:void(0)"  class="btn btn-primary  fa fa-upload" onclick="get_ath_game_fee_id(<?=$athlete_game->game_fee?>,<?=$athlete_game->ath_game_id?>)" style=""> Submit Fee</a>
+
+                                      <?php }  else{ ?>
+
+                                        <?php if($get_game_fees->ath_fee_status ==1){?>
+
+                                      <a href="athletes/bank_challan/<?=$athlete_game->ath_id?>/<?=$get_game_fees->ath_game_fee_id?>" class="btn btn-success  fa fa-download" target="_blank"> Generate Challan</a> 
+
+                                      <a href="javascript:void(0)" data-toggle="modal" data-target="#uploadModel" href="javascript:void(0)" class="btn btn-info  fa fa-upload" onclick=" return get_id(<?=$get_game_fees->ath_game_fee_id?>)"> Upload Challan</a>
+
+                          
+
+                                    <?php  }  }  ?>
+                                    </td>
+
+                                  </tr>
+                                <?php  endforeach;endif;?>
+                            </tbody>
+                      </table>
+                    </div> 
+                </div>
+              </div>
+
+            <!-- <div class="card">
+              <div class="card-header">
+                    <h4>Challans</h4>
+              </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-hover"  style="width:100%;">
+                        <thead >
+                          <tr>
+                            <th>Game </th>
+                            <th>Challan No</th>
+                            <th>Challan Fee</th>
+                            <th>Months</th> 
+                            <th>Admission Fee</th>
+                            <th>Payment Mode</th>
+                            <th>Status</th>
+                            <th>Upload Challan</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                            <tbody>
+                              <?php if(!empty($all_peniding_challans)):
+                                foreach($all_peniding_challans as $all_peniding_challan):?>
+                                  <tr>
+                                    <td><?= ucwords($all_peniding_challan->game_name)?></td>
+                                    <td><?=$all_peniding_challan->ath_challan_no?></td>
+                                    <td><?=$all_peniding_challan->ath_challan_fee?></td>
+                                    <td><?=$all_peniding_challan->ath_fee_months?></td>
+                                    <?php if($all_peniding_challan->ath_challan_admission_fee > 0){?>
+                                    <td><?=$all_peniding_challan->ath_challan_admission_fee?></td>
+                                    <?php } else{?>
+                                    <td></td>
+                                    <?php }?>
+                                    <td><?=$all_peniding_challan->ath_payment_mode?></td>
+
+                                    <?php if($all_peniding_challan->ath_fee_status == 1){?>
+                                    <td> <span class="badge badge-primary">Pending</span></td>
+                                    <?php } elseif ($all_peniding_challan->ath_fee_status == 2) {?>
+                                    <td><span class="badge badge-success">Approve</span></td>
+                                    <?php } elseif ($all_peniding_challan->ath_fee_status == 3) {?>
                                     <td><span class="badge badge-danger">Rejcted</span></td>
                                     <?php }?>
 
-                                    <td> 
-                                      <?php if($this->session->userdata('user_role_id_fk')  == 6){?>
+                                    <?php if($all_peniding_challan->ath_upload_challan  > 0){?>
 
-                                      <?php } else{?>
+                                    <td><img src="assets/images/challan/<?=$all_peniding_challan->ath_upload_challan?>" style="height:50px;width:50px;"></td>
+                                    <?php } else{?>
 
-                                      <?php if($athlete_game->ath_fee_status == 1){?>
-                                      <a href="javascript:void(0)" data-toggle="modal" data-target="#uploadModel" href="javascript:void(0)" class="btn btn-info  fa fa-upload" > Upload Challan</a>
+                                      <td></td>
 
-                                      <a href="athletes/bank_challan/<?=$ath_id?>/<?=$athlete_game->ath_game_fee_id?>/challan" class="btn btn-success  fa fa-download"> Download Challan</a> 
+                                    <?php }?>
 
-                                      <?php } else{?>
+                                    <td><?php if($all_peniding_challan->ath_fee_status == 1 || $all_peniding_challan->ath_fee_status == 3){?>
+                                         <a href="athletes/bank_challan/<?=$all_peniding_challan->ath_id?>/<?=$all_peniding_challan->ath_game_fee_id?>" class="btn btn-success  fa fa-download"> Download Challan</a> 
 
-                                        <?php if($athlete_game->fee_monthly_end_date < date('Y-m-d')){?>
+                                      <a href="javascript:void(0)" data-toggle="modal" data-target="#uploadModel" href="javascript:void(0)" class="btn btn-info  fa fa-upload" onclick=" return get_id(<?=$all_peniding_challan->ath_game_fee_id?>)"> Upload Challan</a>
 
-                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#feeModel" href="javascript:void(0)" class="btn btn-light pull-right fa fa-upload" style="float: left">Submit Fee</a>
                                     
-                                      <?php } }  }?>  
-                                    </td>
+                                      <?php } ?></td>
                                   </tr>
-
                                 <?php  endforeach;endif;?>
                             
                             </tbody>
                       </table>
                     </div> 
-                    
-                  </div>
+
                 </div>
+                </div> -->
+
               </div>
             </div>
-          </div>
-        </section>
-      </div>
+        </div> 
+     </div>
+  </section>
+</div> 
+
+<?php }?>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
 
        <!--- edit form -->
       <div class="modal fade" id="addGameModel"  role="dialog" aria-labelledby="formModaladd" aria-hidden="true" data-backdrop="static">
@@ -136,8 +285,8 @@
                     <!-- body-->
                         <form class="" method="post" action="<?= base_url("athletes/application_form") ?>">
                              
-                             <div class="row">
-                            <div class="col-6">
+                          <div class="row">
+                            <div class="col-6 col-12 col-12">
                             <div class="form-group">
                               <label>Game Applied For</label>
                                   <select class="form-control select2" id="game_id"  multiple="" name="game_id[]" style="width:100%">
@@ -196,13 +345,13 @@
                             </div>
                           </div>
                             
-                            <div class="col-6">
+                            <!-- <div class="col-6">
                             <div class="form-group">
                                   <label>Date of apply</label>
                                   <input type="date" class="form-control" placeholder="" name="date_of_apply" required>
                             </div>
 
-                          </div>
+                          </div> -->
 
                                <div class="col-12">
                                 <div class="form-group pull-right">
@@ -229,7 +378,7 @@
                     </div>
                     <div class="modal-body">
                     <!-- body-->
-                        <form class="" method="post"  action="<?= base_url("athletes/add_athlete_challan") ?>" enctype="multipart/form-data">
+                        <form class="" method="post"  action="<?= base_url("athletes/upload_challan") ?>" enctype="multipart/form-data">
                           <input type="hidden" name="ath_game_fee_id" id="ath_game_fee_id" >
                             <div class="form-group">
                                   <label>Attach Challan Picture</label>
@@ -263,26 +412,31 @@
                     </div>
                     <div class="modal-body">
                     <!-- body-->
-                        <form class="" method="post"  action="<?= base_url("athletes/add_athlete_challan") ?>">
+                        <form class="" method="post"  action="<?= base_url("athletes/submit_monthly_fee") ?>">
+                                  <div class="form-group">
 
-                                <div class="form-group">
-                                  <label>Game</label>
-                                  <input type="text" class="form-control" placeholder="" name="game_name" id="game" readonly="">
-                                </div> 
+                                    <input type="hidden" name="ath_game_id" id="ath_game_id">
+                                        <label>Fee months</label>
 
-                                 <div class="form-group">
-                                  <label>Game Fee</label>
-                                  <input type="text" class="form-control" placeholder="" name="game_name" id="game" readonly="">
-                                </div> 
-
-                                <div class="form-group">
-                                        <label>Fee Type</label>
-                                        <select class="form-control" name="payment_mode">
-                                          <option>-Select Months-</option>
-                                          <option>january</option>
-                                          <option>Febraray</option>
+                                        <select class="form-control" name="fee_months" id="fee_month">
+                                          <option value="">Select Month</option>
+                                          <option>1 Month</option>
+                                          <option>2 Month</option>
+                                          <option>3 Month</option>
+                                          <option>4 Month</option>
+                                          <option>5 Month</option>
+                                          <option>6 Month</option>
+                                          <option>7 Month</option>
+                                          <option>8 Month</option>
+                                          <option>9 Month</option>
+                                          <option>10 Month</option>
+                                          <option>11 Month</option>
+                                          <option>12 Month</option>
                                         </select>
+                                      
                                   </div>
+
+                                  <input type="hidden" class="game_fee">
 
 
                                   <div class="form-group">
@@ -296,7 +450,7 @@
 
                                 <div class="form-group">
                                   <label>Total Fee</label>
-                                  <input type="text" class="form-control" placeholder="" id="game_fee" name="game_fee" required>
+                                  <input type="text" class="form-control" placeholder="" id="total_game_fee" name="total_game_fee" required>
                                 </div>
 
                                   
@@ -313,15 +467,41 @@
 
 
 <script>
-  function get_id(ath_game_id,game_id){
 
-    $('#ath_game_fee_id').val(ath_game_id);
+  $(document).on('change','#fee_month',function(){
+     var fee_month = $(this).val();
+     var game_fee  = $(".game_fee").val();
+     var total_fee = parseInt(fee_month)*parseInt(game_fee); 
+     $('#total_game_fee').val(total_fee);
+
+  });
+
+  function get_ath_game_fee_id(game_fee,ath_game_id){
+
+    $('.game_fee').val(game_fee);
+    $('#ath_game_id').val(ath_game_id);
   }
+
+  function get_id(ath_game_fee_id){
+    $('#ath_game_fee_id').val(ath_game_fee_id);
+  }
+
+  function activate_deactivate($status){
+
+    if($status == 1){
+      alert('Are You sure want deactivate game');
+    }
+    else{
+
+      alert('Are you sure want activate game');
+    }
+
+
+   }
 </script>
 
+
 <script>
-
-
 $(document).ready(function(){
 
    $(document).on('change','#game_id',function(){
@@ -336,9 +516,6 @@ $(document).ready(function(){
             type:"post",
             data:{game_id:game_id},
             success: function(response){
-             
-             console.log(response);
-
              $('#game_fee').val(response.game_fee);
              $('#admission_fee').val(response.game_admission_fee);
              $('#total_fee').val(response.total_fee);
@@ -346,7 +523,93 @@ $(document).ready(function(){
 
           });
   });
+
 });
  
 </script>
+
+
+<?php /* for previouis work deactivat games
+
+
+
+
+
+
+<div class="card">
+                  <div class="card-header">
+                    <h4>List of Active Games</h4>
+                  </div>
+                  <div class="card-body">
+                    <?php if($this->session->userdata('user_role_id_fk')  == 5){?>
+                  <button type="button" class="btn btn-primary fa fa-plus" style="float: right" data-toggle="modal" data-target="#addGameModel"> Add New Game</button>               
+
+                <?php }?>
+
+                    <div class="table-responsive">
+                      <table class="table table-striped table-hover"  style="width:100%;">
+                        <thead >
+                          <tr>
+                            <th>Game</th>
+                            <th>Game Time</th>
+                            <th>Game Fee</th>
+                            <th>Admission Fee</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                            <tbody>
+                              <?php if(!empty($athlete_games)):
+                                foreach($athlete_games as $athlete_game):?>
+                                  <tr>
+                                    <td><?= ucwords($athlete_game->game_name)?></td>
+                                    <td><?=$athlete_game->ath_challan_admission_fee?></td>
+                                    <td><?=$athlete_game->game_fee?></td>
+                                    <td><?=$athlete_game->game_admission_fee?></td>
+                                    <?php if($athlete_game->ath_game_status == 1):?>
+                                    <td> <span class="badge badge-primary">Active</span></td>
+                                    <?php else:?>
+                                    <td><span class="badge badge-danger">In-active</span></td>
+                                    <?php endif;?>
+
+                                   
+                                    <?php if($athlete_game->fee_monthly_end_date < date('Y-m-d') ){?>
+                                       <td> 
+                                      <a  href="javascript:void(0)" data-toggle="modal" data-target="#feeModel" href="javascript:void(0)"  class="btn btn-primary  fa fa-download" onclick="get_ath_game_fee_id(<?=$athlete_game->game_fee?>,<?=$athlete_game->ath_game_id?>)" style=""> Submit Fee</a></td>
+                                    
+                                    
+                                     <?php } ?>
+
+                                     <?php if($athlete_game->ath_fee_status != 1){?>
+
+                                    <?php if($athlete_game->ath_game_status == 0){?>
+                                     <td><a href="athletes/change_game_satus/<?=$athlete_game->ath_game_id?>/1" class="btn btn-icon icon-left btn-success" onclick="return activate_deactivate(<?=$athlete_game->ath_game_status?>)"><i class="fas fa-check"></i><strong> Activate Game</strong></a></td>
+
+                                    <?php } else{?>
+
+                                    
+                                    <td><a href="athletes/change_game_satus/<?=$athlete_game->ath_game_id?>/0" class="btn btn-icon icon-left btn-danger" onclick="return activate_deactivate(<?=$athlete_game->ath_game_status?>)"><i class="fas fa-times"></i><strong>De activate Game</strong></a></td>
+                                     
+                                  <?php  }?>
+
+                                <?php } else{?>
+
+                                  <td></td>
+
+                                <?php }?>
+
+                                  </tr>
+                                <?php  endforeach;endif;?>
+                            </tbody>
+                      </table>
+                    </div> 
+                </div>
+              </div>
+
+
+
+
+
+
+ */?>
       

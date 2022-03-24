@@ -1,24 +1,57 @@
-<div class="main-sidebar sidebar-style-2">
-        <aside id="sidebar-wrapper" >
+
+
+<style type="text/css">
+  .nav-link{
+
+    color: #fff !important;
+    font-weight: bold  !important;
+    font-size:16px !important;
+  }
+  .light-sidebar.sidebar-mini .main-sidebar:after {
+    background: #126E40 !important;
+  }
+
+
+  .sidebar-mini .main-sidebar .sidebar-menu>li {
+
+     background: #126E40 !important;
+    color: #fff !important;
+    font-weight: bold  !important;
+    font-size:16px !important;
+  }
+  .sidebar-menu{
+
+    margin-top: 50px !important;
+  }
+
+  .main-sidebar .sidebar-menu :hover {
+    background:#0d2e010f !important;
+
+  }
+
+</style>
+
+<div class="main-sidebar sidebar-style-2" style="background: #126E40 ">
+        <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a><img alt="image" src="assets/images/DG sports logo.png" class="header-logo" /> 
+            <a><img alt="image" src="assets/images/DG sports logo.png" class="header-logo"  /> 
             </a>
           </div>
 
           <ul class="sidebar-menu">
-            <li class="dropdown active">
+            <li class="dropdown" >
               <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6):?>
-              <a href="Athletes" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <a href="Athletes" class="nav-link" ><i class=" fa fa-home"></i><span>Dashboard</span></a>
               <?php else:?>
-              <a href="admin" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <a href="admin" class="nav-link"  ><i class=" fa fa-home"></i><span >Dashboard</span></a>
 
                 <?php endif;?>
             </li>
 
            <?php if($this->session->userdata('user_role_id_fk') == 1): ?>
-             <li class="dropdown">
+             <li class="dropdown"  style="color:#fff !important">
                 <a href="admin/events" class="nav-link">
-                  <i data-feather="briefcase"></i><span>Events</span>
+                  <i ></i><span>Events</span>
                   
                 </a>
             </li>
@@ -29,7 +62,7 @@
 
             <li class="dropdown">
                 <a  href="admin/events_trials" class="nav-link">
-                  <i data-feather="briefcase"></i><span>Events Trials</span>
+                  <i ></i><span>Events Trials</span>
                   
                 </a>
             </li>
@@ -39,7 +72,7 @@
 
             <li class="dropdown">
                 <a  href="admin/facilities" class="nav-link">
-                  <i data-feather="briefcase"></i><span>Facilities</span>
+                  <i ></i><span>Facilities</span>
                   
                 </a>
             </li>
@@ -51,7 +84,7 @@
 
             <li class="dropdown">
                 <a  href="admin/games" class="nav-link">
-                  <i data-feather="briefcase"></i><span>Games</span>
+                  <i ></i><span>Games</span>
                 </a>
                
             </li>
@@ -60,7 +93,7 @@
            <?php if($this->session->userdata('user_role_id_fk') == 1): ?>
             <li class="dropdown">
                 <a href="admin/districts" class="nav-link">
-                  <i data-feather="briefcase"></i><span>Districts</span>
+                  <i ></i><span>Districts</span>
                 </a>
             </li>
 
@@ -71,7 +104,7 @@
 
              <li class="dropdown">
                 <a href="admin/selected_players" class="nav-link ">
-                  <i data-feather="briefcase"></i><span>Selected Players</span>
+                  <i ></i><span>Selected Players</span>
                 </a>
                
             </li>
@@ -82,7 +115,7 @@
 
             <li class="dropdown">
                 <a href="admin/selected_officals" class="nav-link ">
-                  <i data-feather="briefcase"></i><span>Selected Officals</span>
+                  <i ></i><span>Selected Officals</span>
                 </a>   
             </li>
 
@@ -91,7 +124,7 @@
            <?php if($this->session->userdata('user_role_id_fk') == 1):?>
             <li class="dropdown">
                 <a href="admin/users" class="nav-link">
-                  <i data-feather="briefcase"></i><span>Users</span>
+                  <i ></i><span>Users</span>
                 </a>
                 
             </li> 
@@ -112,7 +145,7 @@
 
             <li class="dropdown">
                 <a href="respondents" class=" nav-link ">
-                  <i data-feather="briefcase"></i><span>Fee</span>
+                  <i ></i><span>Fee</span>
                 </a>
                
             </li>
@@ -121,7 +154,7 @@
             
             <?php /*<li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
-                  <i data-feather="briefcase"></i><span>District Admins</span>
+                  <i ></i><span>District Admins</span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="admin/district_admin">View All</a></li>
@@ -133,7 +166,7 @@
         
             <li class="dropdown">
                 <a href="#"  class="nav-link ">
-                  <i data-feather="briefcase"></i><span>player Category</span>
+                  <i ></i><span>player Category</span>
                 </a>
                 
             </li> 
@@ -144,66 +177,42 @@
 
             <li class="dropdown">
                 <a href="#"  class="nav-link ">
-                  <i data-feather="briefcase"></i><span>Physical status</span>
+                  <i ></i><span>Physical status</span>
                 </a>
                 
             </li> 
             <?php endif;?>
 
-            <?php if($this->session->userdata('user_role_id_fk') == 5):?>
+            <?php if($this->session->userdata('user_role_id_fk') == 5):
+               $ath_id = $this->session->userdata('ath_id');
+
+              ?>
+
 
             <li class="dropdown">
-                <a href="#"  class="nav-link ">
-                  <i data-feather="briefcase"></i><span>Payment History</span>
+                <a href="athletes/athletes_payments/<?=$ath_id?>/payments"  class="nav-link ">
+                  <i class="fa fa-clock" ></i><span>Payment History</span>
                 </a>
                 
             </li> 
             <?php endif;?>
-            
-
-            <?php if($this->session->userdata('user_role_id_fk') == 5):?>
-
-            <li class="dropdown">
-                <a href="#"  class="nav-link ">
-                  <i data-feather="briefcase"></i><span>Change Activity</span>
-                </a>
-                
-            </li> 
-            <?php endif;?>
-            
-
+          
             <?php if($this->session->userdata('user_role_id_fk') == 5):?>
 
             <li class="dropdown">
                 <a href="athletes/user_profile"  class="nav-link ">
-                  <i data-feather="briefcase"></i><span>Update Profile</span>
+                  <i class="fa fa-user"></i><span>Update Profile</span>
                 </a>
             </li> 
             <?php endif;?>
 
-            <?php if($this->session->userdata('user_role_id_fk') == 5):?>
-
-            <li class="dropdown">
-                <a href="#"  class="nav-link ">
-                  <i data-feather="briefcase"></i><span>Active Games</span>
-                </a>
-            </li> 
-            <?php endif;?>
-
-            <?php if($this->session->userdata('user_role_id_fk') == 5):?>
-
-            <li class="dropdown">
-                <a href="#"  class="nav-link ">
-                  <i data-feather="briefcase"></i><span>Fee challans</span>
-                </a>
-            </li> 
-            <?php endif;?>
+        
 
             <?php if($this->session->userdata('user_role_id_fk') == 6):?>
 
             <li class="dropdown">
                 <a href="Athletes/Athlete_dashboard"  class="nav-link ">
-                  <i data-feather="briefcase"></i><span>Applied Games</span>
+                  <i ></i><span>Applied Games</span>
                 </a>
             </li> 
             <?php endif;?>

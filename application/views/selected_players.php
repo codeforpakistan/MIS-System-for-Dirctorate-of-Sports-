@@ -38,7 +38,7 @@
                           <tr>
                             <th>Event</th>
                             <th>Event Trial</th>
-                            <th>Trial Game </th>
+                            <th>Game </th>
                             <th>Name</th>
                             <th>Father Name</th>
                             <th>CNIC</th>

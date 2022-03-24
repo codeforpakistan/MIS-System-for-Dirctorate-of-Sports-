@@ -17,7 +17,8 @@ class Admin extends CI_Controller {
     
     public function check_role_privileges($page_name,$role_id)
     {
-        $pages_data = $this->model->check_page($page_name);  
+        $pages_data = $this->model->check_page($page_name); 
+
 
         if(is_object($pages_data))
         {
@@ -65,27 +66,25 @@ class Admin extends CI_Controller {
         }
         else
         {
+
             $user_email = $this->input->post('user_email');
             $password = $this->input->post('user_password');
             $array    = array('user_email'=>$user_email,'user_password'=>$password,'user_status'=>1);
-
             $response = $this->AuthModel->user_login($array); 
-
-
-
+            
             if(!empty($response))// is user name and passsword valid
                {
-
                 $this->session->set_userdata('user_id',$response->user_id);
                 $this->session->set_userdata('user_name',$response->user_name);
                 $this->session->set_userdata('user_email',$response->user_email);
                 $this->session->set_userdata('user_role_id_fk',$response->user_role_id_fk);
                 $this->session->set_userdata('user_role_name',$response->user_role_name);
-                redirect('/admin/dashboard'); exit();
+                redirect('admin/dashboard'); exit();
                
                 } // end is user name and passsword valid
                 else // not match ue name and pass
                  {
+
                     $this->session->set_flashdata('errorMsg', "Username or password invalid");
                     $this->messages('alert alert-danger',"Username or password invalid");
                   //  echo "username or passwrod invalid"; 
@@ -291,7 +290,8 @@ class Admin extends CI_Controller {
     public function dashboard()
     { 
 
-     $this->check_role_privileges('users',$this->session->userdata('user_role_id_fk'));
+        $this->check_role_privileges('dashboard',$this->session->userdata('user_role_id_fk'));
+
 
         $data['title']          = 'Dashboard';
         $data['page']           = 'dashboard';
@@ -1647,6 +1647,9 @@ public function profile()
                 return redirect('admin/profile');
             }                       
     }
+
+
+
 
 
    

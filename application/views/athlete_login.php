@@ -19,7 +19,7 @@
   <link rel='shortcut icon' type='image/x-icon'  href='assets/img/logo/logo-icon.png' />
 </head>
 
-<body style="background: #15693f;">
+<body>
   <div class="loader"></div>
   <div id="app" >
     <section class="section" >
@@ -32,17 +32,14 @@
                   </div>
 
                   <div class="col-xl-5" style="background: #fff;border-radius:0px 40px 40px 0px;">
-                    <!-- start messages --->
-                    <div style="text-align: center">
+                   <!-- start messages --->
+                    <div style="text-align: center;position: absolute;top:40px;left:40px;z-index: 212121212px;width:80%" class="msg">
                     <?php if($feedback =$this->session->flashdata('feedback')){
                     $feedback_class =$this->session->flashdata('feedbase_class');  ?>
                     <div class="row">
                     <div class="col-lg-12 col-lg-offset-2">
                     <div class="alert alert-dismissible <?=  $feedback_class;?>">
                     <?= $feedback ?>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
                     </div>
                     </div>
                     </div>
@@ -50,11 +47,11 @@
                     </div>  
                     <!-- end of messages  --->
            
-                <form method="POST" action="<?= base_url('Athletes/login_user')?>" class="needs-validation" novalidate="">                  
+                <form method="POST" action="<?= base_url('Athletes/login_user')?>" class="needs-validation" novalidate="">
                   <p style="color:#15693F; font-weight: bold;text-align: center;margin-top:60px;font-size:22px;">Login your account</p>
                   <div class="form-group">
-                    <label for="email"><strong>Useremail</strong></label>
-                    <input id="email" type="email" class="form-control" name="ath_email" tabindex="1"  required autofocus>
+                    <label for="email"><strong>Useremail / Contact</strong></label>
+                    <input id="email" type="text" class="form-control" name="ath_email_mobile" tabindex="1"  required autofocus>
                     <div class="invalid-feedback">
                       Please fill in your Username
                     </div>
@@ -62,11 +59,11 @@
                   <div class="form-group">
                       <div class="d-block">
                       <label for="password" class="control-label"><strong>Password</strong></label>
-                      <!-- <div class="float-right">
+                      <div class="float-right">
                       <a href="auth-forgot-password.html" class="text-small">
-                      Forgot Password?
+                      <strong>Forgot Password?</strong>
                       </a>
-                      </div> -->
+                      </div>
                       </div>
                     <input id="password" type="password" class="form-control" name="ath_password" tabindex="2" required>
                       <div class="invalid-feedback">
@@ -88,18 +85,12 @@
                 </div>
                 <br>
 
-                <div class="row sm-gutters">
-                      <div class="col-6">
-                      <a>
-                      <p style="color:#15693F; font-weight: bold">Forgot Password?</p>
-                      </a>
+                <div class="row sm-gutters pull-right">
+                      <a href="Athletes/athlete_sign_up" class="text-small">
+                      <strong style="font-weight: bold;font-size:15px;">Sign Up</strong>
+                    </a>
                       </div>
-                      <div class="col-6" >
-                      <a href="Athletes/athlete_sign_up">
-                      <p  style="color:#15693F; font-weight: bold;float: right;">Sign Up</p>
-                      </a>
-                      </div>
-                </div>
+                  </div>
                 </form>
             </div>
             </div>
@@ -122,3 +113,9 @@
     </body>
     <!-- auth-login.html  21 Nov 2019 03:49:32 GMT -->
 </html>
+
+<script>
+$(document).ready(function(){
+$(".msg").delay(3000).fadeOut(1000);
+});
+</script>

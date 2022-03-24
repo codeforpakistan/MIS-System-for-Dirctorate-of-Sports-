@@ -14,6 +14,11 @@
   <script src="assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
   <script src="assets/bundles/jquery-ui/jquery-ui.min.js"></script>
 
+  <script src="assets/bundles/cleave-js/dist/cleave.min.js"></script>
+  <script src="assets/bundles/cleave-js/dist/addons/cleave-phone.us.js"></script>
+  <script src="assets/bundles/jquery-pwstrength/jquery.pwstrength.min.js"></script>
+  <script src="assets/bundles/bootstrap-daterangepicker/daterangepicker.js"></script>
+
   <script src="assets/bundles/select2/dist/js/select2.full.min.js"></script>
 
   <script src="assets/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
@@ -31,6 +36,34 @@
   
  
 </body>
+<style type="text/css">
+  .select2-container--default .select2-selection--multiple:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    border-color: #888 transparent transparent transparent;
+    border-style: solid;
+    border-width: 5px 4px 0 4px;
+    height: 0;
+    right: 6px;
+    margin-left: -4px;
+    margin-top: -2px;top: 50%;
+    width: 0;cursor: pointer
+}
+
+.select2-container--open .select2-selection--multiple:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    border-color: transparent transparent #888 transparent;
+    border-width: 0 4px 5px 4px;
+    height: 0;
+    right: 6px;
+    margin-left: -4px;
+    margin-top: -2px;top: 50%;
+    width: 0;cursor: pointer
+}
+</style>
 
 
 <!-- index.html  21 Nov 2019 03:47:04 GMT -->
