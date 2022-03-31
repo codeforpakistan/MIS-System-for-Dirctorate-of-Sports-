@@ -241,6 +241,16 @@ class AdminModel extends CI_Model
                         ->get()->row_array();
     }
 
+    function forgot_email_validation($user_email)
+    {
+        return $this->db->where('user_email',$user_email)->get('users')->row();
+    }
+
+    function check_record_by_array($array,$table_name)
+    { 
+        return $this->db->where($array)->get($table_name)->row();
+    }
+
                 
 }
 

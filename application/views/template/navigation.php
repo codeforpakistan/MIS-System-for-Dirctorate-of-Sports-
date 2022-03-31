@@ -34,7 +34,7 @@
 <div class="main-sidebar sidebar-style-2" style="background: #126E40 ">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a><img alt="image" src="assets/images/DG sports logo.png" class="header-logo"  /> 
+            <a><img alt="image" src="assets/images/DG_sports_logo.png" class="" style=";width:60%; margin-top: 30px;"  /> 
             </a>
           </div>
 
@@ -43,7 +43,7 @@
               <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6):?>
               <a href="Athletes" class="nav-link" ><i class=" fa fa-home"></i><span>Dashboard</span></a>
               <?php else:?>
-              <a href="admin" class="nav-link"  ><i class=" fa fa-home"></i><span >Dashboard</span></a>
+              <a href="admin" class="nav-link"  ><i></i><span >Dashboard</span></a>
 
                 <?php endif;?>
             </li>
@@ -135,23 +135,13 @@
 
 
             <li class="dropdown">
-              <a href="#" class=" nav-link "><i data-feather="image"></i><span>Coach</span></a>
+              <a href="#" class=" nav-link "><i></i><span>Coach</span></a>
               
             </li> 
 
           <?php endif;?>
 
-           <?php if($this->session->userdata('user_role_id_fk') == 1):?>
-
-            <li class="dropdown">
-                <a href="respondents" class=" nav-link ">
-                  <i ></i><span>Fee</span>
-                </a>
-               
-            </li>
-
-          <?php endif;?>
-            
+           
             <?php /*<li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
                   <i ></i><span>District Admins</span>
@@ -173,15 +163,7 @@
 
           <?php endif;?>
           
-           <?php if($this->session->userdata('user_role_id_fk') == 1):?>
-
-            <li class="dropdown">
-                <a href="#"  class="nav-link ">
-                  <i ></i><span>Physical status</span>
-                </a>
-                
-            </li> 
-            <?php endif;?>
+          
 
             <?php if($this->session->userdata('user_role_id_fk') == 5):
                $ath_id = $this->session->userdata('ath_id');
@@ -211,8 +193,35 @@
             <?php if($this->session->userdata('user_role_id_fk') == 6):?>
 
             <li class="dropdown">
-                <a href="Athletes/Athlete_dashboard"  class="nav-link ">
-                  <i ></i><span>Applied Games</span>
+                <a href="Athletes/reports"  class="nav-link ">
+                  <i class="fa fa-file"></i><span>Reports</span>
+                </a>
+            </li> 
+            <?php endif;?>
+
+            <?php if($this->session->userdata('user_role_id_fk') == 6):?>
+
+            <li class="dropdown">
+                <a href="Athletes/pending_challans"  class="nav-link ">
+                  <i class="fa fa-file"></i><span>Pending Challans</span>
+                </a>
+            </li> 
+            <?php endif;?>
+
+            <?php if($this->session->userdata('user_role_id_fk') == 6):?>
+
+            <li class="dropdown">
+                <a href="Athletes/Approve_challans"  class="nav-link ">
+                  <i class="fa fa-file"></i><span>Approve Challans</span>
+                </a>
+            </li> 
+            <?php endif;?>
+
+            <?php if($this->session->userdata('user_role_id_fk') == 6):?>
+
+            <li class="dropdown">
+                <a href="Athletes/Approve_challans"  class="nav-link ">
+                  <i class="fa fa-file"></i><span>Memberships</span>
                 </a>
             </li> 
             <?php endif;?>

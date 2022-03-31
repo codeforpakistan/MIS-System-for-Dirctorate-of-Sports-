@@ -46,13 +46,13 @@
                       <div class="col-4" style="border:1px solid #000">
                         <img alt="image" src="assets/images/Duplicate Card Receipt.png" class="header-logo" style="width:100%;" />
                         
-                        <table  width="100%" border="0" cellpadding="0px"   style="margin-top: 20px;">
+                        <table  width="100%" border="0" cellpadding="0px" cellpadding="0px"   style="margin-top: 20px;">
                         <tr>
-                          <th width="26%">Branch Code:</th>
+                          <th width="40%">Branch Code:</th>
                           <td style="border-bottom: 1px solid #000;"></td>
                         </tr>
                         <tr>
-                          <th width="28%">Branch Name:</th>
+                          <th width="30%">Branch Name:</th>
                           <td style="border-bottom: 1px solid #000;"></td>
                         </tr>
 
@@ -64,9 +64,9 @@
 
                       <table style="margin-top: 10px;" width="100%">
                         <tr>
-                          <td width="25.33%">Mcb</td>
+                          <th width="25.33%">Mcb</th>
                           <td width="50.33%"></td>
-                          <td width="25.33%">easypaisa</td>
+                          <th width="25.33%">easypaisa</th>
                         </tr>
                       </table>
 
@@ -74,51 +74,51 @@
 
                        <table width="100%" border="1" style="margin-top: 10px;">
                         <tr>
-                          <td width="150px;">Challan No:</td>
+                          <th width="150px;">Challan No:</th>
                           <td><?=$bank_challan['ath_challan_no']?></td>
                         </tr>
 
                         <tr>
-                          <td>Name:</td>
+                          <th>Name:</th>
                           <td><?=$bank_challan['ath_name']?></td>
                         </tr>
 
                         <tr>
-                          <td>CNIC:</td>
+                          <th>CNIC:</th>
                           <td><?=$bank_challan['ath_cnic']?></td>
                         </tr>
 
                         <tr>
-                          <td>Payment Mode:</td>
+                          <th>Payment Mode:</th>
                           <td><?=$bank_challan['ath_payment_mode']?></td>
                         </tr>
 
                         <tr>
-                          <td>Games:</td>
+                          <th>Games:</th>
                           <td><?=$bank_challan['game_name']?></td>
                         </tr>
 
                         <tr>
-                          <td>Game Fee:</td>
+                          <th>Game Fee:</th>
                           <td><?=$bank_challan['game_fee']?></td>
                         </tr>
 
                         <?php if($bank_challan['game_admission_fee'] > 0):?>
 
                         <tr>
-                          <td>Admission Fee:</td>
+                          <th>Admission Fee:</th>
                           <td><?=$bank_challan['game_admission_fee']?></td>
                         </tr>
 
                         <tr>
-                          <td>Total Fee:</td>
+                          <th>Total Fee:</th>
                           <td><?=$bank_challan['game_fee']+$bank_challan['game_admission_fee']?></td>
                         </tr>
 
                       <?php endif;?>
 
                       <tr>
-                          <td>Total Fee:</td>
+                          <th>Total Fee:</th>
                           <td><?=$bank_challan['game_fee']?></td>
                         </tr>
                         <tr>
@@ -126,14 +126,15 @@
                           <td></td>
                         </tr>
                       </table>
+                      <br>
 
                       <table width="100%" style="margin-top: 20px;">
                         <tr>
-                          <td style="border-bottom: 1px solid #000;width:30%"></td>
+                          <td style="border-bottom: 1px solid #000;width:46%"></td>
                           <td width="5%"></td>
-                          <td style="border-bottom: 1px solid #000;width:25%"></td>
+                          <td style="border-bottom: 1px solid #000;width:22%"></td>
                           <td width="5%"></td>
-                          <td style="border-bottom: 1px solid #000;width:25%"></td>
+                          <td style="border-bottom: 1px solid #000;width:22%"></td>
                         </tr>
 
                         <tr>

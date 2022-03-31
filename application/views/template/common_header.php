@@ -82,7 +82,7 @@
             <a href="#" data-toggle="dropdown"
                  class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                   <!-- <img alt="image" src="assets/img/user.png"  class="user-img-radious-style"> -->
-                  <img alt="image" style="width: 40px; height: 40px; border-radius: 50%;" src="assets/<?= (!empty($this->session->userdata('prifile_image')))?'images/athlete_images/'.$this->session->userdata('prifile_image'):'img/user.png'?>" class="user-img-radious-style">
+                  <img alt="image" style="width: 40px; height: 40px; border-radius: 50%;" src="<?= (!empty($this->session->userdata('profile_image')))?'assets/images/athlete_images/'.$this->session->userdata('profile_image'):'assets/img/admin.jpg'?>" class="user-img-radious-style">
                  <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6):?>

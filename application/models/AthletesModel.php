@@ -21,7 +21,7 @@ class AthletesModel extends CI_Model
 
 
 
- public function get_athlete_games_fees()
+ public function get_athlete_pending_challans()
     
      {
 
@@ -67,8 +67,8 @@ class AthletesModel extends CI_Model
         $this->db->join('games','athlete_games.game_id=games.game_id');
         $this->db->where('athlete_games.ath_id',$ath_id);
         $this->db->where('athlete_games.ath_game_status !=',3);
-         $query = $this->db->get();
-         return $query->result();
+        $query = $this->db->get();
+        return $query->result();
        }
     
    // :::::::::::::::::::  user profile 
@@ -194,6 +194,16 @@ class AthletesModel extends CI_Model
         $this->db->where('type_name',$type_name)
                  ->update("set_auto_number",$aa);
         
+    }
+
+    function forgot_email_validation($user_email)
+    {
+        return $this->db->where('ath_email',$user_email)->get('athletes')->row();
+    }
+
+    function check_record_by_array($array,$table_name)
+    { 
+        return $this->db->where($array)->get($table_name)->row();
     }
 
 }

@@ -33,6 +33,10 @@
   <script src="assets/js/custom.js"></script>
   <script src="breadcrumb_assets/script.js"></script>
   <script src="assets/js/jquery.inputmask.bundle.js"></script>
+
+  <script src="assets/bundles/apexcharts/apexcharts.min.js"></script>
+  <!-- Page Specific JS File -->
+  <script src="assets/js/page/chart-apexcharts.js"></script>
   
  
 </body>

@@ -3,11 +3,10 @@
 
 <!-- auth-login.html  21 Nov 2019 03:49:32 GMT -->
 <head>
-  <base href="<?php echo base_url()?>">
-  
+  <base href="<?=base_url()?>">
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Sports Directorate</title>
+  <title>Directorate of Sports, Khyber Pakhtunkhwa</title>
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/css/app.min.css">
   <link rel="stylesheet" href="assets/bundles/bootstrap-social/bootstrap-social.css">
@@ -16,106 +15,138 @@
   <link rel="stylesheet" href="assets/css/components.css">
   <!-- Custom style CSS -->
   <link rel="stylesheet" href="assets/css/custom.css">
-  <link rel='shortcut icon' type='image/x-icon'  href='assets/img/logo/logo-icon.png' />
+  <link rel='shortcut icon' type='image/x-icon' href='assets/img/logo/logo-icon.png' />
 </head>
 
 <body>
   <div class="loader"></div>
-  <div id="app" >
-    <section class="section" >
+  <div id="app">
+    <section class="section">
       <div class="container mt-5">
         <div class="row">
-          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2" style="margin-top: 80px;">
-              <div class="row"style="padding:0px;border-radius:40px;box-shadow:10px 10px 100px #00000082">
-                <div class="col-xl-7" style="padding:0px;margin:0px;">
-                <img src="assets/images/asset_1.png" style="width:100% !important;height:100%; ">
-                  </div>
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+            <div class="card card-primary">
 
-                  <div class="col-xl-5" style="background: #fff;border-radius:0px 40px 40px 0px;">
-                   <!-- start messages --->
-                    <div style="text-align: center;position: absolute;top:40px;left:40px;z-index: 212121212px;width:80%" class="msg">
-                    <?php if($feedback =$this->session->flashdata('feedback')){
-                    $feedback_class =$this->session->flashdata('feedbase_class');  ?>
-                    <div class="row">
-                    <div class="col-lg-12 col-lg-offset-2">
-                    <div class="alert alert-dismissible <?=  $feedback_class;?>">
-                    <?= $feedback ?>
+              <div class="card-header">
+                
+              </div>
+              <img alt="image" src="assets/images/dg_sport.png"  style="padding: 0% 35%" />
+              <div class="card-body">
+              <h5 class="card-title text-center"><strong>Login</strong></h5>
+                <!-- start messages --->
+                  <div style="text-align: center">
+                      <?php if($feedback =$this->session->flashdata('feedback')){
+                        $feedback_class =$this->session->flashdata('feedbase_class');  ?>
+                            <div class="row">
+                              <div class="col-lg-12 col-lg-offset-2">
+                              <div class="alert alert-dismissible <?=  $feedback_class;?>">
+                              <?= $feedback ?>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                              </div>
+                              </div>
+                          </div>
+
+                      
+                        <?php }?>
+
                     </div>
-                    </div>
-                    </div>
-                    <?php }?>
-                    </div>  
-                    <!-- end of messages  --->
+            <!-- end of messages  --->
            
-                <form method="POST" action="<?= base_url('Athletes/login_user')?>" class="needs-validation" novalidate="">
-                  <p style="color:#15693F; font-weight: bold;text-align: center;margin-top:60px;font-size:22px;">Login your account</p>
-                  <div class="form-group">
-                    <label for="email"><strong>Useremail / Contact</strong></label>
-                    <input id="email" type="text" class="form-control" name="ath_email_mobile" tabindex="1"  required autofocus>
-                    <div class="invalid-feedback">
-                      Please fill in your Username
+               <form method="POST" action="<?= base_url('Athletes/login_user')?>" class="needs-validation" novalidate="">
+                
+                  <div class="form-row">
+                    <div class="col-12">
+                      <div class="input-group mb-3"> 
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input name="user_email" type="text" value="" class="input form-control" id="user_email" placeholder="User Email" aria-label="user_email" aria-describedby="basic-addon1"  require autofocus/>
+                      </div>
                     </div>
-                  </div>
-                  <div class="form-group">
-                      <div class="d-block">
-                      <label for="password" class="control-label"><strong>Password</strong></label>
-                      <div class="float-right">
-                      <a href="auth-forgot-password.html" class="text-small">
-                      <strong>Forgot Password?</strong>
-                      </a>
+                    <div class="col-12">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                        </div>
+                        <input name="user_password" type="password" value="" class="input form-control" id="password" placeholder="password" required="true" aria-label="password" aria-describedby="basic-addon1" />
+                        <div class="input-group-append">
+                          <span class="input-group-text" onclick="hideShowPassword();">
+                            <i class="fas fa-eye" id="show_eye"></i>
+                            <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                          </span>
+                        </div>
                       </div>
-                      </div>
-                    <input id="password" type="password" class="form-control" name="ath_password" tabindex="2" required>
-                      <div class="invalid-feedback">
-                      please fill in your password
-                      </div>
-                  </div>
-                  <!-- <div class="form-group">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
-                      <label class="custom-control-label" for="remember-me">Remember Me</label>
                     </div>
-                  </div> -->
-                   <div class="col-md-6 offset-sm-3">
+
+                    <div class="col-12">
+                    <div class="float-right">
+                        <a href="Athletes/forgot_passord/" class="text-small">
+                          <strong>Forgot Password?</strong>
+                        </a>
+                      </div> 
+                      <!-- <div class="custom-control custom-checkbox">
+                        <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
+                        <label class="custom-control-label" for="remember-me">Remember Me</label>
+                       </div> --> 
+                    </div>
+                  </div><br>
+                  
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block text-center" style="border-radius:50px" tabindex="4">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                       Login
                     </button>
                   </div>
-                </div>
-                <br>
-
-                <div class="row sm-gutters pull-right">
-                      <a href="Athletes/athlete_sign_up" class="text-small">
-                      <strong style="font-weight: bold;font-size:15px;">Sign Up</strong>
-                    </a>
-                      </div>
-                  </div>
                 </form>
+                
+                </div>
+              </div>
             </div>
-            </div>
-             <!-- <div class="mt-5 text-muted text-center">
-              Don't have an account? <a href="auth-register.html">Create One</a>
-            </div> --> 
           </div>
         </div>
       </div>
     </section>
   </div>
-    <!-- General JS Scripts -->
-    <script src="assets/js/app.min.js"></script>
-    <!-- JS Libraies -->
-    <!-- Page Specific JS File -->
-    <!-- Template JS File -->
-    <script src="assets/js/scripts.js"></script>
-    <!-- Custom JS File -->
-    <script src="assets/js/custom.js"></script>
-    </body>
-    <!-- auth-login.html  21 Nov 2019 03:49:32 GMT -->
+  <!-- General JS Scripts -->
+  <script src="assets/js/app.min.js"></script>
+  <!-- JS Libraies -->
+  <!-- Page Specific JS File -->
+  <!-- Template JS File -->
+  <script src="assets/js/scripts.js"></script>
+  <!-- Custom JS File -->
+  <script src="assets/js/custom.js"></script>
+</body>
+
+
+<!-- auth-login.html  21 Nov 2019 03:49:32 GMT -->
 </html>
 
+<!-- captcha refresh code -->
 <script>
 $(document).ready(function(){
-$(".msg").delay(3000).fadeOut(1000);
+    $('.refreshCaptcha').on('click', function(){
+        $.get('<?= base_url().'admin/refreshCaptcha'; ?>', function(data){
+            $('#captImg').html(data);
+        });
+    });
 });
+function hideShowPassword() 
+{
+  var passsword = document.getElementById("password");
+
+  if (passsword.type === "password") 
+  {
+    passsword.type = "text";
+    $('#show_eye').addClass('d-none');
+    $('#hide_eye').removeClass('d-none');
+    
+  } 
+  else 
+  {
+    passsword.type = "password";
+    $('#show_eye').removeClass('d-none');
+    $('#hide_eye').addClass('d-none');
+  }
+}
 </script>

@@ -28,8 +28,9 @@
                                 <?php }?>
                             </div>
                     <!-- end of messages  --->
+                    
                     <div class="table-responsive">
-                      <table class="table table-striped table-hover" style="width:100%;">
+                      <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
                         <thead class="">
                           <tr>
                             <th>Game </th>

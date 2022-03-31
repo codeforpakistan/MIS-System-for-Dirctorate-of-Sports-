@@ -32,13 +32,13 @@ function chart1() {
             colors: ['transparent']
         },
         series: [{
-            name: 'Net Profit',
+            name: 'Pending',
             data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
         }, {
-            name: 'Revenue',
+            name: 'Approve',
             data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
         }, {
-            name: 'Free Cash Flow',
+            name: 'Membersips',
             data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
         }],
         xaxis: {
@@ -51,7 +51,7 @@ function chart1() {
         },
         yaxis: {
             title: {
-                text: '$ (thousands)'
+                text: ''
             },
             labels: {
                 style: {

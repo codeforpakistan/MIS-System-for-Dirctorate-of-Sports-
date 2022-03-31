@@ -195,7 +195,6 @@
        
       <script>
           function event_update(event_id){ 
-
           $.ajax({
             url: 'admin/get_ajax_event/'+event_id,
             dataType: 'json',

@@ -1,101 +1,126 @@
+
 <!-- start messages --->
     <?php if($this->session->userdata('user_role_id_fk')  == 6){?>
-      <div class="main-content">
-        <section class="section">
-          <div class="section-body">
-            <div class="row">
-              <div class="col-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h4>List of Pending Challan</h4>
-                  </div>
-                  <?php $ath_id = $this->session->userdata('ath_id')?>
-                  <div class="card-body">
-                    <!-- end of messages  --->
-                     <div class="table-responsive">
-                      <table class="table table-striped table-hover"  style="width:100%;">
-                        <thead >
-                          <tr>
-                            <th>Profile Photo</th>
-                            <th>Nic Photo</th>
-                            <th>Name</th>
-                            <th>Father Name</th>
-                            <th>Cnic</th>
-                            <th>Address</th>
-                            <th>Contact</th>
-                            <th>District</th>
-                            <th>Profession</th>
-                            <th>Game</th>
-                            <th>Game Time</th>
-                            <th>Game Fee</th>
-                            <th>Admission Fee</th>
-                            <th>Payment Mode</th>
-                            <th>Bank Challan</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                            <tbody>
-                              <?php if(!empty($athlete_games_fee)):
-                                foreach($athlete_games_fee as $athlete_game):?>
-                                  <tr>
-                                    <td><img src="assets/images/athlete_images/<?=$athlete_game->ath_profile_photo?>" style="height:50px;width:50px;"></td>
-                                    <td><img src="assets/images/athlete_images/<?=$athlete_game->ath_nic_photo?>" style="height:50px;width:50px;"></td>
-                                    <td><?=$athlete_game->ath_name?></td>
-                                    <td><?=$athlete_game->ath_father_name?></td>
-                                    <td><?=$athlete_game->ath_cnic?></td>
-                                    <td><?=$athlete_game->ath_address?></td>
-                                    <td><?=$athlete_game->ath_contact?></td>
-                                    <td><?=$athlete_game->district_name?></td>
-                                    <td><?=$athlete_game->ath_profession?></td>
-                                    <td><?=$athlete_game->game_name?></td>
-                                    <td><?=$athlete_game->ath_game_time_preference?></td>
-                                    <td><?=$athlete_game->game_fee?></td>
-                                    <td><?=$athlete_game->game_admission_fee?></td>
-                                    <td><?=$athlete_game->ath_payment_mode?></td>
-                                    <?php if($athlete_game->ath_upload_challan > 0){?>
-                                    <td><img src="assets/images/challan/<?=$athlete_game->ath_upload_challan?>" style="height:50px;width:50px;"></td>
-                                    
-                                    <?php } else{?>
-                                      <td></td>
-                                    <?php }?>
-                                     
-                                     <td>
-                                    <?php if($athlete_game->ath_fee_status == 1){?>
-                                    <span class="badge badge-primary">Pending</span>
-                                    <?php } elseif ($athlete_game->ath_fee_status == 2) {?>
-                                    <span class="badge badge-success">Approve</span>
-                                    <?php } elseif ($athlete_game->ath_fee_status == 3) {?>
-                                    <span class="badge badge-danger">Rejcted</span>
-                                    <?php }?>
-                                  </td>
 
-                                
-                                    <td>
-                                    <div class="dropdown">
-                                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        Change Status
-                                        <span class="caret"></span>
-                                      </button>
-                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width: 10%;text-align: center;color:#000 !important;">
-                                        <li><a href="athletes/change_fee_satus/<?=$athlete_game->ath_game_id?>/<?=$athlete_game->ath_game_fee_id?>/2/<?=$athlete_game->ath_game_status?>" style="color:#000;text-decoration: none;">Approve</a></li>
-                                        <li><a href="athletes/change_fee_satus/<?=$athlete_game->ath_game_id?>/<?=$athlete_game->ath_game_fee_id?>/3/<?=$athlete_game->ath_game_status?>" style="color:#000;text-decoration: none;">Rejected</a></li> 
-                                      </ul>
-                                    </div>
-                                  </td> 
-
-                                  </tr>
-                                <?php  endforeach;endif;?>
-                            </tbody>
-                      </table>
+      <!-- Main Content -->
+<div class="main-content">
+<section class="section">
+      
+        <div class="row ">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row " >
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Active Members</h5>
+                          <h2 class="mb-3 font-18"></h2>
+                          <!-- <p class="mb-0"><span class="col-green">10%</span> Increase</p> -->
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 " align="center">
+                        <div class="banner-img">
+                          <img src="assets/images/team.png" style="height: 98px;">
+                          <!-- <img src="assets/img/banner/1.png" alt=""> -->
+                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
               </div>
             </div>
-        </div> 
-     </div>
-  </section>
-</div>                
+
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row " >
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Member Ships</h5>
+                          <h2 class="mb-3 font-18"></h2>
+                          <!-- <p class="mb-0"><span class="col-green">10%</span> Increase</p> -->
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 ">
+                        <div class="banner-img">
+                          <img src="assets/images/form.png" style="height:98px;">
+                          <!-- <img src="assets/img/banner/1.png" alt=""> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Approve Challans</h5>
+                          <h2 class="mb-3 font-18"></h2>
+                          <!-- <p class="mb-0"><span class="col-orange">09%</span> Decrease</p> -->
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                           <img src="assets/images/approve.png" style="height:98px;">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Pending Challans</h5>
+                          <h2 class="mb-3 font-18"></h2>
+                          <!-- <p class="mb-0"><span class="col-green">18%</span>Increase</p> -->
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                         <img src="assets/images/pending.png" style="height:98px;">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- :::::::::::::::::::::::: Second Row start  :::::::::::::::::::::::::::::::::::::::::::: -->
+
+          <div class="section-body">
+            <div class="row clearfix">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Bar Chart</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="recent-report__chart">
+                      <div id="chart1"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+</section>
+</div>
+
 
 <?php } else{?>
 
@@ -141,12 +166,15 @@
                                     <?php elseif($athlete_game->ath_game_status == 2):?>
                                     <td><span class="badge badge-primary">Active</span></td>
                                     <?php endif;?>
+                                    <?php $get_game_fees = $this->model->get_game_fees($athlete_game->ath_game_id);
+                                    ?>
 
-                                   <?php $get_game_fees = $this->model->get_game_fees($athlete_game->ath_game_id);
+                                   <td><?php if($get_game_fees->ath_fee_status == 1){?>
+                                   <span style="color: red;font-weight: bold">Payment Not Verified</span>  
 
-                                   ?>
-                                   <td><?=$get_game_fees->ath_fee_status == 1?>
-                                   <span>Payment Not Verified</span>  
+                                   <?php } else{?>
+                                    <span style="color: green;font-weight: bold">Payment Verified</span>
+                                  <?php }?>
                                    </td>
 
                                     <td> 
@@ -158,6 +186,7 @@
                                       $this->db->where('ath_id',$athlete_game->ath_id)->where('ath_game_status',$athlete_game->ath_game_status == 1)->update('athlete_games',$expired_game);
 
                                       $expired_game=array('ath_fee_status' => 4);
+
                                       $this->db->where('ath_game_fee_id',$get_game_fees->ath_game_fee_id)->where('ath_game_id',$athlete_game->ath_game_id)->where('ath_fee_status',1)->update('athlete_games_fees',$expired_game);
 
                                         ?>
@@ -172,8 +201,6 @@
 
                                       <a href="javascript:void(0)" data-toggle="modal" data-target="#uploadModel" href="javascript:void(0)" class="btn btn-info  fa fa-upload" onclick=" return get_id(<?=$get_game_fees->ath_game_fee_id?>)"> Upload Challan</a>
 
-                          
-
                                     <?php  }  }  ?>
                                     </td>
 
@@ -182,84 +209,17 @@
                             </tbody>
                       </table>
                     </div> 
+                   </div>
                 </div>
-              </div>
-
-            <!-- <div class="card">
-              <div class="card-header">
-                    <h4>Challans</h4>
-              </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-striped table-hover"  style="width:100%;">
-                        <thead >
-                          <tr>
-                            <th>Game </th>
-                            <th>Challan No</th>
-                            <th>Challan Fee</th>
-                            <th>Months</th> 
-                            <th>Admission Fee</th>
-                            <th>Payment Mode</th>
-                            <th>Status</th>
-                            <th>Upload Challan</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                            <tbody>
-                              <?php if(!empty($all_peniding_challans)):
-                                foreach($all_peniding_challans as $all_peniding_challan):?>
-                                  <tr>
-                                    <td><?= ucwords($all_peniding_challan->game_name)?></td>
-                                    <td><?=$all_peniding_challan->ath_challan_no?></td>
-                                    <td><?=$all_peniding_challan->ath_challan_fee?></td>
-                                    <td><?=$all_peniding_challan->ath_fee_months?></td>
-                                    <?php if($all_peniding_challan->ath_challan_admission_fee > 0){?>
-                                    <td><?=$all_peniding_challan->ath_challan_admission_fee?></td>
-                                    <?php } else{?>
-                                    <td></td>
-                                    <?php }?>
-                                    <td><?=$all_peniding_challan->ath_payment_mode?></td>
-
-                                    <?php if($all_peniding_challan->ath_fee_status == 1){?>
-                                    <td> <span class="badge badge-primary">Pending</span></td>
-                                    <?php } elseif ($all_peniding_challan->ath_fee_status == 2) {?>
-                                    <td><span class="badge badge-success">Approve</span></td>
-                                    <?php } elseif ($all_peniding_challan->ath_fee_status == 3) {?>
-                                    <td><span class="badge badge-danger">Rejcted</span></td>
-                                    <?php }?>
-
-                                    <?php if($all_peniding_challan->ath_upload_challan  > 0){?>
-
-                                    <td><img src="assets/images/challan/<?=$all_peniding_challan->ath_upload_challan?>" style="height:50px;width:50px;"></td>
-                                    <?php } else{?>
-
-                                      <td></td>
-
-                                    <?php }?>
-
-                                    <td><?php if($all_peniding_challan->ath_fee_status == 1 || $all_peniding_challan->ath_fee_status == 3){?>
-                                         <a href="athletes/bank_challan/<?=$all_peniding_challan->ath_id?>/<?=$all_peniding_challan->ath_game_fee_id?>" class="btn btn-success  fa fa-download"> Download Challan</a> 
-
-                                      <a href="javascript:void(0)" data-toggle="modal" data-target="#uploadModel" href="javascript:void(0)" class="btn btn-info  fa fa-upload" onclick=" return get_id(<?=$all_peniding_challan->ath_game_fee_id?>)"> Upload Challan</a>
-
-                                    
-                                      <?php } ?></td>
-                                  </tr>
-                                <?php  endforeach;endif;?>
-                            
-                            </tbody>
-                      </table>
-                    </div> 
-
-                </div>
-                </div> -->
-
               </div>
             </div>
         </div> 
      </div>
   </section>
-</div> 
+</div>
+
+
+ 
 
 <?php }?>
 
@@ -286,13 +246,21 @@
                         <form class="" method="post" action="<?= base_url("athletes/application_form") ?>">
                              
                           <div class="row">
-                            <div class="col-6 col-12 col-12">
+                            <div class="col-12 col-12 col-12">
                             <div class="form-group">
                               <label>Game Applied For</label>
+                              
                                   <select class="form-control select2" id="game_id"  multiple="" name="game_id[]" style="width:100%">
-                                    <option>-Select Games</option>
                                     <?php if(!empty($games)){
-                                      foreach($games as $game){?>
+                                      foreach($games as $game){
+
+                                      $ath_id = $this->session->userdata('ath_id');
+                                      $data  = $this->db->select('game_id')->where('ath_id',$ath_id)->where('game_id',$game->game_id)->where('game_id',$game->game_id)->get('athlete_games')->row();
+                                        if($data->game_id == $game->game_id):
+                                        continue;
+                                        endif;
+
+                                        ?>
                                     <option value="<?=$game->game_id?>"><?=$game->game_name?></option>
                                    <?php } }?>
                                   </select>
@@ -300,7 +268,7 @@
                           </div>
                         <input type="hidden" name="more_games" value="more_games">
 
-                            <div class="col-6">
+                            <div class="col-12 col-12 col-12">
                             
                             <div class="form-group">
                                   <label>Time Prefernce</label>
@@ -312,7 +280,7 @@
                             </div>
                           </div>
 
-                            <div class="col-6">
+                            <div class="col-12 col-12 col-12">
                             
                             <div class="form-group">
                                   <label>Payment Mode</label>
@@ -323,36 +291,28 @@
                             </div>
                           </div>
 
-                           <div class="col-6">
+                           <div class="col-12 col-12 col-12">
                             <div class="form-group">
                                   <label>Game Fee</label>
                                   <input type="number" class="form-control game_fee" placeholder="Total Fee" name="game_fee" id="game_fee"  required>
                             </div>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-12 col-12 col-12">
                             <div class="form-group">
                                   <label>Admission Fee</label>
                                   <input type="number" class="form-control admission_fee" placeholder="Total Fee" name="admission_fee" id="admission_fee"  required>
                             </div>
                           </div>
 
-                          <div class="col-6">
+                          <div class="col-12 col-12 col-12">
 
                             <div class="form-group">
                                   <label>Total Fee</label>
                                   <input type="number" class="form-control" placeholder="Total Fee" name="total_fee" id="total_fee"  required>
                             </div>
                           </div>
-                            
-                            <!-- <div class="col-6">
-                            <div class="form-group">
-                                  <label>Date of apply</label>
-                                  <input type="date" class="form-control" placeholder="" name="date_of_apply" required>
-                            </div>
-
-                          </div> -->
-
+                          
                                <div class="col-12">
                                 <div class="form-group pull-right">
                                 <button type="submit" class="btn btn-primary m-t-15 waves-effect pull-right" >Save</button>
@@ -528,88 +488,6 @@ $(document).ready(function(){
  
 </script>
 
+ 
 
-<?php /* for previouis work deactivat games
-
-
-
-
-
-
-<div class="card">
-                  <div class="card-header">
-                    <h4>List of Active Games</h4>
-                  </div>
-                  <div class="card-body">
-                    <?php if($this->session->userdata('user_role_id_fk')  == 5){?>
-                  <button type="button" class="btn btn-primary fa fa-plus" style="float: right" data-toggle="modal" data-target="#addGameModel"> Add New Game</button>               
-
-                <?php }?>
-
-                    <div class="table-responsive">
-                      <table class="table table-striped table-hover"  style="width:100%;">
-                        <thead >
-                          <tr>
-                            <th>Game</th>
-                            <th>Game Time</th>
-                            <th>Game Fee</th>
-                            <th>Admission Fee</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                            <tbody>
-                              <?php if(!empty($athlete_games)):
-                                foreach($athlete_games as $athlete_game):?>
-                                  <tr>
-                                    <td><?= ucwords($athlete_game->game_name)?></td>
-                                    <td><?=$athlete_game->ath_challan_admission_fee?></td>
-                                    <td><?=$athlete_game->game_fee?></td>
-                                    <td><?=$athlete_game->game_admission_fee?></td>
-                                    <?php if($athlete_game->ath_game_status == 1):?>
-                                    <td> <span class="badge badge-primary">Active</span></td>
-                                    <?php else:?>
-                                    <td><span class="badge badge-danger">In-active</span></td>
-                                    <?php endif;?>
-
-                                   
-                                    <?php if($athlete_game->fee_monthly_end_date < date('Y-m-d') ){?>
-                                       <td> 
-                                      <a  href="javascript:void(0)" data-toggle="modal" data-target="#feeModel" href="javascript:void(0)"  class="btn btn-primary  fa fa-download" onclick="get_ath_game_fee_id(<?=$athlete_game->game_fee?>,<?=$athlete_game->ath_game_id?>)" style=""> Submit Fee</a></td>
-                                    
-                                    
-                                     <?php } ?>
-
-                                     <?php if($athlete_game->ath_fee_status != 1){?>
-
-                                    <?php if($athlete_game->ath_game_status == 0){?>
-                                     <td><a href="athletes/change_game_satus/<?=$athlete_game->ath_game_id?>/1" class="btn btn-icon icon-left btn-success" onclick="return activate_deactivate(<?=$athlete_game->ath_game_status?>)"><i class="fas fa-check"></i><strong> Activate Game</strong></a></td>
-
-                                    <?php } else{?>
-
-                                    
-                                    <td><a href="athletes/change_game_satus/<?=$athlete_game->ath_game_id?>/0" class="btn btn-icon icon-left btn-danger" onclick="return activate_deactivate(<?=$athlete_game->ath_game_status?>)"><i class="fas fa-times"></i><strong>De activate Game</strong></a></td>
-                                     
-                                  <?php  }?>
-
-                                <?php } else{?>
-
-                                  <td></td>
-
-                                <?php }?>
-
-                                  </tr>
-                                <?php  endforeach;endif;?>
-                            </tbody>
-                      </table>
-                    </div> 
-                </div>
-              </div>
-
-
-
-
-
-
- */?>
       

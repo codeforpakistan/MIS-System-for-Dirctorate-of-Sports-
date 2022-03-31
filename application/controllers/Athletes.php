@@ -13,24 +13,28 @@ class Athletes extends CI_Controller {
         $this->load->library('auto_no.php','zend');
         $this->load->library('form_validation');
 
+
     } 
 
   public function index()
     {         
         if($this->session->userdata('user_role_id_fk'))
         {
+
+
             $this->athlete_dashboard();
         }
         else
         {
+
            $this->load->view('athlete_login'); 
         }
         
     }
     
     public function login_user(){
-        $this->form_validation->set_rules('ath_email_mobile', 'Useremail', 'required|trim');
-        $this->form_validation->set_rules('ath_password', 'Password', 'required|trim');
+        $this->form_validation->set_rules('user_email', 'Useremail', 'required|trim');
+        $this->form_validation->set_rules('user_password', 'Password', 'required|trim');
         if ($this->form_validation->run() == FALSE)
         {
 
@@ -42,8 +46,8 @@ class Athletes extends CI_Controller {
         }
         else
         {
-             $ath_email_mobile   = $this->input->post('ath_email_mobile');
-             $ath_password       = $this->input->post('ath_password');
+             $ath_email_mobile   = $this->input->post('user_email');
+             $ath_password       = $this->input->post('user_password');
              $response           = $this->AuthModel->athlete_login($ath_email_mobile,$ath_password); 
 
 
@@ -109,6 +113,9 @@ class Athletes extends CI_Controller {
     
     public function athlete_dashboard()
     {   
+      if($this->session->userdata('user_role_id_fk'))
+    {
+
 
         $table            = 'games';
         $data['games']    = $this->admin_model->get_all_records($table);
@@ -116,12 +123,14 @@ class Athletes extends CI_Controller {
         $ath_id = $this->session->userdata('ath_id');
         $data['athlete_games']   = $this->model->get_athlete_games($ath_id);
 
-        $data['athlete_games_fee']   = $this->model->get_athlete_games_fees($ath_id);
-
-
         $data['title']  = 'Dashboard';
         $data['page']   = 'athlete_dashboard';
         $this->load->view('template',$data);
+    }
+    else
+    {
+        return redirect(base_url('athletes'));
+    }    
     }
 
     public function athlete_sign_up(){
@@ -451,11 +460,11 @@ class Athletes extends CI_Controller {
 
             $ath_game_fee_id = $this->input->post('ath_game_fee_id',true);
             $challan_no      = $this->input->post('challan_no',true);
-
-
             $challan        = $_FILES['Upload_challan']['name'];
 
             if($challan == ''){
+
+                $this->messages('alert-danger','Challan Not Uploaded');
                 redirect('athletes/athlete_dashboard');
             }
 
@@ -463,7 +472,7 @@ class Athletes extends CI_Controller {
 
             $config = array(
             'upload_path'   => 'assets/images/challan/',
-            'allowed_types' => 'png|jpg|jpeg',
+            'allowed_types' => 'png|jpg|jpeg|pdf',
             );
 
             $this->load->library('upload',$config);
@@ -741,10 +750,12 @@ class Athletes extends CI_Controller {
             $expire_date    =  date('Y-m-d', strtotime($date_of_apply ."+".intVal($fee_months)." months"));
 
             $fee_table_name = "athlete_games_fees"; 
+            $challan_no   =  new auto_no();
+            $challan_no   = $challan_no->get_auto_num('challan','auto_no');
 
             $athlete_games_fees    = array(
                 'ath_payment_mode'         =>  $payment_mode,
-                'ath_challan_no'           =>  10,
+                'ath_challan_no'           =>  $challan_no,
                 'ath_fee_status'           =>  1,
                 'ath_fee_months'           =>  $fee_months,
                 'ath_challan_fee'          =>  $total_game_fee,
@@ -754,6 +765,8 @@ class Athletes extends CI_Controller {
             );
 
               $response = $this->admin_model->insert($athlete_games_fees,$fee_table_name);
+              $this->model->set_auto_no('challan');
+
 
               if($response == true)
                 {
@@ -771,6 +784,161 @@ class Athletes extends CI_Controller {
 
     }
 }
+
+public function pending_challans(){
+
+
+    $data['pending_challans']   = $this->model->get_athlete_pending_challans($ath_id);
+    $data['title']              = 'Pending Challans';
+    $data['page']               = 'pending_challans';     
+    $this->load->view('template',$data);
+}
+
+ public function forgot_passord(){
+
+         $this->load->view("athlete_forgot_password");
+
+
+    }
+
+    function forgot_email_validation()
+    {
+        $user_email = $this->input->post('user_email');
+        $returing_array = array();
+        if(!empty($user_email))
+        {
+            $returing_array = $this->email_send_otp($user_email);
+            
+        }
+        else
+        {
+            $returing_array['message'] = "Email filed is required";
+        }
+        echo json_encode($returing_array); exit;
+    }
+    function email_send_otp($user_email)
+    {
+        $response = $this->model->forgot_email_validation($user_email);
+            if(!empty($response))
+            {
+                $user_first_name = $response->ath_name;
+                $user_email      = $response->ath_email;
+                $user_id         = $response->ath_id;
+                $otp = substr(str_shuffle(time()), 0, 6);
+
+                $update_array = array('vcode'=>trim($otp));
+                $this->model->update($update_array,'athletes','ath_id',$user_id);
+                $htmlContent = "
+                                    <p>Hi, ".$user_first_name.", </p>
+                                    <p>We received a request to reset your password through your email address. Your PPSC verification code is: </p>
+                                    <h2>".$otp."</h2>
+                                    <p>
+                                        If you did not request this code, it is possible that someone else is trying to access your PPSC Account. 
+                                        <b>Do not forward or give this code to anyone.</b>
+                                    </p>
+                                    <a href='https://ppsc.kp.gov.pk'> https://ppsc.kp.gov.pk </a>
+                                ";
+                            $this->load->library('email');
+                            $this->email->from('salmanzafar@codeforpakistan.org', 'PPSC');
+                            $this->email->to($user_email);
+                            $this->email->subject('PPSC Verification Code');
+                            $this->email->message($htmlContent); 
+                            $this->email->set_mailtype("html");
+                            
+                            if($this->email->send())
+                            {
+                                $message =  "Kindly check your email for verification code.";
+                                $returing_array['message'] = $message;
+                                $returing_array['user_email'] = $user_email;
+                                $returing_array['user_id'] = $user_id;
+                                
+                            }
+                            else
+                            {  $message =  "Kindly check your email for verification code.";
+                                // echo "Failed to send verification code on email."; exit;
+                                //$message =  "Kindly check your email for verification code.";
+                                $returing_array['message'] = $message;
+                                $returing_array['user_email'] = $user_email;
+                                $returing_array['user_id'] = $user_id;
+                            }
+            }
+            else
+            {
+                $returing_array['message'] = "Invalid Email";
+            }
+            return $returing_array; exit;
+    }
+
+    function conformation_code()
+    {
+       $user_email =  $this->input->post('user_email');
+       $user_id    =  $this->input->post('user_id');
+       $vcode      =  $this->input->post('vcode');
+       $resend_code = $this->input->post('resend_code'); 
+       $returing_array = array();
+        if(isset($resend_code))
+        {
+           $returing_array = $this->email_send_otp($user_email); 
+        //    $returing_array['user_id']=  $user_id;
+        //    $returing_array['user_email']=  $user_email;
+           echo json_encode($returing_array); exit;
+        }
+        else
+        {
+            if(!empty($user_id) && !empty($vcode) )
+            {
+                $array = array('ath_email'=>$user_email,'vcode'=>$vcode,'ath_id'=>$user_id);
+                $user_response = $this->model->check_record_by_array($array,'athletes');
+                if(!empty($user_response))
+                {
+                    $returing_array['message']    =  "record exists";
+                    $returing_array['user_id']    =  $user_id;
+                    $returing_array['user_email'] =  $user_email;
+                }
+                else
+                {
+                    $returing_array['message'] =  "invalic conformation code";
+                }
+            }
+            else
+            {
+                $returing_array['message'] = "vscode field is required";
+            }
+        }
+       
+       
+       echo json_encode($returing_array); exit;
+    }
+    function update_password()
+    {
+       $user_email        =  $this->input->post('user_email');
+       $user_id           =  $this->input->post('user_id');
+       $user_cpassword    =  $this->input->post('r_cpassword');
+       $user_password     =  $this->input->post('r_password');
+       if($user_password  !== $user_cpassword)
+       {
+           echo "Password Not Match"; exit;
+       }
+
+       if(!empty($user_id) && !empty($user_password) )
+       {
+           $update_array = array('ath_password'=>md5($user_password),'vcode'=>'');
+           $user_response = $this->model->update($update_array,'athletes','ath_id',$user_id);
+           if(!empty($user_response))
+           {
+               echo "Password Update Successfully please Login now"; exit;
+           }
+           else
+           {
+               echo "invalic conformation code"; exit;
+           }
+       }
+       else
+       {
+           echo "vscode field is required"; exit;
+       }
+       echo "password and conform passwor field is required"; exit;
+    }
 
 
 }
