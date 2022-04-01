@@ -188,6 +188,8 @@
             </li> 
             <?php endif;?>
 
+           
+
         
 
             <?php if($this->session->userdata('user_role_id_fk') == 6):?>
@@ -222,6 +224,16 @@
             <li class="dropdown">
                 <a href="Athletes/Approve_challans"  class="nav-link ">
                   <i class="fa fa-file"></i><span>Memberships</span>
+                </a>
+            </li> 
+            <?php endif;?>
+
+
+            <?php if($this->session->userdata('user_role_id_fk') == 6):?>
+
+            <li class="dropdown">
+                <a href="Athletes/users"  class="nav-link ">
+                  <i class="fa fa-file"></i><span>users</span>
                 </a>
             </li> 
             <?php endif;?>

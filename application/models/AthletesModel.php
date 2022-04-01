@@ -5,19 +5,19 @@ if (!defined('BASEPATH'))	exit('No direct script access allowed');
 class AthletesModel extends CI_Model
 {
 
-    public function athlete_profile($ath_id)
+    // public function athlete_profile($ath_id)
     
-    {
+    // {
 
 
-        $query = $this->db->select('athletes.`ath_id`,athletes.`ath_name`,athletes.`ath_father_name`,athletes.`ath_cnic`,athletes.`ath_dob`,athletes.`ath_address`,athletes.`ath_contact`,athletes.`ath_gender`,athletes.`ath_emergency_contact`,athletes.`ath_profession`,athletes.`ath_date_apply`,athletes.`ath_nic_photo`,athletes.`ath_profile_photo`,athletes.`ath_email`,athletes.`ath_password`,athletes.`district_id`,athletes.`user_id`,athletes.`user_role_id_fk`,athletes.`is_active`,districts.district_name')
-        ->from('athletes')
-        ->join('districts','athletes.district_id=districts.district_id','left')
-        ->where('athletes.ath_id =',$ath_id)
-        ->get();
+    //     $query = $this->db->select('athletes.`ath_id`,athletes.`ath_name`,athletes.`ath_father_name`,athletes.`ath_cnic`,athletes.`ath_dob`,athletes.`ath_address`,athletes.`ath_contact`,athletes.`ath_gender`,athletes.`ath_emergency_contact`,athletes.`ath_profession`,athletes.`ath_date_apply`,athletes.`ath_nic_photo`,athletes.`ath_profile_photo`,athletes.`ath_email`,athletes.`ath_password`,athletes.`district_id`,athletes.`user_id`,athletes.`user_role_id_fk`,athletes.`is_active`,districts.district_name')
+    //     ->from('athletes')
+    //     ->join('districts','athletes.district_id=districts.district_id','left')
+    //     ->where('athletes.ath_id =',$ath_id)
+    //     ->get();
 
-        return $query->row_array();
-    }
+    //     return $query->row_array();
+    // }
 
 
 
@@ -205,6 +205,27 @@ class AthletesModel extends CI_Model
     { 
         return $this->db->where($array)->get($table_name)->row();
     }
+
+    public function athlete_profile($user_role_id_fk)
+    {
+      return $this->db->select('*')
+      ->from('athletes')
+      ->where('user_role_id_fk =',$user_role_id_fk)
+      ->join('user_roles r','r.user_role_id=athletes.user_role_id_fk','left')
+      ->join('districts d','d.district_id=athletes.district_id','left')
+      ->order_by('athletes.ath_id','desc')
+      ->get()->row_array();
+}
+
+public  function facility_admins()
+      {
+          return $this->db->from('athletes')
+                          ->where('user_role_id_fk !=',6)
+                          ->where('user_role_id_fk !=',5)
+                          ->join('facilities f','f.facility_id=athletes.facility_id','left')
+                          ->join('user_roles r','r.user_role_id=athletes.user_role_id_fk','left')
+                           ->get()->result();
+      }
 
 }
 

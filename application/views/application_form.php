@@ -166,7 +166,6 @@
                             <div class="form-group">
                               <label>Game Applied For</label>
                                   <select class="form-control select2 " id="game_id"  multiple name="game_id[]">
-                                    <p class=""></p>
                                     <?php if(!empty($games)){
                                       foreach($games as $game){?>
                                     <option value="<?=$game->game_id?>"><?=$game->game_name?></option>
@@ -175,13 +174,26 @@
                             </div>
                     </div>  
 
+                    <div class="col-4">
+                            <div class="form-group">
+                                  <label>Game Complex</label>
+                                   <select class="form-control  " id="facility_id"   name="facility_id">
+                                    <option  disabled value="" selected hidden>---Select Complex---</option>
+                                    <?php if(!empty($facilities)){
+                                      foreach($facilities as $facility){?>
+                                    <option value="<?=$facility->facility_id?>"><?=$facility->facility_name?></option>
+                                   <?php } }?>
+                                  </select>
+                            </div>
+                      </div>
+
                        
 
                       <div class="col-4">
                             <div class="form-group">
                                   <label>Time Prefernce</label>
                                   <select class="form-control" name="time_prefernce">
-                                    <option value="">-Select Prefernce-</option>
+                                    <option  disabled value="" selected hidden>---Select Prefernce---</option>
                                     <option value="morning">Morning</option>
                                     <option value="evening">Evening</option>
                                   </select>

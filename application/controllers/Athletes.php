@@ -226,6 +226,7 @@ class Athletes extends CI_Controller {
         $this->form_validation->set_rules('time_prefernce', 'Time Prefernce', 'required|trim');
         $this->form_validation->set_rules('game_fee', 'Game Fee', 'required|trim');
         $this->form_validation->set_rules('payment_mode', 'Payment Mode', 'required|trim');
+        $this->form_validation->set_rules('facility_id', 'Facility', 'required|trim');
 
     }
 
@@ -260,6 +261,7 @@ class Athletes extends CI_Controller {
             $emergency_contact   = $this->input->post('emergency_contact');
             $profession          = $this->input->post('profession');
             $district_id         = $this->input->post('district_id');
+            $facility_id         = $this->input->post('facility_id');
             $table_name          = 'athletes'; 
             $talbe_column_name   = 'ath_id';
             $table_id            = $ath_id;
@@ -297,7 +299,8 @@ class Athletes extends CI_Controller {
             'district_id'            =>  $district_id,
             'ath_profession'         =>  $profession,
             'ath_profile_photo'      =>  $file_name2,
-            'ath_nic_photo'          =>  $file_name1
+            'ath_nic_photo'          =>  $file_name1,
+            'facility_id'            =>  $facility_id
 
             );
 
@@ -384,6 +387,10 @@ class Athletes extends CI_Controller {
         $table_name = 'districts';
         $data['districts'] = $this->admin_model->get_all_records($table_name);
 
+        $table_name = 'facilities';
+        $data['facilities'] = $this->admin_model->get_all_records($table_name);
+
+
         $table_name          = "athletes";
         $talbe_column_name   = 'ath_id';
         $table_id            =  $ath_id;
@@ -395,22 +402,23 @@ class Athletes extends CI_Controller {
 
     }
 
-    public function athlete_profile()
-    {   
-        //$this->check_role_privileges('dashboard',$this->session->userdata('user_role_id_fk'));
-        $data['title']       = 'User Profile';
-        $data['page']        = 'profile';
-        $ath_id     = $this->session->userdata('ath_id');
+    // public function athlete_profile()
+    // {   
+    //     //$this->check_role_privileges('dashboard',$this->session->userdata('user_role_id_fk'));
+    //     $data['title']       = 'User Profile';
+  
+    //     $data['page']        = 'athlete_profile';
+    //     $ath_id              = $this->session->userdata('ath_id');
 
-        if(empty($ath_id))
-        {
-            $this->logout_user();
-        } 
+    //     if(empty($ath_id))
+    //     {
+    //         $this->logout_user();
+    //     } 
         
-        $data['athlete_profile']  = $this->model->athlete_profile($ath_id); 
+    //     $data['athlete_profile']  = $this->model->athlete_profile($ath_id); 
 
-        $this->load->view('template',$data);
-    }
+    //     $this->load->view('template',$data);
+    // }
 
     public function update_profile()
     { 
@@ -939,6 +947,189 @@ public function pending_challans(){
        }
        echo "password and conform passwor field is required"; exit;
     }
+
+
+    public function athlete_profile()
+    {   
+        //$this->check_role_privileges('dashboard',$this->session->userdata('user_role_id_fk'));
+        $data['title']       = 'User Profile';
+        $data['page']        = 'athlete_profile';
+        $user_role_id_fk     = $this->session->userdata('user_role_id_fk');
+        if(empty($user_role_id_fk))
+        {
+            $this->logout_user();
+        } 
+        
+        $data['athlete_profile']  = $this->model->athlete_profile($user_role_id_fk); 
+        $this->load->view('template',$data);
+    }
+
+      public function users()
+    { 
+
+     //$this->check_role_privileges('users',$this->session->userdata('user_role_id_fk'));
+        
+        $table_name                 = 'athletes';
+        $table_name2                = 'facilities';
+        $table_status_column_name   = 'is_active';
+        $facility_id                = 7;
+        $table_status_column_value  = 1;
+        $data['users']              = $this->model->facility_admins();
+        $data['facilities']           = $this->admin_model->status_active_record($table_name2,$table_status_column_name,$table_status_column_value);
+
+        $data['title']              = 'Users';
+        $data['page']               = 'athlete_admin_users';
+        $this->load->view('template',$data);
+    }
+
+
+    function users_insert()
+    {
+
+
+        $this->form_validation->set_rules('user_email', 'User Email', 'required|trim|is_unique[athletes.ath_email]');
+        $this->form_validation->set_rules('user_name', 'User Email', 'required|trim|is_unique[athletes.ath_name]');
+        $this->form_validation->set_rules('user_password', 'Password', 'required|trim');
+
+        if($this->input->post('user_role_id_fk') == 7) // to for District admin
+        {
+            $this->form_validation->set_rules('facility_id', 'Facility selection', 'required|trim');
+        } 
+
+        if ($this->form_validation->run() == FALSE)
+        {
+
+            $error   = array('error' => validation_errors());
+            $message = implode(" ",$error);
+            $this->messages('alert-danger',$message);
+            return redirect('athletes/users');
+            
+        }
+        else
+        {
+            $user_email           = $this->input->post('user_email');
+            $user_name           = $this->input->post('user_name');
+            $user_password        = $this->input->post('user_password');
+            $user_facility_id_fk  = (empty($this->input->post('facility_id'))? 0:$this->input->post('facility_id'));
+            $user_role_id_fk      = $this->input->post('user_role_id_fk');
+            $table_name           = 'users';
+            $inert_array       = array('ath_email'=> $user_email,'ath_name'=> $user_name,'ath_password'=>md5($user_password),'facility_id'=>$user_facility_id_fk,'is_active'=>1,'user_role_id_fk'=>$user_role_id_fk);
+            $table_name           = 'athletes';
+
+            $response = $this->admin_model->insert($inert_array,$table_name);
+
+                if($response == true)
+                {
+                    $this->messages('alert-success','Successfully Added');
+                    return redirect('athletes/users'); 
+                }
+                else
+                {
+                    $this->messages('alert-danger','Some Thing Wrong');
+                    return redirect('athletes/users');
+                }
+        }
+    }
+    //==========================================================================
+    // update user modal view
+    //==========================================================================
+    function users_edit_model($user_id)
+    { 
+        $table_name        = "athletes";
+        $talbe_column_name = 'ath_id';
+        $table_id          = $user_id;
+
+        $userss = $this->model->exist_record_row($talbe_column_name,$table_id,$table_name);  // get row
+        echo json_encode($userss); exit;      
+    }
+    //==========================================================================
+    // update user
+    //==========================================================================
+    function users_update()
+    {
+        if($this->input->post('user_id'))
+        {   
+            $user_id           = $this->input->post('user_id');
+            $user_email        = $this->input->post('user_email');
+            $user_name         = $this->input->post('user_name');
+            $user_password     = $this->input->post('user_password');
+            // $user_district_id_fk=$this->input->post('district_id');
+            $user_status       = $this->input->post('user_status');
+            $table_name        = "athletes";
+            $talbe_column_name = 'ath_id';
+            $table_id          = $user_id;
+
+            $facility_email = $this->model->exist_record_row($talbe_column_name,$table_id,$table_name);  // get row
+            $exists_user_name =  $facility_email->ath_email;
+            if($exists_user_name != $user_email)
+            {
+              $this->form_validation->set_rules('user_email', 'Useremail', 'required|trim|is_unique[athletes.ath_email]');  
+              $this->form_validation->set_rules('user_name', 'Username', 'required|trim|is_unique[athletes.ath_name]');  
+            }
+            else
+            {
+                $this->form_validation->set_rules('user_email', 'User email', 'required|trim');
+                $this->form_validation->set_rules('user_name',  'Username', 'required|trim');
+            }
+            if($this->input->post('user_role_id_fk') == 3) // to for District admin
+            {
+                $this->form_validation->set_rules('facility_id', 'For facility-admin District selection', 'required|trim');
+            }
+            
+            $this->form_validation->set_rules('user_password', 'Password', 'required|trim');
+            if ($this->form_validation->run() == FALSE)
+            {
+                $error   = array('error' => validation_errors());
+                $message = implode(" ",$error);
+                $this->messages('alert-danger',$message);
+                return redirect('athletes/users');
+                
+            }
+            else
+            {
+                $user_district_id_fk= (empty($this->input->post('facility_id'))? 0:$this->input->post('facility_id'));
+                $update_it_array   = array('ath_name'=>$user_name,'ath_password'=>md5($user_password),'is_active'=>$user_status,'user_district_id_fk'=>$user_district_id_fk);
+                $response = $this->model->update($update_it_array,$table_name,$talbe_column_name,$table_id);
+                    if($response == true)
+                    {
+                        $this->messages('alert-success','Successfully Update');
+                        return redirect('athletes/users'); 
+                    }
+                    else
+                    {
+                        $this->messages('alert-danger','Some Thing Wrong');
+                        return redirect('athletes/users');
+                    }
+            }
+        }
+    }
+    //==========================================================================
+    // Delete User
+    //==========================================================================
+    function users_delete($user_id= null)
+    {
+        if($user_id > 0)
+        {   
+            $talbe_column_name = 'ath_id';
+            $table_name        = 'athletes';
+            $table_id          = $user_id; 
+            // $update_it_array   = array('user_status'=>0);
+            // $response = $this->model->update($update_it_array,$table_name,$talbe_column_name,$table_id);
+            $response = $this->admin_model->delete($talbe_column_name,$table_id,$table_name); 
+            if($response == true)
+            {
+                $this->messages('alert-success','Successfully Deleted');
+                return redirect('athletes/users'); 
+            }
+            else
+            {
+                $this->messages('alert-danger','Some Thing Wrong');
+                return redirect('athletes/users');
+            }
+        }
+    }
+
+
 
 
 }

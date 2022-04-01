@@ -82,14 +82,19 @@
 
                     <div class="col-12">
                     <div class="float-right">
+                        <a href="Athletes/athlete_sign_up">
+                          <strong>SignUp</strong>
+                        </a>
+                      </div> 
+
+                       <div class="float-left">
                         <a href="Athletes/forgot_passord/" class="text-small">
                           <strong>Forgot Password?</strong>
                         </a>
                       </div> 
-                      <!-- <div class="custom-control custom-checkbox">
-                        <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
-                        <label class="custom-control-label" for="remember-me">Remember Me</label>
-                       </div> --> 
+
+
+                       
                     </div>
                   </div><br>
                   
