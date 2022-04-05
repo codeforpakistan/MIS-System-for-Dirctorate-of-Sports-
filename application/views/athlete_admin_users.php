@@ -11,7 +11,7 @@
                   <div class="card-body">
                   <button type="button" class="btn btn-primary pull-right fa fa-plus" data-toggle="modal" data-target="#addModel" style="margin-top:-5%;"> Add User</button>
                       <!-- start messages --->
-                      <div style="text-align: center">
+                      <div style="text-align: center" class="msg">
                               <?php if($feedback =$this->session->flashdata('feedback')){
                                 $feedback_class =$this->session->flashdata('feedbase_class');  ?>
                                     <div class="row">
@@ -85,7 +85,7 @@
                             <div class="form-group">
                               <label>User</label>
                               <div class="input-group">
-                                  <select class="form-control" id="toggleFacilitySection_edit" name="user_role_id_fk" style="width:90%" required>
+                                  <select class="form-control" id="toggleFacilitySection_edit" name="user_role_id_fk" style="width:100%" required>
                                     <option value="4">super admin</option>
                                     
                                     <option value="7">Facility Admin</option>
@@ -94,9 +94,9 @@
                             </div>
                             
                             <div class="form-group" id="hideShowFacilityEdit">
-                                  <label>District</label>
+                                  <label>Facility</label>
                                   <div class="input-group">
-                                      <select class="form-control select2" id="edit_facility_id" name="facility_id" style="width:90%">
+                                      <select class="form-control select2" id="edit_facility_id" name="facility_id" style="width:100%">
                                      <option disabled value="" selected hidden>Please Select Facility</option>
                                         <?php if($facilities){ foreach($facilities as $facility){?>
                                            <option value="<?= $facility->facility_id?>"><?= $facility->facility_name?></option>
@@ -250,7 +250,10 @@
               $('#edit_user_name').val(response.ath_name);
               $('#edit_user_password').val(response.ath_password);
               $('#edit_user_id').val(response.ath_id); 
-              $('#toggleFacilitySection_edit option[value="' + response.user_role_id_fk + '"]').prop('selected', true);
+              // $('#toggleFacilitySection_edit option[value="' + response.user_role_id_fk + '"]').prop('selected', true);
+              // $('#toggleFacilitySection_edit').val(response.user_role_id_fk); 
+              $('#edit_facility_id').val(response.facility_id); 
+              $('#edit_facility_id').trigger("change");
               $('#edit_user_status option[value="' + response.is_active + '"]').prop('selected', true);
               // if(response.user_role_id_fk == 2)
               // {

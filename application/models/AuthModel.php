@@ -32,12 +32,14 @@ class AuthModel extends CI_Model
      public function athlete_login($ath_email_mobile,$ath_password)
     { 
      
-        $query = $this->db->select('`ath_id`, `ath_name`,`ath_email`,`ath_cnic`,`ath_contact`, `ath_password`, `user_role_id_fk`, `is_active`, `create_at`')
+        $query = $this->db->select('athletes.`ath_id`,athletes.`ath_name`,athletes.`ath_email`,athletes.`ath_cnic`,athletes.`facility_id`,athletes.`district_id`,athletes.`ath_contact`,athletes.`ath_password`,athletes.`user_role_id_fk`,athletes.`is_active`,athletes.`create_at`,districts.district_name,facilities.facility_name')
         ->from('athletes')
-        ->where("ath_email",$ath_email_mobile)
-        ->or_where('ath_contact',$ath_email_mobile)
-        ->where('ath_password',md5($ath_password))
-        ->where('is_active',1)
+        ->join('districts','athletes.district_id=districts.district_id','left')
+        ->join('facilities','facilities.facility_id=athletes.facility_id','left')
+        ->where("athletes.ath_email",$ath_email_mobile)
+        ->or_where('athletes.ath_contact',$ath_email_mobile)
+        ->where('athletes.ath_password',md5($ath_password))
+        ->where('athletes.is_active',1)
         ->get();
 
         return $query->row_array();

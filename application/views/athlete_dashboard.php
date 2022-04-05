@@ -1,12 +1,25 @@
 
+
+<style type="text/css">
+  
+  #blinking {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+</style>
 <!-- start messages --->
-    <?php if($this->session->userdata('user_role_id_fk')  == 6){?>
+    <?php if($this->session->userdata('user_role_id_fk')  == 6 || $this->session->userdata('user_role_id_fk')  == 7){?>
 
       <!-- Main Content -->
 <div class="main-content">
 <section class="section">
-      
         <div class="row ">
+
             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
                 <div class="card-statistic-4">
@@ -14,8 +27,16 @@
                     <div class="row " >
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                         <div class="card-content">
-                          <h5 class="font-15">Active Members</h5>
-                          <h2 class="mb-3 font-18"></h2>
+                          <h5 class="font-10"><strong>Approve MemberShips</strong></h5>
+
+                          <?php  
+
+                               $facility_id               = $this->session->userdata('facility_id'); 
+                               $approve_memberships_count = count($this->model->get_approve_memberships($facility_id));
+
+                          ?>  
+
+                          <h2 class="mb-3 font-18"><?=$approve_memberships_count?></h2>
                           <!-- <p class="mb-0"><span class="col-green">10%</span> Increase</p> -->
                         </div>
                       </div>
@@ -38,8 +59,15 @@
                     <div class="row " >
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                         <div class="card-content">
-                          <h5 class="font-15">Member Ships</h5>
-                          <h2 class="mb-3 font-18"></h2>
+                          <h5 class="font-10"><strong>Pending MemberShips</strong></h5>
+
+                           <?php  
+
+                               $facility_id         = $this->session->userdata('facility_id'); 
+                               $pending_memberships_count = count($this->model->get_pending_memberships($facility_id));
+
+                                ?>  
+                          <h2 class="mb-3 font-18"><?=$pending_memberships_count?></h2>
                           <!-- <p class="mb-0"><span class="col-green">10%</span> Increase</p> -->
                         </div>
                       </div>
@@ -62,8 +90,16 @@
                     <div class="row ">
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                         <div class="card-content">
-                          <h5 class="font-15">Approve Challans</h5>
-                          <h2 class="mb-3 font-18"></h2>
+
+                           <?php  
+
+
+                               $facility_id         = $this->session->userdata('facility_id'); 
+                               $approve_facility_count = count($this->model->get_approve_challans(null,$facility_id));
+
+                                ?>  
+                          <h5 class="font-10"><strong>Approve Challans</strong></h5>
+                          <h2 class="mb-3 font-18"><?=$approve_facility_count?></h2>
                           <!-- <p class="mb-0"><span class="col-orange">09%</span> Decrease</p> -->
                         </div>
                       </div>
@@ -77,6 +113,7 @@
                 </div>
               </div>
             </div>
+
             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
                 <div class="card-statistic-4">
@@ -84,8 +121,16 @@
                     <div class="row ">
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                         <div class="card-content">
-                          <h5 class="font-15">Pending Challans</h5>
-                          <h2 class="mb-3 font-18"></h2>
+                           <?php 
+
+                               $facility_id = $this->session->userdata('facility_id');
+                                
+                               $pending_facility_count = count($this->model->get_pending_challans($facility_id));
+
+
+                                ?>  
+                          <h5 class="font-10"><strong>Pending Challans</strong></h5>
+                          <h2 class="mb-3 font-18"><?=$pending_facility_count?></h2>
                           <!-- <p class="mb-0"><span class="col-green">18%</span>Increase</p> -->
                         </div>
                       </div>
@@ -104,10 +149,10 @@
 
           <div class="section-body">
             <div class="row clearfix">
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-6">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Bar Chart</h4>
+                    <h4><strong>Graph View By Facility</strong></h4>
                   </div>
                   <div class="card-body">
                     <div class="recent-report__chart">
@@ -143,6 +188,7 @@
                       <table class="table table-striped table-hover"  style="width:100%;">
                         <thead >
                           <tr>
+                            <th>Game Complex</th>
                             <th>Game</th>
                             <th>Game Fee</th>
                             <th>Admission Fee</th>
@@ -153,11 +199,9 @@
                         </thead>
                             <tbody>
                               <?php if(!empty($athlete_games)):
-                                foreach($athlete_games as $athlete_game):
-
-
-                                  ?>
+                                foreach($athlete_games as $athlete_game):?>
                                   <tr>
+                                    <td><?=$athlete_game->facility_name?></td>
                                     <td><?= ucwords($athlete_game->game_name)?></td>
                                     <td><?=$athlete_game->game_fee?></td>
                                     <td><?=$athlete_game->game_admission_fee?></td>
@@ -191,7 +235,7 @@
 
                                         ?>
 
-                                        <a  href="javascript:void(0)" data-toggle="modal" data-target="#feeModel" href="javascript:void(0)"  class="btn btn-primary  fa fa-upload" onclick="get_ath_game_fee_id(<?=$athlete_game->game_fee?>,<?=$athlete_game->ath_game_id?>)" style=""> Submit Fee</a>
+                                        <a  href="javascript:void(0)" data-toggle="modal" data-target="#feeModel" href="javascript:void(0)"  class="btn btn-primary  fa fa-upload" onclick="get_ath_game_fee_id(<?=$athlete_game->game_fee?>,<?=$athlete_game->ath_game_id?>)" id="blinking">Submit Fee</a>
 
                                       <?php }  else{ ?>
 
@@ -246,7 +290,7 @@
                         <form class="" method="post" action="<?= base_url("athletes/application_form") ?>">
                              
                           <div class="row">
-                            <div class="col-12 col-12 col-12">
+                            <div class="col-md-6 col-sm-12 col-xm-12">
                             <div class="form-group">
                               <label>Game Applied For</label>
                               
@@ -255,7 +299,7 @@
                                       foreach($games as $game){
 
                                       $ath_id = $this->session->userdata('ath_id');
-                                      $data  = $this->db->select('game_id')->where('ath_id',$ath_id)->where('game_id',$game->game_id)->where('game_id',$game->game_id)->get('athlete_games')->row();
+                                      $data  = $this->db->select('game_id')->where('ath_id',$ath_id)->where('game_id',$game->game_id)->get('athlete_games')->row();
                                         if($data->game_id == $game->game_id):
                                         continue;
                                         endif;
@@ -268,44 +312,74 @@
                           </div>
                         <input type="hidden" name="more_games" value="more_games">
 
-                            <div class="col-12 col-12 col-12">
+                        <div class="col-md-6 col-sm-12 col-xm-12">
+                            <div class="form-group">
+                                  <label>District</label>
+
+                                  <select  class="form-control "  name="district_id" required>
+                                   <option>--Select District--</option>
+
+                                    <?php if(!empty($districts)){
+                                      foreach ($districts as $district){?>
+                                      ?>
+                                    <option value="<?=$district->district_id?>"><?=$district->district_name?></option>
+
+                                  <?php } }?>
+                                  </select>
+                            </div>
+                      </div>
+
+                         <div class="col-md-6 col-sm-12 col-xm-12">
+                            <div class="form-group">
+                                  <label>Game Complex</label>
+                                   <select class="form-control  " id="facility_id"   name="facility_id">
+                                    <option  disabled value="" selected hidden>---Select Complex---</option>
+                                    <?php if(!empty($facilities)){
+                                      foreach($facilities as $facility){?>
+                                    <option value="<?=$facility->facility_id?>"><?=$facility->facility_name?></option>
+                                   <?php } }?>
+                                  </select>
+                            </div>
+                      </div>
+
+                            <div class="col-md-6 col-sm-12 col-xm-12">
                             
                             <div class="form-group">
                                   <label>Time Prefernce</label>
                                   <select class="form-control" name="time_prefernce">
-                                    <option>-Select Prefernce-</option>
+                                    <option  disabled value="" selected hidden>---Select Prefernce---</option>
                                     <option value="morning">Morning</option>
                                     <option value="evening">Evening</option>
                                   </select>
                             </div>
                           </div>
 
-                            <div class="col-12 col-12 col-12">
+                            <div class="col-md-6 col-sm-12 col-xm-12">
                             
                             <div class="form-group">
                                   <label>Payment Mode</label>
                                   <select class="form-control" name="payment_mode">
-                                    <option>-Select Payment Mode-</option>
+                                    <option  disabled value="" selected hidden>---Select Payment Mode---</option>
                                     <option>Bank</option>
                                   </select>
                             </div>
                           </div>
 
-                           <div class="col-12 col-12 col-12">
+                           <div class="col-md-6 col-sm-12 col-xm-12">
                             <div class="form-group">
                                   <label>Game Fee</label>
                                   <input type="number" class="form-control game_fee" placeholder="Total Fee" name="game_fee" id="game_fee"  required>
                             </div>
                             </div>
 
-                            <div class="col-12 col-12 col-12">
+                            <div class="col-md-6 col-sm-12 col-xm-12">
                             <div class="form-group">
                                   <label>Admission Fee</label>
                                   <input type="number" class="form-control admission_fee" placeholder="Total Fee" name="admission_fee" id="admission_fee"  required>
                             </div>
                           </div>
 
-                          <div class="col-12 col-12 col-12">
+                          <div class="col-md-6 col-sm-12 col-xm-12">
 
                             <div class="form-group">
                                   <label>Total Fee</label>
@@ -313,7 +387,7 @@
                             </div>
                           </div>
                           
-                               <div class="col-12">
+                               <div class="col-md-6 col-sm-12 col-xm-12">
                                 <div class="form-group pull-right">
                                 <button type="submit" class="btn btn-primary m-t-15 waves-effect pull-right" >Save</button>
                               </div>
@@ -483,6 +557,9 @@ $(document).ready(function(){
 
           });
   });
+
+   $('#blinking').toogle();
+   
 
 });
  

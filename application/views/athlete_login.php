@@ -34,7 +34,7 @@
               <div class="card-body">
               <h5 class="card-title text-center"><strong>Login</strong></h5>
                 <!-- start messages --->
-                  <div style="text-align: center">
+                  <div style="text-align: center" class="msg">
                       <?php if($feedback =$this->session->flashdata('feedback')){
                         $feedback_class =$this->session->flashdata('feedbase_class');  ?>
                             <div class="row">
@@ -80,7 +80,8 @@
                       </div>
                     </div>
 
-                    <div class="col-12">
+
+                    <div class="col-12" style="margin-top: 10px;">
                     <div class="float-right">
                         <a href="Athletes/athlete_sign_up">
                           <strong>SignUp</strong>

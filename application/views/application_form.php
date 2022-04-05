@@ -11,7 +11,7 @@
       <div class="main-content">
         <section class="section">
 <!-- start messages --->
-          <div style="text-align: center">
+          <div style="text-align: center" class="msg">
                   <?php if($feedback =$this->session->flashdata('feedback')){
                     $feedback_class =$this->session->flashdata('feedbase_class');  ?>
                         <div class="row">

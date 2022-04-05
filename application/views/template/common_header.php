@@ -71,13 +71,22 @@
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
       <div class="navbar-bg"></div>
+
       <nav class="navbar navbar-expand-lg main-navbar sticky">
+         
         <div class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn"> <i data-feather="align-justify"></i></a></li>
           </ul>
+          <h4><?=ucwords($this->session->userdata('facility_name'))?></h4>
+          
         </div>
+
+
+       
+
         <ul class="navbar-nav navbar-right">
+
           <li class="dropdown">
             <a href="#" data-toggle="dropdown"
                  class="nav-link dropdown-toggle nav-link-lg nav-link-user">
@@ -85,14 +94,14 @@
                   <img alt="image" style="width: 40px; height: 40px; border-radius: 50%;" src="<?= (!empty($this->session->userdata('profile_image')))?'assets/images/athlete_images/'.$this->session->userdata('profile_image'):'assets/img/admin.jpg'?>" class="user-img-radious-style">
                  <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
-              <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6):?>
+              <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6 ||  $this->session->userdata('user_role_id_fk') == 7):?>
               <div class="dropdown-title"><?= $this->session->userdata('ath_name')?></div>
 
               <?php else:?>
               <div class="dropdown-title"><?= $this->session->userdata('user_role_name')?></div>
             <?php endif;?>
 
-              <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6):?>
+              <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6 || $this->session->userdata('user_role_id_fk') == 7):?>
                 <a href="Athletes/athlete_profile" class="dropdown-item has-icon" ><i class="far
                     fa-user"></i> Profile
               </a>
@@ -107,7 +116,7 @@
                 Settings
               </a> -->
               <div class="dropdown-divider"></div>
-              <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6):?>
+              <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6  || $this->session->userdata('user_role_id_fk') == 7):?>
               <a href="<?=base_url('Athletes/logout_user')?>" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
               Logout
               </a>

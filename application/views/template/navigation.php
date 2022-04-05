@@ -38,9 +38,11 @@
             </a>
           </div>
 
+         
+
           <ul class="sidebar-menu">
             <li class="dropdown" >
-              <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6):?>
+              <?php if($this->session->userdata('user_role_id_fk') == 5 || $this->session->userdata('user_role_id_fk') == 6  || $this->session->userdata('user_role_id_fk') == 7):?>
               <a href="Athletes" class="nav-link" ><i class=" fa fa-home"></i><span>Dashboard</span></a>
               <?php else:?>
               <a href="admin" class="nav-link"  ><i></i><span >Dashboard</span></a>
@@ -167,12 +169,11 @@
 
             <?php if($this->session->userdata('user_role_id_fk') == 5):
                $ath_id = $this->session->userdata('ath_id');
-
               ?>
 
 
             <li class="dropdown">
-                <a href="athletes/athletes_payments/<?=$ath_id?>/payments"  class="nav-link ">
+                <a href="athletes/approve_athlete_challans"  class="nav-link ">
                   <i class="fa fa-clock" ></i><span>Payment History</span>
                 </a>
                 
@@ -201,28 +202,37 @@
             </li> 
             <?php endif;?>
 
-            <?php if($this->session->userdata('user_role_id_fk') == 6):?>
+            <?php if($this->session->userdata('user_role_id_fk') == 6 || $this->session->userdata('user_role_id_fk') == 7):
+            
+              $facility_id = $this->session->userdata('facility_id');
+           
+
+            ?>
 
             <li class="dropdown">
-                <a href="Athletes/pending_challans"  class="nav-link ">
+                <a href="Athletes/pending_challans/<?=$facility_id?>"  class="nav-link ">
                   <i class="fa fa-file"></i><span>Pending Challans</span>
                 </a>
             </li> 
             <?php endif;?>
 
-            <?php if($this->session->userdata('user_role_id_fk') == 6):?>
+            <?php if($this->session->userdata('user_role_id_fk') == 6 || $this->session->userdata('user_role_id_fk') == 7):
+            
+
+
+            ?>
 
             <li class="dropdown">
-                <a href="Athletes/Approve_challans"  class="nav-link ">
+                <a href="Athletes/approve_facility_challans"  class="nav-link ">
                   <i class="fa fa-file"></i><span>Approve Challans</span>
                 </a>
             </li> 
             <?php endif;?>
 
-            <?php if($this->session->userdata('user_role_id_fk') == 6):?>
+            <?php if($this->session->userdata('user_role_id_fk') == 6 || $this->session->userdata('user_role_id_fk') == 7):?>
 
             <li class="dropdown">
-                <a href="Athletes/Approve_challans"  class="nav-link ">
+                <a href="Athletes/memberships"  class="nav-link ">
                   <i class="fa fa-file"></i><span>Memberships</span>
                 </a>
             </li> 
