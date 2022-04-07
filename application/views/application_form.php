@@ -64,7 +64,7 @@
                             <div class="form-group">
                                   <label>Gender</label>
                                  <select class="form-control" name="gender">
-                                    <option>-Select Gender-</option>
+                                    <option disabled value="" selected hidden>---Select Gender---</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                     
@@ -91,7 +91,7 @@
                                   <label>District</label>
 
                                   <select  class="form-control "  name="district_id" required>
-                                   <option>--Select District--</option>
+                                   <option disabled value="" selected hidden>---Select District---</option>
 
                                     <?php if(!empty($districts)){
                                       foreach ($districts as $district){?>
@@ -121,16 +121,22 @@
                             </div>
                       </div>
 
-
                        <div class="col-4">
                             <div class="form-group">
                                   <label>Profession</label>
-                                 <select class="form-control" name="profession">
-                                    <option>-Select Profession-</option>
+                                 <select class="form-control" name="profession" id="profession">
+                                    <option disabled value="" selected hidden>---Select Profession---</option>
                                     <option value="student">Student</option>
-                                    <option value="player">Player</option>
+                                    <option value="player">General Player</option>
                                     
                                   </select>
+                            </div>
+                      </div>
+
+                      <div class="col-4" style="display: none" id="certificate_pic">
+                            <div class="form-group" >
+                                  <label>Attach Certificate Picture</label>
+                                  <input type="file" class="form-control"  name="certificate_pic" required>
                             </div>
                       </div>
 
@@ -145,7 +151,7 @@
                       <div class="col-4">
                             <div class="form-group">
                                   <label>Attach NIC Front Photocopy</label>
-                                  <input type="file" class="form-control"  name="cnic_front_copy" required>
+                                  <input type="file" class="form-control"  name="cnic_front_copy" id="nic" required>
                             </div>
                       </div>
               </div>
@@ -226,7 +232,7 @@
                             <div class="form-group">
                                   <label>Payment Mode</label>
                                   <select class="form-control" name="payment_mode">
-                                    <option>-Select Payment Mode-</option>
+                                    <option disabled value="" selected hidden>---Select Payment Mode---</option>
                                     <option>Bank</option>
                                   </select>
                             </div>
@@ -282,6 +288,22 @@ $(document).ready(function(){
 
           });
   });
+});
+
+$(document).on('change','#profession',function(){
+
+
+  var profession = $(this).val();
+
+   if(profession == 'student'){
+
+    $('#nic').removeAttr('required')
+
+    $('#certificate_pic').css('display','block');
+   }
+   else{
+    $('#certificate_pic').css('display','none');
+   }
 });
  
 </script>

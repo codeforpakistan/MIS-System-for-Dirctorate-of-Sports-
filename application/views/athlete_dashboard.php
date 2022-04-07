@@ -20,19 +20,50 @@
 <section class="section">
         <div class="row ">
 
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
                 <div class="card-statistic-4">
                   <div class="align-items-center justify-content-between">
                     <div class="row " >
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                         <div class="card-content">
-                          <h5 class="font-10"><strong>Approve MemberShips</strong></h5>
+                          <h5 class="font-15"><strong>Pending MemberShips</strong></h5>
+
+                           <?php  
+
+                               $facility_id         = $this->session->userdata('facility_id'); 
+                               $pending_memberships_count = count($this->model->get_status_memberships($facility_id,1));
+
+                                ?>  
+                          <h2 class="mb-3 font-18"><?=$pending_memberships_count?></h2>
+                          <!-- <p class="mb-0"><span class="col-green">10%</span> Increase</p> -->
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 ">
+                        <div class="banner-img">
+                          <img src="assets/images/form.png" style="height:98px;">
+                          <!-- <img src="assets/img/banner/1.png" alt=""> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row " >
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15"><strong>Approve MemberShips</strong></h5>
 
                           <?php  
 
                                $facility_id               = $this->session->userdata('facility_id'); 
-                               $approve_memberships_count = count($this->model->get_approve_memberships($facility_id));
+                               $approve_memberships_count = count($this->model->get_status_memberships($facility_id,2));
 
                           ?>  
 
@@ -52,29 +83,29 @@
               </div>
             </div>
 
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
                 <div class="card-statistic-4">
                   <div class="align-items-center justify-content-between">
-                    <div class="row " >
+                    <div class="row ">
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                         <div class="card-content">
-                          <h5 class="font-10"><strong>Pending MemberShips</strong></h5>
+                           <?php 
 
-                           <?php  
+                               $facility_id = $this->session->userdata('facility_id');
+                                
+                               $Rejected_facility_count = count($this->model->get_status_memberships($facility_id,4));
 
-                               $facility_id         = $this->session->userdata('facility_id'); 
-                               $pending_memberships_count = count($this->model->get_pending_memberships($facility_id));
 
                                 ?>  
-                          <h2 class="mb-3 font-18"><?=$pending_memberships_count?></h2>
-                          <!-- <p class="mb-0"><span class="col-green">10%</span> Increase</p> -->
+                          <h5 class="font-15"><strong>Rejected Memberships</strong></h5>
+                          <h2 class="mb-3 font-18"><?=$Rejected_facility_count?></h2>
+                          <!-- <p class="mb-0"><span class="col-green">18%</span>Increase</p> -->
                         </div>
                       </div>
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
                         <div class="banner-img">
-                          <img src="assets/images/form.png" style="height:98px;">
-                          <!-- <img src="assets/img/banner/1.png" alt=""> -->
+                         <img src="assets/images/pending.png" style="height:98px;">
                         </div>
                       </div>
                     </div>
@@ -83,7 +114,42 @@
               </div>
             </div>
 
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            
+
+
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                           <?php 
+
+                               $facility_id               = $this->session->userdata('facility_id'); 
+                               $expired_memberships_count = count($this->model->get_status_memberships($facility_id,3));
+
+
+                                ?>  
+                          <h5 class="font-15"><strong>Expired Memberships</strong></h5>
+                          <h2 class="mb-3 font-18"><?=$expired_memberships_count?></h2>
+                          <!-- <p class="mb-0"><span class="col-green">18%</span>Increase</p> -->
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                         <img src="assets/images/pending.png" style="height:98px;">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
+
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
                 <div class="card-statistic-4">
                   <div class="align-items-center justify-content-between">
@@ -98,7 +164,7 @@
                                $approve_facility_count = count($this->model->get_approve_challans(null,$facility_id));
 
                                 ?>  
-                          <h5 class="font-10"><strong>Approve Challans</strong></h5>
+                          <h5 class="font-15"><strong>Approve Challans</strong></h5>
                           <h2 class="mb-3 font-18"><?=$approve_facility_count?></h2>
                           <!-- <p class="mb-0"><span class="col-orange">09%</span> Decrease</p> -->
                         </div>
@@ -114,7 +180,7 @@
               </div>
             </div>
 
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
                 <div class="card-statistic-4">
                   <div class="align-items-center justify-content-between">
@@ -129,7 +195,7 @@
 
 
                                 ?>  
-                          <h5 class="font-10"><strong>Pending Challans</strong></h5>
+                          <h5 class="font-15"><strong>Pending Challans</strong></h5>
                           <h2 class="mb-3 font-18"><?=$pending_facility_count?></h2>
                           <!-- <p class="mb-0"><span class="col-green">18%</span>Increase</p> -->
                         </div>
@@ -144,6 +210,8 @@
                 </div>
               </div>
             </div>
+
+            
           </div>
           <!-- :::::::::::::::::::::::: Second Row start  :::::::::::::::::::::::::::::::::::::::::::: -->
 
@@ -175,6 +243,23 @@
             <div class="row">
               <div class="col-12">
                 <div class="card">
+                  <!-- start messages --->
+          <div style="text-align: center" class="msg">
+                  <?php if($feedback =$this->session->flashdata('feedback')){
+                    $feedback_class =$this->session->flashdata('feedbase_class');  ?>
+                        <div class="row">
+                          <div class="col-md-6 col-md-offset-6 msg">
+                          <div class="alert alert-dismissible <?=  $feedback_class;?>">
+                          <?= $feedback ?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                          </div>
+                          </div>
+                      </div>    
+                    <?php }?>
+                </div>
+        <!-- end of messages  --->
                   <div class="card-header">
                     <h4>Games</h4>
                   </div>
@@ -193,6 +278,7 @@
                             <th>Game Fee</th>
                             <th>Admission Fee</th>
                             <th>Game Status</th>
+                            <th>Remarks</th>
                             <th>Fee Status</th>
                             <th>Action</th>
                           </tr>
@@ -207,8 +293,13 @@
                                     <td><?=$athlete_game->game_admission_fee?></td>
                                     <?php if($athlete_game->ath_game_status == 1):?>
                                     <td> <span class="badge badge-danger">In-active</span></td>
+                                    <td></td>
                                     <?php elseif($athlete_game->ath_game_status == 2):?>
                                     <td><span class="badge badge-primary">Active</span></td>
+                                    <td></td>
+                                    <?php elseif($athlete_game->ath_game_status == 4):?>
+                                    <td><span class="badge badge-danger">Rejected</span></td>
+                                    <td>sasa</td>
                                     <?php endif;?>
                                     <?php $get_game_fees = $this->model->get_game_fees($athlete_game->ath_game_id);
                                     ?>
@@ -235,7 +326,7 @@
 
                                         ?>
 
-                                        <a  href="javascript:void(0)" data-toggle="modal" data-target="#feeModel" href="javascript:void(0)"  class="btn btn-primary  fa fa-upload" onclick="get_ath_game_fee_id(<?=$athlete_game->game_fee?>,<?=$athlete_game->ath_game_id?>)" id="blinking">Submit Fee</a>
+                                        <a  href="javascript:void(0)" data-toggle="modal" data-target="#feeModel" class="btn btn-primary  fa fa-upload" onclick="get_ath_game_fee_id(<?=$athlete_game->game_fee?>,<?=$athlete_game->ath_game_id?>)" id="blinking">Submit Fee</a>
 
                                       <?php }  else{ ?>
 
@@ -436,6 +527,70 @@
         </div>
 
          <div class="modal fade" id="feeModel"  role="dialog" aria-labelledby="formModaladd" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-success">
+                    <h5 class="modal-title text-white" id="formModaladd">Submit Fee</h5>
+                    <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span> 
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <!-- body-->
+                        <form class="" method="post"  action="<?= base_url("athletes/submit_monthly_fee") ?>">
+                                  <div class="form-group">
+
+                                    <input type="hidden" name="ath_game_id" id="ath_game_id">
+                                        <label>Fee months</label>
+
+                                        <select class="form-control" name="fee_months" id="fee_month">
+                                          <option value="">Select Month</option>
+                                          <option>1 Month</option>
+                                          <option>2 Month</option>
+                                          <option>3 Month</option>
+                                          <option>4 Month</option>
+                                          <option>5 Month</option>
+                                          <option>6 Month</option>
+                                          <option>7 Month</option>
+                                          <option>8 Month</option>
+                                          <option>9 Month</option>
+                                          <option>10 Month</option>
+                                          <option>11 Month</option>
+                                          <option>12 Month</option>
+                                        </select>
+                                      
+                                  </div>
+
+                                  <input type="hidden" class="game_fee">
+
+
+                                  <div class="form-group">
+                                        <label>Payment Mode</label>
+                                        <select class="form-control" name="payment_mode">
+                                          <option>-Select Payment Mode-</option>
+                                          <option>Bank</option>
+                                          <option>Easypaisa</option>
+                                        </select>
+                                  </div>
+
+                                <div class="form-group">
+                                  <label>Total Fee</label>
+                                  <input type="text" class="form-control" placeholder="" id="total_game_fee" name="total_game_fee" required>
+                                </div>
+
+                                  
+                               <div class="col-12">
+                                <div class="form-group pull-right">
+                                <button type="submit" class="btn btn-primary m-t-15 waves-effect pull-right" >Save</button>
+                              </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="change_status"  role="dialog" aria-labelledby="formModaladd" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-success">

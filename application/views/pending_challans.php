@@ -27,11 +27,12 @@
                             </div>
                     <!-- end of messages  --->
                      <div class="table-responsive">
-                      <table class="table table-striped table-hover"  style="width:100%;">
+                      <table class="table table-striped table-hover" id="tableExport"  style="width:100%;">
                         <thead >
                           <tr>
                             <th>Profile Photo</th>
                             <th>Nic Photo</th>
+                            <th>Student Certificate</th>
                             <th>Name</th>
                             <th>Father Name</th>
                             <th>Cnic</th>
@@ -53,8 +54,28 @@
                               <?php if(!empty($pending_challans)):
                                 foreach($pending_challans as $pending_challan):?>
                                   <tr>
-                                    <td><img src="assets/images/athlete_images/<?=$pending_challan->ath_profile_photo?>" style="height:50px;width:50px;"></td>
-                                    <td><img src="assets/images/athlete_images/<?=$pending_challan->ath_nic_photo?>" style="height:50px;width:50px;"></td>
+
+                                    <?php if(!empty($pending_challan->ath_profile_photo)){?>
+                                    <td><a href="assets/images/athlete_images/<?=$pending_challan->ath_profile_photo?>"  target="_blank"><img src="assets/images/athlete_images/<?=$pending_challan->ath_profile_photo?>" style="height:50px;width:50px;"></a></td>
+                                    <?php } else{?>
+
+                                      <td></td>
+                                    <?php }?>
+
+                                    <?php if(!empty($pending_challan->ath_nic_photo)){?>
+                                    <td><a href="assets/images/athlete_images/<?=$pending_challan->ath_nic_photo?>" target="_blank"><img src="assets/images/athlete_images/<?=$pending_challan->ath_nic_photo?>" style="height:50px;width:50px;"></a></td>
+                                     <?php } else{?>
+
+                                      <td></td>
+                                    <?php }?>
+
+                                     <?php if(!empty($pending_challan->certificate_pic)){?>
+                                    <td><a href="assets/images/athlete_images/<?=$pending_challan->certificate_pic?>"  target="_blank"><img src="assets/images/athlete_images/<?=$pending_challan->certificate_pic?>" style="height:50px;width:50px;"></a></td>
+                                     <?php } else{?>
+
+                                      <td></td>
+                                    <?php }?>
+
                                     <td><?=$pending_challan->ath_name?></td>
                                     <td><?=$pending_challan->ath_father_name?></td>
                                     <td><?=$pending_challan->ath_cnic?></td>

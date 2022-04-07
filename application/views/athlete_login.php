@@ -38,7 +38,7 @@
                       <?php if($feedback =$this->session->flashdata('feedback')){
                         $feedback_class =$this->session->flashdata('feedbase_class');  ?>
                             <div class="row">
-                              <div class="col-lg-12 col-lg-offset-2">
+                              <div class="col-lg-12 col-lg-offset-2 msg">
                               <div class="alert alert-dismissible <?=  $feedback_class;?>">
                               <?= $feedback ?>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -62,7 +62,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
                         </div>
-                        <input name="user_email" type="text" value="" class="input form-control" id="user_email" placeholder="User Email" aria-label="user_email" aria-describedby="basic-addon1"  require autofocus/>
+                        <input name="user_email" type="text" value="" class="input form-control" id="user_email" placeholder="User Email / User Contact" aria-label="user_email" aria-describedby="basic-addon1"  require autofocus/>
                       </div>
                     </div>
                     <div class="col-12">

@@ -218,6 +218,8 @@ class Athletes extends CI_Controller {
         $more_games = $this->input->post('more_games');
 
         if(!empty($more_games)){
+
+
         //$this->form_validation->set_rules('game_id', 'Name', 'required|trim');
        $this->form_validation->set_rules('time_prefernce', 'Time Prefernce', 'required|trim');
        $this->form_validation->set_rules('game_fee', 'Game Fee', 'required|trim');
@@ -250,7 +252,8 @@ class Athletes extends CI_Controller {
             $message = implode(" ",$error);
             $this->messages('alert-danger',$message);
 
-            if($more_games > 0){
+            if(!empty($more_games)){
+
             return redirect('Athletes');
     }
             else{
@@ -265,6 +268,7 @@ class Athletes extends CI_Controller {
             {
             $cnic_picture        = $_FILES['cnic_front_copy']['name'];
             $profile_picture     = $_FILES['profile_pic']['name'];
+            $certificate_pic     = $_FILES['certificate_pic']['name'];
             $name                = $this->input->post('name');
             $f_name              = $this->input->post('f_name');
             $cnic                = $this->input->post('cnic');
@@ -299,6 +303,16 @@ class Athletes extends CI_Controller {
             $upload_profile_data = $this->upload->data(); 
             $file_name2 = $upload_profile_data['file_name'];
 
+            $config['upload_path'] = 'assets/images/athlete_images/';
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            $config['encrypt_name']  = TRUE;
+            $this->load->library('upload',$config);
+            $this->upload->initialize($config);
+            $this->upload->do_upload('certificate_pic');
+            $upload_certificate_pic = $this->upload->data(); 
+            $file_name3 = $upload_certificate_pic['file_name'];
+
+
             
             $applicantion_array  = array(
 
@@ -312,13 +326,15 @@ class Athletes extends CI_Controller {
             'ath_emergency_contact'  =>  $emergency_contact,
             'district_id'            =>  $district_id,
             'ath_profession'         =>  $profession,
-            'ath_profile_photo'      =>  $file_name2,
             'ath_nic_photo'          =>  $file_name1,
+            'ath_profile_photo'      =>  $file_name2,
+            'certificate_pic'        =>  $file_name3,
             'facility_id'            =>  $facility_id
 
             );
 
-            $response = $this->admin_model->update($applicantion_array,$table_name,$talbe_column_name,$table_id);
+
+             $this->admin_model->update($applicantion_array,$table_name,$talbe_column_name,$table_id);
 }
 
             $ath_game_table      = 'athlete_games';
@@ -341,6 +357,14 @@ class Athletes extends CI_Controller {
 
                 $challan_fee               = $data['games']['game_fee'];
                 $ath_challan_admission_fee = $data['games']['game_admission_fee']; 
+
+                if($profession == 'student'){
+
+                   $challan_fee =  $challan_fee /2;
+
+                  $ath_challan_admission_fee  = $ath_challan_admission_fee/2;
+
+                }
 
                 $athlete_games_array1    = array(
                 'game_id'                     =>  $game_id[$i],
@@ -377,20 +401,22 @@ class Athletes extends CI_Controller {
               $this->admin_model->insert($athlete_games_fees,$fee_table_name);
               $this->model->set_auto_no('challan');
 
-
+              $this->messages('alert-success','Successfully Added');
+            
           }
+          return redirect('athletes'); 
 
 
-                if($response == true)
-                {
-                    $this->messages('alert-success','Successfully Added');
-                    return redirect('athletes'); 
-                }
-                else
-                {
-                    $this->messages('alert-danger','Some Thing Wrong');
-                    return redirect('athletes');
-                }
+                // if($response == true)
+                // {
+                //     $this->messages('alert-success','Successfully Added');
+                //     return redirect('athletes'); 
+                // }
+                // else
+                // {
+                //     $this->messages('alert-danger','Some Thing Wrong');
+                //     return redirect('athletes');
+                // }
     }
 }
 
@@ -712,8 +738,6 @@ class Athletes extends CI_Controller {
         $data['page']        = 'facility_approve_payments';     
         $this->load->view('template',$data);
 
-
-
     }
 
 
@@ -726,17 +750,22 @@ class Athletes extends CI_Controller {
         if($fee_status ==2){
         $update_game_status = array('ath_game_status' => 2);
         $this->db->where('ath_game_id',$ath_game_id)->update('athlete_games',$update_game_status);
-
        }
 
         redirect('athletes/athlete_dashboard');
     }
 
-     public function change_game_satus($ath_game_id,$status){
+     public function change_game_satus(){
 
-        $data = array('ath_game_status'=> $status);
+        $status      =  $this->input->post('status');
+        $ath_game_id      = $this->input->post('ath_game_id');
+
+        $data = array('ath_game_status'=> $status,'ath_game_remarks' => $this->input->post('ath_game_remarks',true));
         $this->db->where('ath_game_id',$ath_game_id)->update('athlete_games',$data);
-        redirect('athletes/athlete_dashboard');
+
+
+        $this->messages('alert-success','Successfully Rejected');
+        redirect('athletes/memberships');
     }
 
 
@@ -820,10 +849,12 @@ class Athletes extends CI_Controller {
     }
 }
 
-public function pending_challans($facility_id){
+public function pending_challans(){
 
+    $facility_id = $this->session->userdata('facility_id');
 
     $data['pending_challans']   = $this->model->get_pending_challans($facility_id);
+
     $data['title']              = 'Pending Challans';
     $data['page']               = 'pending_challans';     
     $this->load->view('template',$data);

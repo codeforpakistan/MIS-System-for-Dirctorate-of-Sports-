@@ -32,7 +32,7 @@ class AthletesModel extends CI_Model
 
             games.game_name,games.game_fee,games.game_admission_fee,
 
-            athletes.`ath_id`,athletes.`ath_name`,athletes.`ath_father_name`,athletes.`ath_cnic`,athletes.`ath_dob`,athletes.`ath_address`,athletes.`ath_contact`,athletes.`ath_gender`,athletes.`ath_emergency_contact`,athletes.`ath_profession`,athletes.`ath_date_apply`,athletes.`ath_nic_photo`,athletes.`ath_profile_photo`,athletes.`ath_email`,athletes.`ath_password`,athletes.`district_id`,athletes.`user_role_id_fk`,districts.district_name
+            athletes.`ath_id`,athletes.`ath_name`,athletes.`ath_father_name`,athletes.`certificate_pic`,athletes.`ath_cnic`,athletes.`ath_dob`,athletes.`ath_address`,athletes.`ath_contact`,athletes.`ath_gender`,athletes.`ath_emergency_contact`,athletes.`ath_profession`,athletes.`ath_date_apply`,athletes.`ath_nic_photo`,athletes.`ath_profile_photo`,athletes.`ath_email`,athletes.`ath_password`,athletes.`district_id`,athletes.`user_role_id_fk`,districts.district_name
         ');
         
         $this->db->from('athlete_games');
@@ -40,41 +40,6 @@ class AthletesModel extends CI_Model
         $this->db->join('athlete_games_fees','athlete_games.ath_game_id=athlete_games_fees.ath_game_id','left');
         $this->db->join('games','athlete_games.game_id=games.game_id','left');
         $this->db->join('districts','athletes.district_id=districts.district_id','left');
-
-        if(!empty($facility_id)){
-        $this->db->where('athlete_games.facility_id',$facility_id); 
-        }
-
-        $this->db->where('athlete_games_fees.ath_fee_status',1);                 
-      
-        
-         $query = $this->db->get();
-
-
-
-         return $query->result();
-       }
-
-       public function get_pending_memberships($facility_id=null)
-    
-       {
-
-
-         $this->db->select('athlete_games.`ath_game_id`,athlete_games.`ath_game_time_preference`,athlete_games.`ath_game_status`,athlete_games.`ath_game_fee`,athlete_games.`ath_game_admission_fee`,athlete_games.`ath_id`,athlete_games.`game_id`,
-
-            athlete_games_fees.`ath_game_fee_id`,athlete_games_fees.`ath_payment_mode`,athlete_games_fees.`ath_challan_no`,athlete_games_fees.`ath_upload_challan`,athlete_games_fees.`ath_challan_fee,athlete_games_fees.`ath_fee_status`,athlete_games_fees.`fee_monthly_end_date`,athlete_games_fees.ath_challan_admission_fee,
-
-            games.game_name,games.game_fee,games.game_admission_fee,
-
-            athletes.`ath_id`,athletes.`ath_name`,athletes.`ath_father_name`,athletes.`ath_cnic`,athletes.`ath_dob`,athletes.`ath_address`,athletes.`ath_contact`,athletes.`ath_gender`,athletes.`ath_emergency_contact`,athletes.`ath_profession`,athletes.`ath_date_apply`,athletes.`ath_nic_photo`,athletes.`ath_profile_photo`,athletes.`ath_email`,athletes.`ath_password`,athletes.`district_id`,athletes.`user_role_id_fk`,districts.district_name
-        ');
-        
-        $this->db->from('athlete_games');
-        $this->db->join('athletes','athletes.ath_id=athlete_games.ath_id','left');
-        $this->db->join('athlete_games_fees','athlete_games.ath_game_id=athlete_games_fees.ath_game_id','left');
-        $this->db->join('games','athlete_games.game_id=games.game_id','left');
-        $this->db->join('districts','athletes.district_id=districts.district_id','left');
-        $this->db->where('athlete_games_fees.ath_challan_admission_fee >',0);
 
         if(!empty($facility_id)){
         $this->db->where('athlete_games.facility_id',$facility_id); 
@@ -128,7 +93,7 @@ class AthletesModel extends CI_Model
 
        }
 
-       public function get_approve_memberships($facility_id)
+       public function get_status_memberships($facility_id,$status)
     
      {
 
@@ -147,7 +112,7 @@ class AthletesModel extends CI_Model
         $this->db->join('athlete_games_fees','athlete_games.ath_game_id=athlete_games_fees.ath_game_id','left');
         $this->db->join('games','athlete_games.game_id=games.game_id','left');
         $this->db->join('districts','athletes.district_id=districts.district_id','left');
-         $this->db->where('athlete_games_fees.ath_challan_admission_fee >',0);
+        $this->db->where('athlete_games_fees.ath_challan_admission_fee >',0);
 
        
       if(!empty($facility_id)){
@@ -155,7 +120,7 @@ class AthletesModel extends CI_Model
 
       }
 
-        $this->db->where('athlete_games_fees.ath_fee_status',2);  
+        $this->db->where('athlete_games.ath_game_status',$status);  
 
          $query = $this->db->get();
          return $query->result();

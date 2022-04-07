@@ -33,6 +33,12 @@
                       <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
                         <thead class="">
                           <tr>
+                            <th>Profile Photo</th>
+                            <th>Nic Photo</th>
+                            <th>Student Certificate</th>
+                            <th>Name</th>
+                            <th>Father Name</th>
+                            <th>Cnic</th>
                             <th>Game </th>
                             <th>Challan No</th>
                             <th>Challan Admission fee</th>
@@ -49,6 +55,30 @@
                                 foreach ($payments as $payment){?>
 
                               <tr>
+                                <?php if(!empty($payment->ath_profile_photo)){?>
+                                    <td><a href="assets/images/athlete_images/<?=$payment->ath_profile_photo?>"  target="_blank"><img src="assets/images/athlete_images/<?=$payment->ath_profile_photo?>" style="height:50px;width:50px;"></a></td>
+                                    <?php } else{?>
+
+                                      <td></td>
+                                    <?php }?>
+
+                                    <?php if(!empty($payment->ath_nic_photo)){?>
+                                    <td><a href="assets/images/athlete_images/<?=$payment->ath_nic_photo?>" target="_blank"><img src="assets/images/athlete_images/<?=$payment->ath_nic_photo?>" style="height:50px;width:50px;"></a></td>
+                                     <?php } else{?>
+
+                                      <td></td>
+                                    <?php }?>
+
+                                     <?php if(!empty($payment->certificate_pic)){?>
+                                    <td><a href="assets/images/athlete_images/<?=$payment->certificate_pic?>"  target="_blank"><img src="assets/images/athlete_images/<?=$payment->certificate_pic?>" style="height:50px;width:50px;"></a></td>
+                                     <?php } else{?>
+
+                                      <td></td>
+                                    <?php }?>
+
+                                    <td><?=$payment->ath_name?></td>
+                                    <td><?=$payment->ath_father_name?></td>
+                                    <td><?=$payment->ath_cnic?></td>
                                     <td><?= ucwords($payment->game_name)?></td>
                                     <td><?=$payment->ath_challan_no?></td>
                                     <td><?=$payment->ath_challan_admission_fee?></td>

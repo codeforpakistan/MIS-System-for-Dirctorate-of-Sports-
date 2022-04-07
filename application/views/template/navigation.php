@@ -204,13 +204,12 @@
 
             <?php if($this->session->userdata('user_role_id_fk') == 6 || $this->session->userdata('user_role_id_fk') == 7):
             
-              $facility_id = $this->session->userdata('facility_id');
-           
+            
 
             ?>
 
             <li class="dropdown">
-                <a href="Athletes/pending_challans/<?=$facility_id?>"  class="nav-link ">
+                <a href="Athletes/pending_challans"  class="nav-link ">
                   <i class="fa fa-file"></i><span>Pending Challans</span>
                 </a>
             </li> 

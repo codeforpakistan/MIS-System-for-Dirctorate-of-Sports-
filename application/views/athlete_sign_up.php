@@ -62,7 +62,7 @@
 
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="text" class="form-control" name="ath_email" required autofocus>
+                    <input id="email" type="email" class="form-control" name="ath_email" required autofocus>
                    
                   </div>
 
