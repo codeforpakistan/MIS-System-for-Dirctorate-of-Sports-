@@ -1,4 +1,4 @@
-      <!-- Main Content -->
+     <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-body">
@@ -62,7 +62,7 @@
                 <div class="card">
                   <form method="post" class="needs-validation profile_add_form">
                             <div class="card-header">
-                              <h4>Edit Profile</h4>
+                              <img alt="image" src="assets/images/athlete_images/<?=$this->session->userdata('profile_image')?>" class="rounded-circle author-box-picture" style="width: 100px ;height: 100px;">
                             </div>
                             <div class="card-body">
                               <div class="row">

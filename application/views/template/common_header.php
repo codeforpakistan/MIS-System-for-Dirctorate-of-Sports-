@@ -63,7 +63,14 @@
 
     }
 
+    label{
+    font-weight:bold !important;
+    font-size:14px !important;
+
+  }
+
   </style>
+
 </head>
 
 <body>

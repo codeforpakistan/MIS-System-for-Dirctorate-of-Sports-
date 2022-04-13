@@ -41,7 +41,7 @@
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 ">
                         <div class="banner-img">
-                          <img src="assets/images/form.png" style="height:98px;">
+                          <img src="assets/images/Pending Membership.png" style="height:98px;">
                           <!-- <img src="assets/img/banner/1.png" alt=""> -->
                         </div>
                       </div>
@@ -73,7 +73,7 @@
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 " align="center">
                         <div class="banner-img">
-                          <img src="assets/images/team.png" style="height: 98px;">
+                          <img src="assets/images/Approve Membership.png" style="height: 98px;">
                           <!-- <img src="assets/img/banner/1.png" alt=""> -->
                         </div>
                       </div>
@@ -105,7 +105,7 @@
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
                         <div class="banner-img">
-                         <img src="assets/images/pending.png" style="height:98px;">
+                         <img src="assets/images/Rejected Membership.png" style="height:98px;">
                         </div>
                       </div>
                     </div>
@@ -138,6 +138,37 @@
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
                         <div class="banner-img">
+                         <img src="assets/images/Expire Membership.png" style="height:98px;">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                           <?php 
+
+                               $facility_id = $this->session->userdata('facility_id');
+                                
+                               $pending_facility_count = count($this->model->get_pending_challans($facility_id));
+
+
+                                ?>  
+                          <h5 class="font-15"><strong>Pending Monthly Challans</strong></h5>
+                          <h2 class="mb-3 font-18"><?=$pending_facility_count?></h2>
+                          <!-- <p class="mb-0"><span class="col-green">18%</span>Increase</p> -->
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
                          <img src="assets/images/pending.png" style="height:98px;">
                         </div>
                       </div>
@@ -164,14 +195,14 @@
                                $approve_facility_count = count($this->model->get_approve_challans(null,$facility_id));
 
                                 ?>  
-                          <h5 class="font-15"><strong>Approve Challans</strong></h5>
-                          <h2 class="mb-3 font-18"><?=$approve_facility_count?></h2>
+                          <h5 class="font-15"><strong>Approve Monthly Challans</strong></h5>
+                          <h2 class="mb-3 font-16"><?=$approve_facility_count?></h2>
                           <!-- <p class="mb-0"><span class="col-orange">09%</span> Decrease</p> -->
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
                         <div class="banner-img">
-                           <img src="assets/images/approve.png" style="height:98px;">
+                           <img src="assets/images/approved.png" style="height:98px;">
                         </div>
                       </div>
                     </div>
@@ -180,36 +211,7 @@
               </div>
             </div>
 
-            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-              <div class="card">
-                <div class="card-statistic-4">
-                  <div class="align-items-center justify-content-between">
-                    <div class="row ">
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
-                        <div class="card-content">
-                           <?php 
-
-                               $facility_id = $this->session->userdata('facility_id');
-                                
-                               $pending_facility_count = count($this->model->get_pending_challans($facility_id));
-
-
-                                ?>  
-                          <h5 class="font-15"><strong>Pending Challans</strong></h5>
-                          <h2 class="mb-3 font-18"><?=$pending_facility_count?></h2>
-                          <!-- <p class="mb-0"><span class="col-green">18%</span>Increase</p> -->
-                        </div>
-                      </div>
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                        <div class="banner-img">
-                         <img src="assets/images/pending.png" style="height:98px;">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+           
 
             
           </div>
@@ -292,15 +294,13 @@
                                     <td><?=$athlete_game->game_fee?></td>
                                     <td><?=$athlete_game->game_admission_fee?></td>
                                     <?php if($athlete_game->ath_game_status == 1):?>
-                                    <td> <span class="badge badge-danger">In-active</span></td>
-                                    <td></td>
+                                    <td><span class="badge badge-danger">In-active</span></td>
                                     <?php elseif($athlete_game->ath_game_status == 2):?>
                                     <td><span class="badge badge-primary">Active</span></td>
-                                    <td></td>
                                     <?php elseif($athlete_game->ath_game_status == 4):?>
                                     <td><span class="badge badge-danger">Rejected</span></td>
-                                    <td>sasa</td>
                                     <?php endif;?>
+                                    <td><?=$athlete_game->ath_game_remarks?></td>
                                     <?php $get_game_fees = $this->model->get_game_fees($athlete_game->ath_game_id);
                                     ?>
 
@@ -337,6 +337,13 @@
                                       <a href="javascript:void(0)" data-toggle="modal" data-target="#uploadModel" href="javascript:void(0)" class="btn btn-info  fa fa-upload" onclick=" return get_id(<?=$get_game_fees->ath_game_fee_id?>)"> Upload Challan</a>
 
                                     <?php  }  }  ?>
+
+                                    <?php if($athlete_game->ath_game_status != 1 && $athlete_game->ath_game_status != 4){?>
+
+                                    <a href="athletes/dublicate_card_add/<?=$athlete_game->ath_id?>/<?=$athlete_game->ath_game_id?>" class="btn btn-warning" onclick="return confirm('Are you sure you want to apply for dublicate card?')">Dublicate Card</a>
+
+                                  <?php } ?>
+
                                     </td>
 
                                   </tr>
@@ -390,10 +397,14 @@
                                       foreach($games as $game){
 
                                       $ath_id = $this->session->userdata('ath_id');
-                                      $data  = $this->db->select('game_id')->where('ath_id',$ath_id)->where('game_id',$game->game_id)->get('athlete_games')->row();
+                                      $data  = $this->db->select('game_id,ath_game_status')->where('ath_id',$ath_id)->where('game_id',$game->game_id)->get('athlete_games')->row();
+
+                                      if($data->ath_game_status != 3 ){
+
                                         if($data->game_id == $game->game_id):
                                         continue;
                                         endif;
+                                      }
 
                                         ?>
                                     <option value="<?=$game->game_id?>"><?=$game->game_name?></option>

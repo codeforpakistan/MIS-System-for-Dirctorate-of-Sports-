@@ -193,10 +193,10 @@
 
         
 
-            <?php if($this->session->userdata('user_role_id_fk') == 6):?>
+            <?php if($this->session->userdata('user_role_id_fk') == 6 || $this->session->userdata('user_role_id_fk') == 7):?>
 
             <li class="dropdown">
-                <a href="Athletes/reports"  class="nav-link ">
+                <a href="Athletes/general_report"  class="nav-link ">
                   <i class="fa fa-file"></i><span>Reports</span>
                 </a>
             </li> 
@@ -216,9 +216,7 @@
             <?php endif;?>
 
             <?php if($this->session->userdata('user_role_id_fk') == 6 || $this->session->userdata('user_role_id_fk') == 7):
-            
-
-
+          
             ?>
 
             <li class="dropdown">
@@ -228,11 +226,38 @@
             </li> 
             <?php endif;?>
 
+            
+
             <?php if($this->session->userdata('user_role_id_fk') == 6 || $this->session->userdata('user_role_id_fk') == 7):?>
 
             <li class="dropdown">
                 <a href="Athletes/memberships"  class="nav-link ">
                   <i class="fa fa-file"></i><span>Memberships</span>
+                </a>
+            </li> 
+            <?php endif;?>
+            <?php if($this->session->userdata('user_role_id_fk') == 6 ):
+            
+
+
+            ?>
+
+            <li class="dropdown">
+                <a href="Athletes/card"  class="nav-link ">
+                  <i class="fa fa-file"></i><span>Card</span>
+                </a>
+            </li> 
+            <?php endif;?>
+
+            <?php if($this->session->userdata('user_role_id_fk') == 5 ):
+            
+
+
+            ?>
+
+            <li class="dropdown">
+                <a href="Athletes/dublicate_card"  class="nav-link ">
+                  <i class="fa fa-file"></i><span>Dublicate Card</span>
                 </a>
             </li> 
             <?php endif;?>

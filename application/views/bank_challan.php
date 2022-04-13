@@ -98,7 +98,17 @@
                           <td><?=$bank_challan['game_name']?></td>
                         </tr>
 
-                        <tr>
+                        <?php if(!empty($bank_challan['challan_status'])){?>
+
+                           <tr>
+                          <th>Dublicate Card fee:</th>
+                          <td><?=$bank_challan['ath_challan_fee']?></td>
+                        </tr>
+
+                      
+                        <?php } else{?>
+
+                            <tr>
                           <th>Game Fee:</th>
                           <td><?=$bank_challan['game_fee']?></td>
                         </tr>
@@ -115,16 +125,15 @@
                           <td><?=$bank_challan['game_fee']+$bank_challan['game_admission_fee']?></td>
                         </tr>
 
-                      <?php endif;?>
+                      <?php else:?>
 
                       <tr>
                           <th>Total Fee:</th>
                           <td><?=$bank_challan['game_fee']?></td>
                         </tr>
-                        <tr>
-                          <td>Due Date:</td>
-                          <td></td>
-                        </tr>
+                      <?php endif;?>
+                       <?php }?>
+                        
                       </table>
                       <br>
 

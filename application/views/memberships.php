@@ -5,7 +5,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Memberships</h4>
+                    <h4>membership</h4>
                   </div>
                   <?php $ath_id = $this->session->userdata('ath_id')?>
                   <div class="card-body">
@@ -52,56 +52,56 @@
                         </thead>
                             <tbody>
                               <?php if(!empty($memberships)):
-                                foreach($memberships as $memberships):?>
+                                foreach($memberships as $membership):?>
                                   <tr>
-                                  <?php if(!empty($memberships->ath_profile_photo)){?>
-                                    <td><a href="assets/images/athlete_images/<?=$memberships->ath_profile_photo?>"  target="_blank"><img src="assets/images/athlete_images/<?=$memberships->ath_profile_photo?>" style="height:50px;width:50px;"></a></td>
+                                  <?php if(!empty($membership->ath_profile_photo)){?>
+                                    <td><a href="assets/images/athlete_images/<?=$membership->ath_profile_photo?>"  target="_blank"><img src="assets/images/athlete_images/<?=$membership->ath_profile_photo?>" style="height:50px;width:50px;"></a></td>
                                     <?php } else{?>
 
                                       <td></td>
                                     <?php }?>
 
-                                    <?php if(!empty($memberships->ath_nic_photo)){?>
-                                    <td><a href="assets/images/athlete_images/<?=$memberships->ath_nic_photo?>" target="_blank"><img src="assets/images/athlete_images/<?=$memberships->ath_nic_photo?>" style="height:50px;width:50px;"></a></td>
+                                    <?php if(!empty($membership->ath_nic_photo)){?>
+                                    <td><a href="assets/images/athlete_images/<?=$membership->ath_nic_photo?>" target="_blank"><img src="assets/images/athlete_images/<?=$membership->ath_nic_photo?>" style="height:50px;width:50px;"></a></td>
                                      <?php } else{?>
 
                                       <td></td>
                                     <?php }?>
 
-                                     <?php if(!empty($memberships->certificate_pic)){?>
-                                    <td><a href="assets/images/athlete_images/<?=$memberships->certificate_pic?>"  target="_blank"><img src="assets/images/athlete_images/<?=$memberships->certificate_pic?>" style="height:50px;width:50px;"></a></td>
+                                     <?php if(!empty($membership->certificate_pic)){?>
+                                    <td><a href="assets/images/athlete_images/<?=$membership->certificate_pic?>"  target="_blank"><img src="assets/images/athlete_images/<?=$membership->certificate_pic?>" style="height:50px;width:50px;"></a></td>
                                      <?php } else{?>
 
                                       <td></td>
                                     <?php }?>
-                                    <td><?=$memberships->ath_name?></td>
-                                    <td><?=$memberships->ath_father_name?></td>
-                                    <!-- <td><?=$memberships->ath_cnic?></td> -->
-                                    <!-- <td><?=$memberships->ath_address?></td>
-                                    <td><?=$memberships->ath_contact?></td>
-                                    <td><?=$memberships->district_name?></td> -->
-                                    <td><?=$memberships->ath_profession?></td>
-                                    <td><?=$memberships->game_name?></td>
-                                    <td><?=$memberships->ath_game_time_preference?></td>
-                                    <td><?=$memberships->game_admission_fee?></td>
-                                    <td><?=$memberships->game_fee?></td>
-                                    <td><?=$memberships->ath_payment_mode?></td>
-                                    <?php if($memberships->ath_upload_challan > 0){?>
-                                    <td><img src="assets/images/challan/<?=$memberships->ath_upload_challan?>" style="height:50px;width:50px;"></td>
+                                    <td><?=$membership->ath_name?></td>
+                                    <td><?=$membership->ath_father_name?></td>
+                                    <!-- <td><?=$membership->ath_cnic?></td> -->
+                                    <!-- <td><?=$membership->ath_address?></td>
+                                    <td><?=$membership->ath_contact?></td>
+                                    <td><?=$membership->district_name?></td> -->
+                                    <td><?=$membership->ath_profession?></td>
+                                    <td><?=$membership->game_name?></td>
+                                    <td><?=$membership->ath_game_time_preference?></td>
+                                    <td><?=$membership->game_admission_fee?></td>
+                                    <td><?=$membership->game_fee?></td>
+                                    <td><?=$membership->ath_payment_mode?></td>
+                                    <?php if($membership->ath_upload_challan > 0){?>
+                                    <td><img src="assets/images/challan/<?=$membership->ath_upload_challan?>" style="height:50px;width:50px;"></td>
                                     
                                     <?php } else{?>
                                       <td></td>
                                     <?php }?>
                                      
                                      <td>
-                                    <?php if($memberships->ath_game_status == 1){?>
+                                    <?php if($membership->ath_game_status == 1){?>
                                     <span class="badge badge-primary">Pending</span>
-                                    <?php } elseif ($memberships->ath_game_status == 2) {?>
+                                    <?php } elseif ($membership->ath_game_status == 2) {?>
                                     <span class="badge badge-success">Approve</span>
-                                    <?php } elseif ($memberships->ath_game_status == 3) {?>
+                                    <?php } elseif ($membership->ath_game_status == 3) {?>
                                     <span class="badge badge-danger">Expired</span>
 
-                                    <?php } elseif ($memberships->ath_game_status == 4) {?>
+                                    <?php } elseif ($membership->ath_game_status == 4) {?>
                                     <span class="badge badge-danger">Rejected</span>
                                     <?php }?>
                                   </td>
@@ -113,14 +113,14 @@
                                       </button>
                                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width: 10%;text-align: center;color:#000 !important;">
 
-                                        <li><a href="athletes/change_fee_satus/<?=$memberships->ath_game_id?>/<?=$memberships->ath_game_fee_id?>/2/<?=$memberships->ath_game_status?>" style="color:#000;text-decoration: none;"onclick="return confirm('Are you sure you want to approve this membership?')">Approve</a></li>
+                                        <li><a href="athletes/change_fee_satus/<?=$membership->ath_game_id?>/<?=$membership->ath_game_fee_id?>/2/<?=$membership->ath_card_id?>" style="color:#000;text-decoration: none;"onclick="return confirm('Are you sure you want to approve this membership?')">Approve</a></li>
 
-                                        <li><a  href="javascript:void(0)" data-toggle="modal" data-target="#change_status" onclick="get_ath_game_fee_id(<?=$memberships->ath_game_id?>,4)" style="color:#000;text-decoration: none;">Rejected</a></li> 
+                                        <li><a  href="javascript:void(0)" data-toggle="modal" data-target="#change_status" onclick="get_ath_game_fee_id(<?=$membership->ath_game_id?>,<?=$membership->ath_card_id?>,4)" style="color:#000;text-decoration: none;">Rejected</a></li> 
 
                                       </ul>
                                     </div>
 
-                                    <a href="">Generat card</a>
+        
                                   </td> 
 
                                   </tr>
@@ -151,6 +151,7 @@
 
                           <input type="hidden" name="ath_game_id" id="ath_game_id">
                           <input type="hidden" name="status" id="status">
+                          <input type="hidden" name="ath_card_id" id="ath_card_id">
                                  
                                   <div class="form-group">
                                         <label>Remarks</label>
@@ -176,10 +177,13 @@
 
   });
   
- function get_ath_game_fee_id(ath_game_id,status){
+ function get_ath_game_fee_id(ath_game_id,ath_card_id,status){
+
+
 
 
     $('#ath_game_id').val(ath_game_id);
+    $('#ath_card_id').val(ath_card_id);
     $('#status').val(status);
   }
 

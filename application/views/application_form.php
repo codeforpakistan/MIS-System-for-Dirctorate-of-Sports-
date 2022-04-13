@@ -193,12 +193,10 @@
                             </div>
                       </div>
 
-                       
-
                       <div class="col-4">
                             <div class="form-group">
                                   <label>Time Prefernce</label>
-                                  <select class="form-control" name="time_prefernce">
+                                  <select class="form-control" name="time_prefernce" required>
                                     <option  disabled value="" selected hidden>---Select Prefernce---</option>
                                     <option value="morning">Morning</option>
                                     <option value="evening">Evening</option>

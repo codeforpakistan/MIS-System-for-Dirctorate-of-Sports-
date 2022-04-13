@@ -1,8 +1,9 @@
 <footer class="main-footer">
         <div class="footer-left">
-          <a href="">Code For Pakistan</a></a>
-        </div>
-        <div class="footer-right">
+          <strong style="color:#000;"> &copy; 2020-2021 <a href="https://codeforpakistan.org/" target="_blank"><span style="color:#000;">Code For pakistan/</span></a>.</strong><span style="color:#000;font-weight: bold;">
+    All rights reserved.</span>
+          <img src="assets/images/kpitb.png" style="width:30%;width:30%;padding: 0px 10px">
+          <img src="assets/images/Code_for_Pakistan.png" style="width:20%;width:20%">
         </div>
       </footer>
     </div>

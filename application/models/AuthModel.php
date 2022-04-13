@@ -32,7 +32,7 @@ class AuthModel extends CI_Model
      public function athlete_login($ath_email_mobile,$ath_password)
     { 
      
-        $query = $this->db->select('athletes.`ath_id`,athletes.`ath_name`,athletes.`ath_email`,athletes.`ath_cnic`,athletes.`facility_id`,athletes.`district_id`,athletes.`ath_contact`,athletes.`ath_password`,athletes.`user_role_id_fk`,athletes.`is_active`,athletes.`create_at`,districts.district_name,facilities.facility_name')
+        $query = $this->db->select('athletes.`ath_id`,athletes.`ath_name`,athletes.`ath_profile_photo`,athletes.`ath_email`,athletes.`ath_cnic`,athletes.`facility_id`,athletes.`district_id`,athletes.`ath_contact`,athletes.`ath_password`,athletes.`user_role_id_fk`,athletes.`is_active`,athletes.`create_at`,districts.district_name,facilities.facility_name')
         ->from('athletes')
         ->join('districts','athletes.district_id=districts.district_id','left')
         ->join('facilities','facilities.facility_id=athletes.facility_id','left')

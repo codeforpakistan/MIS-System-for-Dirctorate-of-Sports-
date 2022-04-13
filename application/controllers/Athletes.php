@@ -53,6 +53,7 @@ class Athletes extends CI_Controller {
 
 
 
+
             if(!empty($response))// is user name and passsword valid
                {               
                 $this->session->set_userdata('ath_id',$response['ath_id']);
@@ -61,7 +62,7 @@ class Athletes extends CI_Controller {
                 $this->session->set_userdata('user_role_id_fk',$response['user_role_id_fk']);
                 $this->session->set_userdata('facility_id',$response['facility_id']);
                 $this->session->set_userdata('facility_name',$response['facility_name']);
-                $this->session->set_userdata('prifile_image',$response['ath_profile_photo']);
+                $this->session->set_userdata('profile_image',$response['ath_profile_photo']);
               
 
             if($response['ath_cnic'] > 0 || $response['user_role_id_fk'] == 6 || $response['user_role_id_fk'] == 7 ){
@@ -110,7 +111,6 @@ class Athletes extends CI_Controller {
         $this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate, no-transform, max-age=0, post-check=0, pre-check=0");
         $this->output->set_header("Pragma: no-cache");
     }
-
 
    //==========================================================================
     // dashboard
@@ -217,17 +217,17 @@ class Athletes extends CI_Controller {
 
         $more_games = $this->input->post('more_games');
 
-        if(!empty($more_games)){
+        if(!empty($more_games))
 
-
-        //$this->form_validation->set_rules('game_id', 'Name', 'required|trim');
+        {
        $this->form_validation->set_rules('time_prefernce', 'Time Prefernce', 'required|trim');
        $this->form_validation->set_rules('game_fee', 'Game Fee', 'required|trim');
        $this->form_validation->set_rules('payment_mode', 'Payment Mode', 'required|trim');
        $this->form_validation->set_rules('facility_id', 'Facility', 'required|trim');
        $this->form_validation->set_rules('district_id', 'District', 'required|trim');
         }
-        else{
+        else
+        {
 
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
         $this->form_validation->set_rules('f_name', 'Father Name', 'required|trim');
@@ -392,6 +392,7 @@ class Athletes extends CI_Controller {
                 'ath_fee_status'            =>  1,
                 'ath_fee_months'            =>  '1 Month',
                 'ath_challan_fee'           =>  $challan_fee,
+                'challan_status'            =>  1,
                 'ath_challan_admission_fee' =>  $ath_challan_admission_fee,
                 'ath_game_id'               =>  $ath_game_id,
                 'fee_monthly_start_date'    =>  $date_of_apply,
@@ -401,9 +402,25 @@ class Athletes extends CI_Controller {
               $this->admin_model->insert($athlete_games_fees,$fee_table_name);
               $this->model->set_auto_no('challan');
 
-              $this->messages('alert-success','Successfully Added');
-            
+
+
+              $card_no   =  new auto_no();
+              $card_no   = $card_no->get_auto_num('card','auto_no');
+               $fee_table_name = "athlete_membership_cards"; 
+              $athlete_card_data  = array(
+
+                'ath_card_no'     =>  $card_no,
+                'ath_game_id'     =>  $ath_game_id,
+                'ath_id'          =>  $ath_id,
+                'ath_card_status' =>  1,
+              );
+
+
+              $this->admin_model->insert($athlete_card_data,$fee_table_name);
+              $this->model->set_auto_no('card'); 
           }
+
+          $this->messages('alert-success','Successfully Added');
           return redirect('athletes'); 
 
 
@@ -498,7 +515,6 @@ class Athletes extends CI_Controller {
 
         $data['bank_challan']  = $this->model->athlete_games_fees_challans($ath_id,$ath_game_fee_id);
         $data['title']         = 'Bank Copy';
-       // $data['page']          = 'bank_challan';
         $this->load->view('bank_challan',$data);
     }
 
@@ -741,27 +757,38 @@ class Athletes extends CI_Controller {
     }
 
 
-    public function change_fee_satus($ath_game_id,$ath_game_fee_id,$fee_status){
+    public function change_fee_satus($ath_game_id,$ath_game_fee_id,$fee_status,$ath_card_id){
 
 
         $data = array('ath_fee_status' => $fee_status);
         $this->db->where('ath_game_fee_id',$ath_game_fee_id)->update('athlete_games_fees',$data);
 
         if($fee_status ==2){
+
         $update_game_status = array('ath_game_status' => 2);
         $this->db->where('ath_game_id',$ath_game_id)->update('athlete_games',$update_game_status);
+
+        $update_card_status = array('ath_card_status' => 2);
+        $this->db->where('ath_card_id',$ath_card_id)->update('athlete_membership_cards',$update_card_status);
+
        }
 
-        redirect('athletes/athlete_dashboard');
+        redirect('athletes/memberships');
     }
 
      public function change_game_satus(){
 
-        $status      =  $this->input->post('status');
-        $ath_game_id      = $this->input->post('ath_game_id');
+         $status        =  $this->input->post('status');
+         $ath_game_id   = $this->input->post('ath_game_id');
+         $ath_card_id   = $this->input->post('ath_card_id');
+
+
 
         $data = array('ath_game_status'=> $status,'ath_game_remarks' => $this->input->post('ath_game_remarks',true));
         $this->db->where('ath_game_id',$ath_game_id)->update('athlete_games',$data);
+
+        $update_card_status = array('ath_card_status' => 1);
+        $this->db->where('ath_card_id',$ath_card_id)->update('athlete_membership_cards',$update_card_status);
 
 
         $this->messages('alert-success','Successfully Rejected');
@@ -1199,6 +1226,186 @@ public function pending_challans(){
         $data['page']               = 'memberships';
         $this->load->view('template',$data);
 
+
+
+    }
+
+    public function general_report(){
+
+         $facility_id = $this->session->userdata('facility_id');
+
+            $from_date   = "";
+            $to_date     = "";
+            $facility    = "";
+            $gender      = "";
+            $membership  = "";
+            $fee_challan = "";
+            $game        = "";
+
+
+        if($this->input->post()){
+
+            $from_date   = $this->input->post('from_date');
+            $to_date     = $this->input->post('to_date');
+            $facility    = $this->input->post('facility');
+            $gender      = $this->input->post('gender');
+            $membership  = $this->input->post('Membership_status');
+            $fee_challan = $this->input->post('fee_challan_status');
+            $game        = $this->input->post('game');
+
+            $data["reports"]      = $this->model->get_FilterDetails($from_date,$to_date,$facility,$gender,$membership,$fee_challan,$game,$facility_id);
+
+
+        }
+
+
+            $data['from_date']   = $from_date;
+            $data['to_date']     = $to_date;
+            $data['facility']    = $facility;
+            $data['gender']      = $gender;
+            $data['membership']  = $membership;
+            $data['fee_challan'] = $fee_challan;
+            $data['game']        = $game;
+
+
+
+        $table_name = 'districts';
+        $data['districts'] = $this->admin_model->get_all_records($table_name);
+
+        $table_name = 'facilities';
+        $data['facilities'] = $this->admin_model->get_all_records($table_name);
+
+
+        $table            = 'games';
+        $data['games']    = $this->admin_model->get_all_records($table);
+
+       
+        $data['title'] = 'Report Result';
+        $data['page']   = 'general_report';
+        $this->load->view('template',$data);
+    }
+
+    public function card(){
+
+
+
+        $table            = 'cards';
+        $data['cards']    = $this->admin_model->get_all_records($table);
+
+
+        $data['title'] = 'Card';
+        $data['page']   = 'card';
+        $this->load->view('template',$data);
+
+
+    }
+
+    public function get_ajax_card($card_id)
+    { 
+
+
+        $table_name        = "cards";
+        $talbe_column_name = 'card_id';
+        $table_id          = $card_id;
+
+
+        $card_game = $this->admin_model->exist_record_row($talbe_column_name,$table_id,$table_name); 
+        echo json_encode($card_game); exit;      
+    }
+
+    public function card_update()
+    {
+
+
+        $card_id            = $this->input->post('card_id');
+        $card_fee            = $this->input->post('card_fee');
+
+        $table_name        = "cards";
+        $talbe_column_name = 'card_id';
+        $table_id          = $card_id;
+        
+
+            $card_array         = array(
+                'card_fee'      =>  $card_fee,
+                
+
+            );
+                $response = $this->model->update($card_array,$table_name,$talbe_column_name,$table_id);
+                    if($response == true)
+                    {
+                        $this->messages('alert-success','Successfully Update');
+                        return redirect('athletes/card'); 
+                    }
+                    else
+                    {
+                        $this->messages('alert-danger','Some Thing Wrong');
+                        return redirect('athletes/card');
+                    }
+    }
+
+    public function dublicate_card(){
+
+        $ath_id = $this->session->userdata('ath_id');
+
+
+        $table                   = 'athlete_membership_cards';
+        $data['dublicate_cards']  = $this->model->get_dublicate_card($ath_id);
+
+        $data['title']  = 'Dublicate Card';
+        $data['page']   = 'dublicate_card';
+        $this->load->view('template',$data);
+
+
+    }
+
+
+    public function dublicate_card_add($ath_id,$ath_game_id){
+
+        $update_card_array = array(
+            'ath_card_status'  => 3,
+        );
+
+       $this->db->where('ath_id',$ath_id)
+                ->where('ath_game_id',$ath_game_id)
+                ->where('ath_card_status',2)
+                ->update(' athlete_membership_cards',$update_card_array);
+
+        $data         = $this->model->get_card();
+        $ath_card_fee = $data['card_fee'];
+    
+        $card_no   =  new auto_no();
+        $card_no   = $card_no->get_auto_num('card','auto_no');
+
+        $dublicate_card_arry = array(
+
+            'ath_id'       => $ath_id,
+            'ath_game_id'  => $ath_game_id,
+            'ath_card_no'  => $card_no,
+            'ath_card_fee' => $ath_card_fee 
+        );
+
+        $this->db->insert('athlete_membership_cards',$dublicate_card_arry);
+        $this->model->set_auto_no('card');
+
+         $fee_table_name = "athlete_games_fees"; 
+
+         $challan_no   =  new auto_no();
+            $challan_no   = $challan_no->get_auto_num('challan','auto_no');
+
+            $dublicate_card_fees    = array(
+                'ath_payment_mode'          =>  'Bank',
+                'ath_challan_no'            =>  $challan_no,
+                'ath_fee_status'            =>  1,
+                'ath_challan_fee'           =>  $ath_card_fee,
+                'challan_status'            =>  2,
+                'ath_game_id'               =>  $ath_game_id,
+            );
+
+
+        $this->admin_model->insert($dublicate_card_fees,$fee_table_name);
+        $this->model->set_auto_no('challan');
+        $this->messages('alert-success','Successfully Applied for Dublicate Card');
+        return redirect('athletes/dublicate_card'); 
 
 
     }
